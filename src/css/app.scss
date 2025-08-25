@@ -1,1 +1,62 @@
 // app global css in SCSS form
+
+/* Importando a fonte Raleway */
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+/* Aplicando globalmente */
+body {
+  font-family: 'Raleway', sans-serif;
+}
+
+.formLogin {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 50%;
+}
+
+.input {
+    background-color: #404668;
+
+    .q-field__label {
+        color: #f0f0f0;
+        border-color: #00ffcc;
+    }
+}
+
+.input .q-field__native {
+  color: white;  /* cor do texto digitado */
+}
+
+
+#botaoEntrar {
+    width: 50%;
+    background-color: #F7B176;
+    color: #2B324E;
+    font-weight: bolder;
+}
+
+
+.containerLogin {
+    padding: 2%;
+    width: 80%;
+    background-color: #2B324E;
+    color: white;
+}
+
+.logoSection img {
+  width: 80px; 
+  margin-right: 10px;
+//   height: 100px;
+}
+
+.logoSection{
+    display: flex;
+    align-items: center;
+}
+
+.containerLogin h1 {
+    font-size: 250%;
+    margin: 1px;
+}
