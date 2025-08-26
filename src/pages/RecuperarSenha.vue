@@ -1,26 +1,24 @@
 <template>
-  <q-page class="flex flex-center" id="fundoLogin">
+  <q-page class="flex flex-center" id="fundoRecSenha">
 
-    <div class="containerLogin">
+    <div class="containerLogin" id="containerRecSenha">
       <div class="left">
         <div class="logoSection">
           <img :src="logo" alt="Logo" />
           <header>Locadora de Livros</header>
         </div>
-        <div class="formLogin" style="max-width: 300px">
-          <p>Bem-vindo(a) de volta!</p>
-          <header style="color: #F7B176;">Login</header>
+        <div class="formLogin" style="max-width: 300px" id="formRecSenha">
+          <p>Esqueceu a senha?</p>
+          <header style="color: #F7B176;">Recuperar senha</header>
           <q-input filled v-model="email" type="email" label="Email" class="input" />
-          <q-input filled v-model="password" type="password" label="Senha" class="input" />
-          <q-btn push label="Entrar" id="botaoEntrar" />
-          <router-link to="/recuperar-senha" id="esqueceuSenhaLabel">
-            Esqueceu a senha?
-          </router-link>
+          <div class="botoes">
+            <q-btn push label="Continuar" id="botaoEntrar" /> <q-btn push label="Voltar" id="botaoVoltar" to="/"/>
+          </div>
            <img :src="logoWDA" alt="">
         </div>
       </div>
-      <div class="imagemLogin" id="imagemLogin">
-         <img :src="logoWDA" alt="">
+      <div class="imagemLogin" id="imgRecSenha">
+        <img :src="logoWDA" alt="">
       </div>
     </div>
 

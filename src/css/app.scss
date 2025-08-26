@@ -5,7 +5,15 @@
 
 /* Aplicando globalmente */
 body {
-  font-family: 'Raleway', sans-serif;
+    font-family: 'Raleway', sans-serif;
+}
+
+#fundoRecSenha {
+    background-color: #121F2F;
+}
+
+#fundoLogin {
+    background-color: #121F2F;
 }
 
 .formLogin {
@@ -18,6 +26,7 @@ body {
 
 .input {
     background-color: #404668;
+    width: 150%;
 
     .q-field__label {
         color: #f0f0f0;
@@ -26,7 +35,8 @@ body {
 }
 
 .input .q-field__native {
-  color: white;  /* cor do texto digitado */
+    color: white;
+    /* cor do texto digitado */
 }
 
 
@@ -37,26 +47,141 @@ body {
     font-weight: bolder;
 }
 
+#botaoVoltar {
+    width: 50%;
+    background-color: #404668;
+    color: #F7B176;
+    font-weight: bolder;
+}
+
 
 .containerLogin {
-    padding: 2%;
-    width: 80%;
+    width: 60%;
     background-color: #2B324E;
+    color: white;
+    display: flex;
+    // height: 90%;
+    border-radius: 25px;
+}
+
+#containerRecSenha {
+    width: 50%;
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+
+.logoSection img {
+    width: 80px;
+    margin-right: 10px;
+    //   height: 100px;
+}
+
+.logoSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 6%;
+}
+
+.containerLogin header {
+    font-size: 250%;
+    width: 150%;
+    // margin-bottom: 2%;
+}
+
+.imagemLogin {
+    background-image: url("src/assets/fundoLogin.jpg");
+    height: auto;
+    width: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 2%;
+    display: flex;
+}
+
+.imagemLogin img {
+    height: 60px;
+}
+
+#imagemLogin {
+    justify-content: flex-end;
+}
+
+.left {
+    padding: 3%;
+    padding-bottom: 5%;
+    width: 55%;
+    // background-color: #00ffcc;
+}
+
+#esqueceuSenhaLabel {
+    text-decoration: none;
     color: white;
 }
 
-.logoSection img {
-  width: 80px; 
-  margin-right: 10px;
-//   height: 100px;
-}
-
-.logoSection{
+.botoes {
     display: flex;
-    align-items: center;
+    gap: 5%;
 }
 
-.containerLogin h1 {
-    font-size: 250%;
-    margin: 1px;
+#imgRecSenha {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    display: flex;
+    justify-content: none;
+}
+
+
+
+@media (max-width: 768px) {
+
+    html,
+    body {
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }
+
+
+
+    .q-page .imagemLogin {
+        display: none;
+    }
+
+    .containerLogin {
+        width: 90%;
+        height: 75vh;
+        padding-top: 10%;
+    }
+
+    #containerRecSenha{
+        width: 90%;
+        height: 60vh;
+        padding-top: 10%;
+        display: block;
+    }
+    #formRecSenha{
+        width: 120%;
+    }
+    .formLogin {
+        width: 115%;
+    }
+    .formLogin img{
+        width: 70px;
+        align-self: flex-end;
+    }
+    .containerLogin header {
+        font-size: 170%;
+    }
+    .logoSection {
+        width: 190%;
+    }
+
+    #imgRecSenha{
+        display: none;
+    }
 }
