@@ -1,18 +1,18 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="header">
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <q-toolbar-title>Locadora de Livros</q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div><img :src="logoWDApreta" alt="" id="toolBarImg"></div>
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer v-model="leftDrawerOpen" show-if-above bordered class="sideBar">
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+        <q-item-label header class="headerSideBar"><img :src="logo" alt=""> Admin </q-item-label>
 
         <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
       </q-list>
@@ -30,50 +30,47 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
+    title: 'Dashboard',
+    icon: 'insights',
+    link: '/dashboard-quasar',
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
+    title: 'Biblioteca',
+    icon: 'book',
+    link: '',
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
+    title: 'Aluguéis',
+    icon: 'assignment',
+    link: '',
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
+    title: 'Usuários',
+    icon: 'badge',
+    link: '',
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
+    title: 'Locatários',
+    icon: 'person',
+    link: '',
   },
   {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
+    title: 'Editoras',
+    icon: 'edit',
+    link: '',
   },
   {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
+    title: 'Logout',
+    icon: 'logout',
+    link: '/',
   },
 ]
 
 const leftDrawerOpen = ref(false)
+import logoImg from 'src/assets/logoLocadora.png'
+import logoPreta from 'src/assets/logo-preta.png'
+const logo = logoImg
+const logoWDApreta = logoPreta
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value

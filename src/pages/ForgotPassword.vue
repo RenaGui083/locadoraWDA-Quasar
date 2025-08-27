@@ -1,23 +1,23 @@
 <template>
-  <q-page class="flex flex-center" id="fundoRecSenha">
+  <q-page class="flex flex-center" id="fundoForgotPassword">
 
-    <div class="containerLogin" id="containerRecSenha">
+    <div class="containerLogin" id="containerForgotPassword">
       <div class="left">
         <div class="logoSection">
           <img :src="logo" alt="Logo" />
           <header>Locadora de Livros</header>
         </div>
-        <div class="formLogin" style="max-width: 300px" id="formRecSenha">
+        <div class="formLogin" style="max-width: 300px" id="formForgotPassword">
           <p>Esqueceu a senha?</p>
           <header style="color: #F7B176;">Recuperar senha</header>
           <q-input filled v-model="email" type="email" label="Email" class="input" />
-          <div class="botoes">
-            <q-btn push label="Continuar" id="botaoEntrar" /> <q-btn push label="Voltar" id="botaoVoltar" to="/"/>
+          <div class="buttons">
+            <q-btn push label="Continuar" id="logIn" /> <q-btn push label="Voltar" id="backButton" to="/"/>
           </div>
-           <img :src="logoWDA" alt="">
+           <img :src="logoWDA" alt="" class="logoResponsive">
         </div>
       </div>
-      <div class="imagemLogin" id="imgRecSenha">
+      <div class="imgLogin" id="imgForgotPassword">
         <img :src="logoWDA" alt="">
       </div>
     </div>

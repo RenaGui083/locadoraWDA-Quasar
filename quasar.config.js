@@ -68,6 +68,9 @@ export default defineConfig((/* ctx */) => {
           { server: false },
         ],
       ],
+      htmlVariables: {
+    favicon: 'public/faviIconWDA.png'
+  },
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
@@ -75,7 +78,7 @@ export default defineConfig((/* ctx */) => {
       // https: true,
       open: true, // opens browser window automatically
     },
-
+    
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
     framework: {
       config: {},

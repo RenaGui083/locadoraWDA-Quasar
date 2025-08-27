@@ -12,14 +12,14 @@
           <header style="color: #F7B176;">Login</header>
           <q-input filled v-model="email" type="email" label="Email" class="input" />
           <q-input filled v-model="password" type="password" label="Senha" class="input" />
-          <q-btn push label="Entrar" id="botaoEntrar" />
-          <router-link to="/recuperar-senha" id="esqueceuSenhaLabel">
+          <q-btn push label="Entrar"  to="/dashboard-quasar" id="logIn" />
+          <router-link to="/forgot-password" id="forgotPasswordLabel">
             Esqueceu a senha?
           </router-link>
-           <img :src="logoWDA" alt="">
+           <img :src="logoWDA" alt="" class="logo">
         </div>
       </div>
-      <div class="imagemLogin" id="imagemLogin">
+      <div class="imgLogin" id="imgLogin">
          <img :src="logoWDA" alt="">
       </div>
     </div>

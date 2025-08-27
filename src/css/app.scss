@@ -1,14 +1,14 @@
 // app global css in SCSS form
 
-/* Importando a fonte Raleway */
+//Forgot password and login
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
-/* Aplicando globalmente */
 body {
     font-family: 'Raleway', sans-serif;
+    background-color: #E0E4EB;
 }
 
-#fundoRecSenha {
+#fundoForgotPassword {
     background-color: #121F2F;
 }
 
@@ -22,6 +22,10 @@ body {
     flex-direction: column;
     gap: 16px;
     width: 50%;
+}
+
+.formLogin img {
+    display: none;
 }
 
 .input {
@@ -40,14 +44,14 @@ body {
 }
 
 
-#botaoEntrar {
+#logIn {
     width: 50%;
     background-color: #F7B176;
     color: #2B324E;
     font-weight: bolder;
 }
 
-#botaoVoltar {
+#backButton {
     width: 50%;
     background-color: #404668;
     color: #F7B176;
@@ -64,7 +68,7 @@ body {
     border-radius: 25px;
 }
 
-#containerRecSenha {
+#containerForgotPassword {
     width: 50%;
     display: flex;
     flex-direction: row-reverse;
@@ -89,7 +93,7 @@ body {
     // margin-bottom: 2%;
 }
 
-.imagemLogin {
+.imgLogin {
     background-image: url("src/assets/fundoLogin.jpg");
     height: auto;
     width: 50%;
@@ -102,11 +106,11 @@ body {
     display: flex;
 }
 
-.imagemLogin img {
+.imgLogin img {
     height: 60px;
 }
 
-#imagemLogin {
+#imgLogin {
     justify-content: flex-end;
 }
 
@@ -117,17 +121,17 @@ body {
     // background-color: #00ffcc;
 }
 
-#esqueceuSenhaLabel {
+#forgotPasswordLabel {
     text-decoration: none;
     color: white;
 }
 
-.botoes {
+.buttons {
     display: flex;
     gap: 5%;
 }
 
-#imgRecSenha {
+#imgForgotPassword {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-top-left-radius: 25px;
@@ -135,7 +139,6 @@ body {
     display: flex;
     justify-content: none;
 }
-
 
 
 @media (max-width: 768px) {
@@ -147,8 +150,7 @@ body {
     }
 
 
-
-    .q-page .imagemLogin {
+    .q-page .imgLogin {
         display: none;
     }
 
@@ -158,30 +160,81 @@ body {
         padding-top: 10%;
     }
 
-    #containerRecSenha{
+    #containerForgotPassword {
         width: 90%;
         height: 60vh;
         padding-top: 10%;
         display: block;
     }
-    #formRecSenha{
+
+    #formForgotPassword {
         width: 120%;
     }
+
     .formLogin {
         width: 115%;
     }
-    .formLogin img{
+
+    .formLogin img {
         width: 70px;
         align-self: flex-end;
+        display: block;
     }
+
     .containerLogin header {
         font-size: 170%;
     }
+
     .logoSection {
         width: 190%;
     }
 
-    #imgRecSenha{
+    #imgForgotPassword {
         display: none;
     }
+}
+
+//Main layout
+
+.header {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    height: 10%;
+    color: #121F2F;
+}
+
+.sideBar {
+    background-color: #121F2F;
+    color: white;
+    padding: 4%;
+    padding-left: 7%;
+    font-size: 120%;
+}
+
+.sideBar img {
+    width: 70px;
+}
+
+.headerSideBar {
+    display: flex;
+    align-items: center;
+    font-size: 140%;
+    gap: 30px;
+    color: white;
+}
+
+.menu-item {
+    margin: 5% 0;
+    /* espaçamento vertical */
+}
+
+#toolBarImg {
+    width: 8%;
+    margin-left: 90%;
+}
+
+.menu-item:hover{
+    padding-left: 10%;
+    transition: 0.7s;
 }

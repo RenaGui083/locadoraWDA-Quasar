@@ -4,10 +4,16 @@ const routes = [
     component: () => import('layouts/LoginLayout.vue'),
     children: [
       { path: '', component: () => import('pages/IndexPage.vue') },
-      { path: 'recuperar-senha', component: () => import('pages/RecuperarSenha.vue')}
+      { path: 'forgot-password', component: () => import('src/pages/ForgotPassword.vue')},
     ],
   },
-
+  {
+    path: '/dashboard-quasar',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {path: '', component: () => import('pages/DashboardPage.vue')},
+    ],
+  },
   // Always leave this as last one,
   // but you can also remove it
   {
