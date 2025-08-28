@@ -207,8 +207,7 @@ body {
 .sideBar {
     background-color: #121F2F;
     color: white;
-    padding: 4%;
-    padding-left: 7%;
+    padding-top: 4%;
     font-size: 120%;
 }
 
@@ -217,21 +216,22 @@ body {
 }
 
 .headerSideBar {
+    padding-left: 10%;
     display: flex;
     align-items: center;
     font-size: 140%;
-    gap: 30px;
+    gap: 25px;
     color: white;
 }
 
 .menu-item {
+    padding-left: 11%;
     margin: 5% 0;
     /* espaçamento vertical */
 }
 
 #toolBarImg {
-    width: 8%;
-    margin-left: 90%;
+    width: 70px;
 }
 
 .menu-item:hover{

@@ -1,8 +1,7 @@
 <template>
     <q-page class="mainContainer">
         <div class="headerTitle">
-            <q-icon name="insights" />
-            <h5>Dashboard</h5>
+            <q-icon name="book"/> <h5>Biblioteca</h5>
         </div>
     </q-page>
 </template>
