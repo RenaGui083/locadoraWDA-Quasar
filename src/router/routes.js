@@ -15,10 +15,17 @@ const routes = [
     ],
   },
   {
-    path: '/biblioteca-quasar',
+    path: '/books-quasar',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/BibliotecaPage.vue') },
+    ],
+  },
+  {
+    path: '/rents-quasar',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/AlugueisPage.vue') },
     ],
   },
   // Always leave this as last one,

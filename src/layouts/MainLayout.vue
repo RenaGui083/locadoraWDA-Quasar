@@ -37,12 +37,12 @@ const linksList = [
   {
     title: 'Biblioteca',
     icon: 'book',
-    link: '/biblioteca-quasar',
+    link: '/books-quasar',
   },
   {
     title: 'Aluguéis',
     icon: 'assignment',
-    link: '',
+    link: '/rents-quasar',
   },
   {
     title: 'Usuários',
