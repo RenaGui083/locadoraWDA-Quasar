@@ -16,7 +16,7 @@
         </div>
         <div class="gridContainer">
             <div class="tableTittle">
-                <header>Acervo atual</header>
+                <header>Relação de aluguéis</header>
             </div>
             <table class="tableMain">
                 <thead class="headerTable">

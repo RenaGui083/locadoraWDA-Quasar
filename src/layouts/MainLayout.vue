@@ -47,17 +47,17 @@ const linksList = [
   {
     title: 'Usuários',
     icon: 'badge',
-    link: '',
+    link: '/users-quasar',
   },
   {
     title: 'Locatários',
     icon: 'person',
-    link: '',
+    link: '/renters-quasar',
   },
   {
     title: 'Editoras',
     icon: 'edit',
-    link: '',
+    link: '/publishers-quasar',
   },
   {
     title: 'Logout',

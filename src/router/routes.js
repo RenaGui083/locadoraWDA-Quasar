@@ -18,14 +18,35 @@ const routes = [
     path: '/books-quasar',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/BibliotecaPage.vue') },
+      { path: '', component: () => import('src/pages/BooksPage.vue') },
     ],
   },
   {
     path: '/rents-quasar',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/AlugueisPage.vue') },
+      { path: '', component: () => import('src/pages/RentsPage.vue') },
+    ],
+  },
+  {
+    path: '/users-quasar',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/UsersPage.vue') },
+    ],
+  },
+  {
+    path: '/renters-quasar',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/RentersPage.vue') },
+    ],
+  },
+  {
+    path: '/publishers-quasar',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('src/pages/PublishersPage.vue') },
     ],
   },
   // Always leave this as last one,

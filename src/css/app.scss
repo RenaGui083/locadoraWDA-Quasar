@@ -236,7 +236,15 @@ body {
     width: 70px;
 }
 
-.menu-item:hover{
+.menu-item:hover {
     padding-left: 10%;
     transition: 0.7s;
+}
+
+//dashboard
+
+.dashboardContainer {
+    // height: 100%;
+    width: 100%;
+    // background-color: #00ffcc;
 }
