@@ -247,4 +247,76 @@ body {
     // height: 100%;
     width: 100%;
     // background-color: #00ffcc;
+
+}
+
+.sectionTop{
+    width: 100%;
+    gap: 1%;
+    display: flex;
+    margin-bottom: 0.6%;
+}
+
+.sectionBottom{
+    display: flex;
+    height: 50%;
+    width: 100.5%;
+    gap: 0.6%;
+}
+
+.headerContainerChart{
+    font-size: 180%;
+    // font-weight: 500;
+    padding: 2%;
+}
+
+.cardSection{
+    // padding: 30px;
+    border-radius: 16px;
+    width: 35%;
+}
+
+#gridDashboard{
+    width: 65%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    border-radius: 15px;
+}
+
+
+#chartPieBottom{
+    // margin: auto;
+    padding-left: 28%;
+}
+#chartPieSection{
+    // width: 30%;
+    margin: auto;
+    // background-color: #00ffcc;
+}
+
+.numberOfUsers{
+    height: auto;
+    width: 40%;
+    border-radius: 15px;
+    background-color: white;
+}
+
+#usersData{
+    background: transparent;
+    box-shadow: none;
+}
+
+#numberOfUsers{
+    background-color: white;
+}
+
+#numberOfAdmins{
+    background-color: white;
+}
+
+.headerUsers{
+    border-bottom: 2px solid black;
+}
+
+.headerContainerChart{
+    font-size: 140%;
 }
