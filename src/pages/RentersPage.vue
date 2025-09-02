@@ -34,9 +34,9 @@
                         <td data-label="Telefone:">(11) 99876-1234</td>
                         <td data-label="CPF:">123.456.789-00</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="visibility" color="#121F2F" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
+                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
                         </td>
                     </tr>
 
@@ -47,8 +47,8 @@
                         <td data-label="CPF:">987.654.321-11</td>
                         <td data-label="Ações:">
                             <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" />
+                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
+                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
                         </td>
                     </tr>
 
@@ -58,9 +58,9 @@
                         <td data-label="Telefone:">(21) 93456-7890</td>
                         <td data-label="CPF:">456.789.123-22</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="visibility" color="#121F2F" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
+                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
                         </td>
                     </tr>
 
@@ -70,9 +70,9 @@
                         <td data-label="Telefone:">(31) 97654-3210</td>
                         <td data-label="CPF:">741.852.963-33</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="visibility" color="#121F2F" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
+                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
                         </td>
                     </tr>
 
@@ -82,9 +82,9 @@
                         <td data-label="Telefone:">(41) 98765-4321</td>
                         <td data-label="CPF:">852.963.741-44</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="visibility" color="#121F2F" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
+                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
                         </td>
                     </tr>
                 </tbody>
@@ -159,10 +159,120 @@
 
             </q-card>
         </q-dialog>
+
+
+
+        <q-dialog v-model="openModalExclude" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Você tem certeza de que deseja realizar a exclusão?</div>
+                    <q-space />
+                    <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
+                </q-card-section>
+
+                <q-card-section class="scroll">
+                </q-card-section>
+
+                <q-card-actions align="left">
+                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Não" color="white" v-close-popup />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
+
+
+
+        <q-dialog v-model="openModalView" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Detalhes do Locatário</div>
+                    <q-space />
+                    <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
+                </q-card-section>
+
+                <q-separator />
+
+                <q-card-section class="scroll">
+
+
+
+                    <q-field outlined :dense="dense" class="viewInput">
+                        <template v-slot:prepend>
+                            <q-icon name="key" class="viewFont" />
+                        </template>
+
+                        <template v-slot:control>
+                            <div class="viewFont" tabindex="0">{{ "Id: " + "" }}</div>
+                        </template>
+                    </q-field>
+
+                    <q-field outlined :dense="dense" class="viewInput">
+                        <template v-slot:prepend>
+                            <q-icon name="person" class="viewFont" />
+                        </template>
+
+                        <template v-slot:control>
+                            <div class="viewFont" tabindex="0">{{ "Nome: " + "" }}</div>
+                        </template>
+                    </q-field>
+
+                    <q-field outlined :dense="dense" class="viewInput">
+                        <template v-slot:prepend>
+                            <q-icon name="email" class="viewFont" />
+                        </template>
+
+                        <template v-slot:control>
+                            <div class="viewFont" tabindex="0">{{  "Email: " + ""  }}</div>
+                        </template>
+                    </q-field>
+
+                    <q-field outlined :dense="dense" class="viewInput">
+                        <template v-slot:prepend>
+                            <q-icon name="phone" class="viewFont" />
+                        </template>
+
+                        <template v-slot:control>
+                            <div class="viewFont" tabindex="0">{{ "Telefone: " + ""  }}</div>
+                        </template>
+                    </q-field>
+
+                    <q-field outlined :dense="dense" class="viewInput">
+                        <template v-slot:prepend>
+                            <q-icon name="article" class="viewFont" />
+                        </template>
+
+                        <template v-slot:control>
+                            <div class="viewFont" tabindex="0">{{ "CPF: " + "" }}</div>
+                        </template>
+                    </q-field>
+
+                    <q-field outlined :dense="dense" class="viewInput">
+                        <template v-slot:prepend>
+                            <q-icon name="map" class="viewFont" />
+                        </template>
+
+                        <template v-slot:control>
+                            <div class="viewFont" tabindex="0">{{ "Endereço: " + "" }}</div>
+                        </template>
+                    </q-field>
+
+                </q-card-section>
+
+                <q-separator />
+
+                <q-card-section class="left">
+                    <q-btn flat label="Fechar" color="white" v-close-popup />
+                </q-card-section>
+
+            </q-card>
+        </q-dialog>
     </q-page>
 </template>
 <script setup>
 import { useCrud } from 'src/utils/biblioteca.js'
 
-const { email, name, telephone, address, cpf, $q, openModalCreate, openModalEdit } = useCrud()
+const { email, name, telephone, address, cpf, $q, openModalCreate, openModalEdit, openModalExclude, openModalView } = useCrud()
 </script>
