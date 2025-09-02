@@ -29,6 +29,7 @@ const chartData = {
 
 const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: { position: "top" },
         title: { display: false, text: "Aluguéis (mensal)" },

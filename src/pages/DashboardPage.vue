@@ -13,7 +13,7 @@
                         <div class="headerContainerChart">
                             <header>Aluguéis (mensal)</header>
                         </div>
-                        <ChartBar1 />
+                        <ChartBar1 style="height: 200px;"/>
                     </q-card-section>
                 </q-card>
 
@@ -22,16 +22,21 @@
                         <div class="headerContainerChart">
                             <header>Top 3 livros mais alugados</header>
                         </div>
-                        <ChartBar2 />
+                        <ChartBar2 style="height: 200px;"/>
                     </q-card-section>
                 </q-card>
 
-                <q-card class="cardSection" id="chartPieSection">
+
+                                <q-card class="cardSection">
                     <q-card-section>
                         <div class="headerContainerChart">
-                            <header>Editoras, livros e locatários cadastrados</header>
+                            <header class="headerUsers">Número de usuários:</header>
+                            <p>29</p>
                         </div>
-                        <ChartPie1 id="chartPieBottom" style="height:270px;" />
+                        <div class="headerContainerChart">
+                            <header class="headerUsers">Número de admins:</header>
+                            <p>18</p>
+                        </div>
                     </q-card-section>
                 </q-card>
 
@@ -43,7 +48,7 @@
                     <div class="tableTittle">
                         <header>Relação de locatários</header>
                     </div>
-                    <table class="tableMain">
+                    <table class="tableMain" id="tableDashboard">
                         <thead class="headerTable">
                             <td class="nome">Nome</td>
                             <td>Total de aluguéis</td>
@@ -79,16 +84,12 @@
                     </table>
                 </div>
 
-                <q-card class="cardSection">
+                <q-card class="cardSection" id="chartPieSection">
                     <q-card-section>
                         <div class="headerContainerChart">
-                            <header class="headerUsers">Número de usuários:</header>
-                            <p>29</p>
+                            <header>Editoras, livros e locatários cadastrados</header>
                         </div>
-                        <div class="headerContainerChart">
-                            <header class="headerUsers">Número de admins:</header>
-                            <p>18</p>
-                        </div>
+                        <ChartPie1 id="chartPieBottom"/>
                     </q-card-section>
                 </q-card>
 

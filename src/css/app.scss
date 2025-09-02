@@ -250,73 +250,77 @@ body {
 
 }
 
-.sectionTop{
+.sectionTop {
     width: 100%;
     gap: 1%;
     display: flex;
     margin-bottom: 0.6%;
 }
 
-.sectionBottom{
+.sectionBottom {
     display: flex;
     height: 50%;
     width: 100.5%;
     gap: 0.6%;
 }
 
-.headerContainerChart{
+.headerContainerChart {
     font-size: 180%;
     // font-weight: 500;
     padding: 2%;
 }
 
-.cardSection{
+.cardSection {
     // padding: 30px;
     border-radius: 16px;
     width: 35%;
 }
 
-#gridDashboard{
+#gridDashboard {
     width: 65%;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
+    background-color: white;
 }
 
 
-#chartPieBottom{
-    // margin: auto;
-    padding-left: 28%;
-}
-#chartPieSection{
-    // width: 30%;
+#chartPieBottom {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%; // trava o tamanho máximo
+    max-height: 190px;
     margin: auto;
-    // background-color: #00ffcc;
 }
 
-.numberOfUsers{
+
+.numberOfUsers {
     height: auto;
     width: 40%;
     border-radius: 15px;
     background-color: white;
 }
 
-#usersData{
+#usersData {
     background: transparent;
     box-shadow: none;
 }
 
-#numberOfUsers{
+#numberOfUsers {
     background-color: white;
 }
 
-#numberOfAdmins{
+#numberOfAdmins {
     background-color: white;
 }
 
-.headerUsers{
+.headerUsers {
     border-bottom: 2px solid black;
 }
 
-.headerContainerChart{
+.headerContainerChart {
     font-size: 140%;
+}
+
+#tableDashboard{
+    height: 90%;
 }

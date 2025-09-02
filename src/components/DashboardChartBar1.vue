@@ -16,7 +16,7 @@ import { Bar } from "vue-chartjs";
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const chartData = {
-    labels: ["Alugados","Atrasados","Devolvidos no prazo","Devolvidos com demora"],
+    labels: ["Alugados", "Atrasados", "Devolvidos no prazo", "Devolvidos com demora"],
     datasets: [
         {
             label: "Vendas",
@@ -28,6 +28,7 @@ const chartData = {
 
 const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: { position: "none" },
         title: { display: false, text: "Aluguéis (mensal)" },

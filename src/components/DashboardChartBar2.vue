@@ -20,13 +20,14 @@ const chartData = {
         {
             label: "Distribuição",
             data: [40, 20, 60],
-            backgroundColor: ['#88B6EE','#4B6B92','#404668'],
+            backgroundColor: ['#88B6EE', '#4B6B92', '#404668'],
         },
     ],
 };
 
 const chartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: { position: "none" },
         title: { display: false, text: "Aluguéis (mensal)" },
