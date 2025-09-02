@@ -13,7 +13,7 @@
                         <div class="headerContainerChart">
                             <header>Aluguéis (mensal)</header>
                         </div>
-                        <ChartBar1 style="height: 200px;"/>
+                        <ChartBar1 style="height: 200px;" />
                     </q-card-section>
                 </q-card>
 
@@ -22,12 +22,12 @@
                         <div class="headerContainerChart">
                             <header>Top 3 livros mais alugados</header>
                         </div>
-                        <ChartBar2 style="height: 200px;"/>
+                        <ChartBar2 style="height: 200px;" />
                     </q-card-section>
                 </q-card>
 
 
-                                <q-card class="cardSection">
+                <q-card class="cardSection">
                     <q-card-section>
                         <div class="headerContainerChart">
                             <header class="headerUsers">Número de usuários:</header>
@@ -56,29 +56,29 @@
                         </thead>
                         <tbody id="tbody">
                             <tr>
-                                <td>Maria Silva</td>
-                                <td>12</td>
-                                <td>3</td>
+                                <td data-label="Nome:">Maria Silva</td>
+                                <td data-label="Total de aluguéis:">12</td>
+                                <td data-label="Aluguéis ativos:">3</td>
                             </tr>
                             <tr>
-                                <td>João Pereira</td>
-                                <td>8</td>
-                                <td>1</td>
+                                <td data-label="Nome:">João Pereira</td>
+                                <td data-label="Total de aluguéis:">8</td>
+                                <td data-label="Aluguéis ativos:">1</td>
                             </tr>
                             <tr>
-                                <td>Fernanda Costa</td>
-                                <td>15</td>
-                                <td>5</td>
+                                <td data-label="Nome:">Fernanda Costa</td>
+                                <td data-label="Total de aluguéis:">15</td>
+                                <td data-label="Aluguéis ativos:">5</td>
                             </tr>
                             <tr>
-                                <td>Lucas Almeida</td>
-                                <td>5</td>
-                                <td>0</td>
+                                <td data-label="Nome:">Lucas Almeida</td>
+                                <td data-label="Total de aluguéis:">5</td>
+                                <td data-label="Aluguéis ativos:">0</td>
                             </tr>
                             <tr>
-                                <td>Ana Torres</td>
-                                <td>10</td>
-                                <td>2</td>
+                                <td data-label="Nome:">Ana Torres</td>
+                                <td data-label="Total de aluguéis:">10</td>
+                                <td data-label="Aluguéis ativos:">2</td>
                             </tr>
                         </tbody>
                     </table>
@@ -89,7 +89,7 @@
                         <div class="headerContainerChart">
                             <header>Editoras, livros e locatários cadastrados</header>
                         </div>
-                        <ChartPie1 id="chartPieBottom"/>
+                        <ChartPie1 id="chartPieBottom" />
                     </q-card-section>
                 </q-card>
 

@@ -1,0 +1,33 @@
+.mainModal{
+    background-color: #2B324E;
+}
+
+.text-h5{
+    color: #F7B176;
+    font-weight: bold;
+}
+
+.closeIcon{
+    color: #F7B176;
+}
+
+.buttonRegister{
+    background-color: #F7B176;
+}
+
+
+.inputModal {
+    background-color: #404668;
+    width: 100%;
+    margin-bottom: 2%;
+
+    .q-field__label {
+        color: #f0f0f0;
+        border-color: #00ffcc;
+    }
+}
+
+.inputModal .q-field__native {
+    color: white;
+    /* cor do texto digitado */
+}

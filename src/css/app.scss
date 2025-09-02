@@ -145,11 +145,11 @@ body {
 
 @media (max-width: 768px) {
 
-    html,
-    body {
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }
+    // html,
+    // body {
+    //     // overflow-x: hidden;
+    //     // overflow-y: hidden;
+    // }
 
 
     .q-page .imgLogin {
@@ -194,6 +194,36 @@ body {
     #imgForgotPassword {
         display: none;
     }
+    .mainContainer{
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .sectionBottom{
+        display: flex;
+        flex-direction: column;
+    }
+    .sectionTop{
+        display: flex;
+        flex-direction: column;
+    }
+  
+      .sectionTop,
+  .sectionBottom {
+    display: flex;
+    flex-direction: column; // fica um embaixo do outro
+    gap: 15px;
+    width: 100%;
+  }
+
+  .cardSection,
+  #gridDashboard {
+    width: 100% !important; // ocupa 100% da largura da tela
+    margin-bottom: 15px;
+  }
+
+  #chartPieSection {
+    width: 100% !important;
+  }
 }
 
 //Main layout
