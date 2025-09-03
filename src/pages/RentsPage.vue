@@ -12,7 +12,7 @@
                 </label>
                 <input type="text" id="searchInput" placeholder="Pesquisar">
             </div>
-            <q-btn push label="+ Criar" class="addButton" />
+            <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
         <div class="gridContainer">
             <div class="tableTittle">
@@ -36,8 +36,8 @@
                         <td data-label="Data de devolução:">17/08/2025</td>
                         <td data-label="Status:">Em andamento</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" />
-                            <q-btn flat round dense icon="check" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
                         </td>
                     </tr>
 
@@ -48,8 +48,8 @@
                         <td data-label="Data de devolução:">19/08/2025</td>
                         <td data-label="Status:">Em andamento</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" />
-                            <q-btn flat round dense icon="check" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
                         </td>
                     </tr>
 
@@ -60,8 +60,8 @@
                         <td data-label="Data de devolução:">22/08/2025</td>
                         <td data-label="Status:">Em andamento</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" />
-                            <q-btn flat round dense icon="check" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
                         </td>
                     </tr>
 
@@ -72,8 +72,8 @@
                         <td data-label="Data de devolução:">25/08/2025</td>
                         <td data-label="Status:">Em andamento</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" />
-                            <q-btn flat round dense icon="check" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
                         </td>
                     </tr>
 
@@ -84,12 +84,106 @@
                         <td data-label="Data de devolução:">27/08/2025</td>
                         <td data-label="Status:">Em andamento</td>
                         <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" />
-                            <q-btn flat round dense icon="check" color="#121F2F" />
+                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+
+
+        <!-- Modals -->
+        <q-dialog v-model="openModalCreate" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Cadastrar Editora</div>
+                    <q-space />
+                    <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
+                </q-card-section>
+
+                <q-separator />
+
+                <q-card-section class="scroll">
+                    <slot>
+                        <q-select filled v-model="book" :options="options" label="Livro" class="inputModal" />
+                        <q-select filled v-model="renter" :options="options" label="Locatário" class="inputModal" />
+                        <q-input filled v-model="deadLine" type="date" label="Data de devolução" class="inputModal" />
+                    </slot>
+                </q-card-section>
+
+
+                <q-separator />
+                <q-card-actions align="left">
+                    <q-btn unelevated label="Cadastrar" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Cancelar" color="white" v-close-popup />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
+
+
+
+        <q-dialog v-model="openModalEdit" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Editar Locatário</div>
+                    <q-space />
+                    <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
+                </q-card-section>
+
+                <q-separator />
+
+
+                <q-card-section class="scroll">
+                    <slot>
+                        <q-select filled v-model="book" :options="options" label="Novo livro" class="inputModal"/>
+                        <q-select filled v-model="renter" :options="options" label="Novo locatário"
+                            class="inputModal" />
+                        <q-input filled v-model="deadLine" type="date" label="Data de devolução" class="inputModal"  />
+                        
+                    </slot>
+                </q-card-section>
+
+
+                <q-separator />
+                <q-card-actions align="left">
+                    <q-btn unelevated label="Atualizar" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Cancelar" color="white" v-close-popup />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
+
+
+
+        <q-dialog v-model="openModalDevolution" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Devolver o livro "[livro]" alugado por "[locatário]"?</div>
+                    <q-space />
+                    <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
+                </q-card-section>
+
+                <q-card-section class="scroll">
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Não" color="white" v-close-popup />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
+
     </q-page>
 </template>
+<script setup>
+import { useCrud } from 'src/utils/rents.js'
+
+const { renter, book, deadLine, $q, openModalCreate, openModalEdit, openModalDevolution } = useCrud()
+</script>

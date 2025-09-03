@@ -41,3 +41,24 @@
 .viewFont{
     color: white;
 }
+
+.radio{
+    color: white;
+}
+
+
+.radio .q-radio__label {
+  color: white !important;
+}
+
+.radio .q-radio__bg {
+  border: 2px solid white !important;
+  border-radius: 50%;
+}
+
+.radio-container{
+      display: flex;
+      width: 100%;
+      padding: 1px;
+}
+

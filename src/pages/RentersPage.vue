@@ -168,13 +168,13 @@
                 <q-card-section class="row items-center">
                     <div class="text-h5">Você tem certeza de que deseja realizar a exclusão?</div>
                     <q-space />
-                    <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
+                    <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
 
                 <q-card-section class="scroll">
                 </q-card-section>
 
-                <q-card-actions align="left">
+                <q-card-actions align="right">
                     <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
                     <q-btn flat label="Não" color="white" v-close-popup />
                 </q-card-actions>
@@ -225,7 +225,7 @@
                         </template>
 
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{  "Email: " + ""  }}</div>
+                            <div class="viewFont" tabindex="0">{{ "Email: " + "" }}</div>
                         </template>
                     </q-field>
 
@@ -235,7 +235,7 @@
                         </template>
 
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ "Telefone: " + ""  }}</div>
+                            <div class="viewFont" tabindex="0">{{ "Telefone: " + "" }}</div>
                         </template>
                     </q-field>
 
@@ -272,7 +272,7 @@
     </q-page>
 </template>
 <script setup>
-import { useCrud } from 'src/utils/biblioteca.js'
+import { useCrud } from 'src/utils/renters.js'
 
 const { email, name, telephone, address, cpf, $q, openModalCreate, openModalEdit, openModalExclude, openModalView } = useCrud()
 </script>
