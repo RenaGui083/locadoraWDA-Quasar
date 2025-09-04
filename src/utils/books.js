@@ -12,7 +12,8 @@ export function useCrud() {
     const openModalCreate = ref(false)
     const openModalEdit = ref(false)
     const openModalExclude = ref(false)
+    const openModalConfirm = ref(false)
 
 
-    return {  name, publisher, author, launchDate, totalQuantity, $q, openModalCreate, openModalEdit, openModalExclude }
+    return {  name, publisher, author, launchDate, totalQuantity, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm }
 }

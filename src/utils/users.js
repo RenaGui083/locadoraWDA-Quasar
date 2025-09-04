@@ -16,11 +16,12 @@ export function useCrud() {
     const openModalEdit = ref(false)
     const openModalExclude = ref(false)
     const openModalView = ref(false)
+    const openModalConfirm = ref(false)
 
     const options = [
         {label: 'Ususário', value: 'USER'},
         {label: 'Administrador', value: 'ADMIN'}
     ]
 
-    return { email, name, password, role, logo, logoWDA, $q, openModalCreate, openModalEdit, openModalExclude,openModalView, options}
+    return { email, name, password, role, logo, logoWDA, $q, openModalCreate, openModalEdit, openModalExclude,openModalView, options, openModalConfirm}
 }

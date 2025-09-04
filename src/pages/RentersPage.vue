@@ -146,14 +146,13 @@
                         <q-input filled v-model="telephone" type="text" label="Telefone" class="inputModal" />
                         <q-input filled v-model="cpf" type="text" label="CPF" class="inputModal" />
                         <q-input filled v-model="address" type="text" label="Endereço" class="inputModal" />
-
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Atualizar" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated label="Atualizar" color="primary" @click="openModalConfirm = true,openModalEdit = false" class="buttonRegister" />
                     <q-btn flat label="Cancelar" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -269,10 +268,31 @@
 
             </q-card>
         </q-dialog>
+
+
+        <q-dialog v-model="openModalConfirm" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Você tem certeza de que deseja realizar a edição?</div>
+                    <q-space />
+                    <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
+                </q-card-section>
+
+                <q-card-section class="scroll">
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Não" color="white" v-close-popup />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
     </q-page>
 </template>
 <script setup>
 import { useCrud } from 'src/utils/renters.js'
 
-const { email, name, telephone, address, cpf, $q, openModalCreate, openModalEdit, openModalExclude, openModalView } = useCrud()
+const { email, name, telephone, address, cpf, $q, openModalCreate, openModalEdit, openModalExclude, openModalView,  openModalConfirm } = useCrud()
 </script>

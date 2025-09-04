@@ -146,7 +146,7 @@
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Atualizar" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated label="Atualizar" color="primary"  @click="openModalConfirm = true,openModalEdit = false" class="buttonRegister" />
                     <q-btn flat label="Cancelar" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -177,88 +177,24 @@
 
 
 
-        <q-dialog v-model="openModalView" persistent :maximized="$q.screen.lt.md">
+        
+
+        <q-dialog v-model="openModalConfirm" persistent :maximized="$q.screen.lt.md">
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Detalhes da Editora</div>
+                    <div class="text-h5">Você tem certeza de que deseja realizar a edição?</div>
                     <q-space />
-                    <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
+                    <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
-
-                <q-separator />
 
                 <q-card-section class="scroll">
-
-
-
-                    <q-field outlined :dense="dense" class="viewInput">
-                        <template v-slot:prepend>
-                            <q-icon name="key" class="viewFont" />
-                        </template>
-
-                        <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ "Id: " + "" }}</div>
-                        </template>
-                    </q-field>
-
-                    <q-field outlined :dense="dense" class="viewInput">
-                        <template v-slot:prepend>
-                            <q-icon name="person" class="viewFont" />
-                        </template>
-
-                        <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ "Nome: " + "" }}</div>
-                        </template>
-                    </q-field>
-
-                    <q-field outlined :dense="dense" class="viewInput">
-                        <template v-slot:prepend>
-                            <q-icon name="email" class="viewFont" />
-                        </template>
-
-                        <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ "Email: " + "" }}</div>
-                        </template>
-                    </q-field>
-
-                    <q-field outlined :dense="dense" class="viewInput">
-                        <template v-slot:prepend>
-                            <q-icon name="phone" class="viewFont" />
-                        </template>
-
-                        <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ "Telefone: " + "" }}</div>
-                        </template>
-                    </q-field>
-
-                    <q-field outlined :dense="dense" class="viewInput">
-                        <template v-slot:prepend>
-                            <q-icon name="article" class="viewFont" />
-                        </template>
-
-                        <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ "CPF: " + "" }}</div>
-                        </template>
-                    </q-field>
-
-                    <q-field outlined :dense="dense" class="viewInput">
-                        <template v-slot:prepend>
-                            <q-icon name="map" class="viewFont" />
-                        </template>
-
-                        <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ "Endereço: " + "" }}</div>
-                        </template>
-                    </q-field>
-
                 </q-card-section>
 
-                <q-separator />
-
-                <q-card-section class="left">
-                    <q-btn flat label="Fechar" color="white" v-close-popup />
-                </q-card-section>
+                <q-card-actions align="right">
+                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Não" color="white" v-close-popup />
+                </q-card-actions>
 
             </q-card>
         </q-dialog>
@@ -267,5 +203,5 @@
 <script setup>
 import { useCrud } from 'src/utils/publishers.js'
 
-const { email, name, telephone, site, $q, openModalCreate, openModalEdit, openModalExclude } = useCrud()
+const { email, name, telephone, site, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm } = useCrud()
 </script>

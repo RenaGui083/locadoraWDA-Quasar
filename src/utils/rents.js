@@ -14,7 +14,8 @@ export function useCrud() {
     const openModalCreate = ref(false)
     const openModalEdit = ref(false)
     const openModalDevolution = ref(false)
+    const openModalConfirm = ref(false)
 
 
-    return { renter,book, deadLine, $q, openModalCreate, openModalEdit, openModalDevolution }
+    return { renter,book, deadLine, $q, openModalCreate, openModalEdit, openModalDevolution, openModalConfirm }
 }

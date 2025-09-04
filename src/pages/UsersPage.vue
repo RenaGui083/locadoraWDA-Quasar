@@ -148,7 +148,7 @@
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Atualizar" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated label="Atualizar" color="primary" @click="openModalConfirm = true,openModalEdit = false" class="buttonRegister" />
                     <q-btn flat label="Cancelar" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -246,6 +246,27 @@
             </q-card>
         </q-dialog>
 
+
+                <q-dialog v-model="openModalConfirm" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Você tem certeza de que deseja realizar a edição?</div>
+                    <q-space />
+                    <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
+                </q-card-section>
+
+                <q-card-section class="scroll">
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Não" color="white" v-close-popup />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
+
     </q-page>
 </template>
 
@@ -253,5 +274,5 @@
 import { useCrud } from 'src/utils/users.js'
 
 
-const { email, name, password, role, $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options } = useCrud()
+const { email, name, password, role, $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm} = useCrud()
 </script>
