@@ -99,7 +99,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Cadastrar Editora</div>
+                    <div class="text-h5">Cadastrar Aluguel</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -130,7 +130,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Editar Locatário</div>
+                    <div class="text-h5">Editar Aluguel</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
