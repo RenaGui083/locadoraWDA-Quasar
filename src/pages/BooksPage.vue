@@ -12,98 +12,13 @@
                 </label>
                 <input type="text" id="searchInput" placeholder="Pesquisar">
             </div>
-            <q-btn push label="+ Criar" class="addButton"  @click="openModalCreate = true" />
+            <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
-        <div class="gridContainer">
-            <div class="tableTittle">
-                <header>Acervo atual</header>
+            <div class="tableContainer">
+                <div class="text-h6 text-center full-width" >Acervo atual</div>
+                <q-table :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
+                    :rows-per-page-options="[5,6]" flat bordered class="my-table shadow-2 rounded-borders" rows-per-page-label="Linhas por página"  no-data-label="Sem dados para exibir"/>
             </div>
-            <table class="tableMain">
-                <thead class="headerTable">
-                    <!-- <td>Id</td> -->
-                    <td class="name">Nome</td>
-                    <td>Autor</td>
-                    <td>Data de Lançamento</td>
-                    <td>Estoque</td>
-                    <td>Alugados</td>
-                    <td>Editora</td>
-                    <td>Ações</td>
-                </thead>
-                <tbody id="tbody">
-                    <tr>
-                        <!-- <td data-label = "Id:">1</td> -->
-                        <td class="name" data-label = "Nome:">O Senhor dos Anéis</td>
-                        <td data-label = "Autor:">J.R.R. Tolkien</td>
-                        <td data-label = "Data de Lançamento:">29/07/1954</td>
-                        <td data-label = "Estoque:">12</td>
-                        <td data-label = "Alugados:">4</td>
-                        <td data-label = "Editora:">HarperCollins</td>
-                        <td data-label = "Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true"/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <!-- <td data-label = "Id:">2</td> -->
-                        <td class="name" data-label = "Nome:">Dom Casmurro</td>
-                        <td data-label = "Autor:">Machado de Assis</td>
-                        <td data-label = "Data de Lançamento:">01/01/1899</td>
-                        <td data-label = "Estoque:">8</td>
-                        <td data-label = "Alugados:">2</td>
-                        <td data-label = "Editora:">Globo</td>
-                        <td data-label = "Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true"/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <!-- <td data-label = "Id:">3</td> -->
-                        <td class="name" data-label = "Nome:">1984</td>
-                        <td data-label = "Autor:">George Orwell</td>
-                        <td data-label = "Data de Lançamento:">08/06/1949</td>
-                        <td data-label = "Estoque:">10</td>
-                        <td data-label = "Alugados:">5</td>
-                        <td data-label = "Editora:">Companhia das Letras</td>
-                        <td data-label = "Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <!-- <td data-label = "Id:">4</td> -->
-                        <td class="name" data-label = "Nome:">Harry Potter e a Pedra Filosofal</td>
-                        <td data-label = "Autor:">J.K. Rowling</td>
-                        <td data-label = "Data de Lançamento:">26/06/1997</td>
-                        <td data-label = "Estoque:">20</td>
-                        <td data-label = "Alugados:">7</td>
-                        <td data-label = "Editora:">Rocco</td>
-                        <td data-label = "Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true"/>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <!-- <td data-label = "Id:">5</td> -->
-                        <td class="name" data-label = "Nome:">A Revolução dos Bichos</td>
-                        <td data-label = "Autor:">George Orwell</td>
-                        <td data-label = "Data de Lançamento:">17/08/1945</td>
-                        <td data-label = "Estoque:">6</td>
-                        <td data-label = "Alugados:">1</td>
-                        <td data-label = "Editora:">Companhia Editora Nacional</td>
-                        <td data-label = "Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true"/>
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true"/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
 
 
         <!-- Modals -->
@@ -123,9 +38,12 @@
                     <slot>
                         <q-input filled v-model="name" type="text" label="Nome" class="inputModal" />
                         <q-input filled v-model="author" type="text" label="Autor" class="inputModal" />
-                        <q-input filled v-model="totalQuantity" type="number" label="Estoque" class="inputModal" :min="1"/>
-                        <q-select filled v-model="publisher" :options="options" type="email" label="Editora" class="inputModal" />
-                        <q-input filled v-model="launchDate" type="date" label="Data de lançamento" class="inputModal" />
+                        <q-input filled v-model="totalQuantity" type="number" label="Estoque" class="inputModal"
+                            :min="1" />
+                        <q-select filled v-model="publisher" :options="options" type="email" label="Editora"
+                            class="inputModal" />
+                        <q-input filled v-model="launchDate" type="date" label="Data de lançamento"
+                            class="inputModal" />
                     </slot>
                 </q-card-section>
 
@@ -157,16 +75,20 @@
                     <slot>
                         <q-input filled v-model="name" type="text" label="Nome" class="inputModal" />
                         <q-input filled v-model="author" type="text" label="Autor" class="inputModal" />
-                        <q-input filled v-model="totalQuantity" type="number" label="Estoque" class="inputModal" :min="1"/>
-                        <q-select filled v-model="publisher" :options="options" type="email" label="Editora" class="inputModal" />
-                        <q-input filled v-model="launchDate" type="date" label="Data de lançamento" class="inputModal" />
+                        <q-input filled v-model="totalQuantity" type="number" label="Estoque" class="inputModal"
+                            :min="1" />
+                        <q-select filled v-model="publisher" :options="options" type="email" label="Editora"
+                            class="inputModal" />
+                        <q-input filled v-model="launchDate" type="date" label="Data de lançamento"
+                            class="inputModal" />
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Atualizar" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated label="Atualizar" color="primary"
+                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
                     <q-btn flat label="Cancelar" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -195,11 +117,58 @@
             </q-card>
         </q-dialog>
 
+        <q-dialog v-model="openModalConfirm" persistent :maximized="$q.screen.lt.md">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+
+                <q-card-section class="row items-center">
+                    <div class="text-h5">Você tem certeza de que deseja realizar a edição?</div>
+                    <q-space />
+                    <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
+                </q-card-section>
+
+                <q-card-section class="scroll">
+                </q-card-section>
+
+                <q-card-actions align="right">
+                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat label="Não" color="white" v-close-popup />
+                </q-card-actions>
+
+            </q-card>
+        </q-dialog>
+
     </q-page>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useCrud } from 'src/utils/books.js'
 
-const { name, publisher, author, launchDate, totalQuantity, $q, openModalCreate, openModalEdit, openModalExclude } = useCrud()
+const { name, publisher, author, launchDate, totalQuantity, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm } = useCrud()
+
+const pagination = ref({
+    page: 1,
+    rowsPerPage: 5 // inicial
+})
+
+// colunas da tabela
+const columns = [
+    { name: "name", label: "Nome", field: "name", align: "left" },
+    { name: "publisher", label: "Editora", field: "publisher", align: "left" },
+    { name: "author", label: "Autor", field: "author", align: "left" },
+    { name: "launchDate", label: "Lançamento", field: "launchDate", align: "left" },
+    { name: "totalQuantity", label: "Quantidade", field: "totalQuantity", align: "left" }
+]
+
+// mock de dados (depois vem da API do CRUD)
+const rows = ref([
+    { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
+    { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
+    { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 },
+    { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
+    { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
+    { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 }
+    // ...
+])
+
 </script>

@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { useQuasar } from 'quasar'
 
+
 export function useCrud() {
     const author = ref('')
     const name = ref('')
