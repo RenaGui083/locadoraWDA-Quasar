@@ -19,14 +19,18 @@
 
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">Acervo atual</div>
-            <q-table :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
+            <!-- <q-table :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
                 :rows-per-page-options="[5, 6]" :filter="filter"
                 flat
                 bordered
                 class="my-table shadow-2 rounded-borders"
                 rows-per-page-label="Linhas por página"
                 no-data-label="Sem dados para exibir"
-                />
+                /> -->
+            <q-table :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
+                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                class="my-table shadow-2 rounded-borders" :grid="$q.screen.lt.md" :hide-bottom="$q.screen.lt.md">
+            </q-table>
         </div>
 
 
@@ -157,31 +161,38 @@ const { name, publisher, author, launchDate, totalQuantity, $q, openModalCreate,
 
 // pesquisa
 const filter = ref("")
+import { watch } from 'vue'
+
+
 
 // paginação
 const pagination = ref({
-  page: 1,
-  rowsPerPage: 5
+    page: 1,
+    rowsPerPage: 5
+})
+
+watch(() => $q.screen.lt.md, (isMobile) => {
+    pagination.value.rowsPerPage = isMobile ? 0 : 5
 })
 
 // colunas
 const columns = [
-  { name: "name", label: "Nome", field: "name", align: "left", sortable: true },
-  { name: "publisher", label: "Editora", field: "publisher", align: "left", sortable: true },
-  { name: "author", label: "Autor", field: "author", align: "left", sortable: true },
-  { name: "launchDate", label: "Lançamento", field: "launchDate", align: "left", sortable: true },
-  { name: "totalQuantity", label: "Quantidade", field: "totalQuantity", align: "left", sortable: true }
+    { name: "name", label: "Nome", field: "name", align: "left", sortable: true },
+    { name: "publisher", label: "Editora", field: "publisher", align: "left", sortable: true },
+    { name: "author", label: "Autor", field: "author", align: "left", sortable: true },
+    { name: "launchDate", label: "Lançamento", field: "launchDate", align: "left", sortable: true },
+    { name: "totalQuantity", label: "Quantidade", field: "totalQuantity", align: "left", sortable: true }
 ]
 
 // mock
 const rows = ref([
-  { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
-  { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
-  { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 },
-  { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
-  { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
-  { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 },
-  { name: "Livro 4", publisher: "Editora D", author: "Autor W", launchDate: "2020-11-20", totalQuantity: 5 }
+    { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
+    { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
+    { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 },
+    { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
+    { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
+    { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 },
+    { name: "Livro 4", publisher: "Editora D", author: "Autor W", launchDate: "2020-11-20", totalQuantity: 5 }
 ])
 
 </script>
