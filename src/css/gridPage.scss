@@ -77,9 +77,6 @@
     // background-color: #121F2F;
 }
 
-tr:hover {
-    background-color: #858585;
-}
 
 .headerTable :hover {
     background-color: #121F2F;
@@ -116,7 +113,7 @@ tr:hover {
     }
 
     tbody tr:hover {
-        background-color: #d6e5f8; // hover
+        background-color: #ffe3a7; // hover
         cursor: pointer;
     }
 
@@ -131,13 +128,24 @@ tr:hover {
     border-top-right-radius: 15px;
 }
 
+.my-table .q-table__middle table {
+  table-layout: fixed; /* força largura fixa */
+  width: 100%;
+}
+
+.my-table td,
+.my-table th {
+  white-space: normal !important; /* permite quebrar texto */
+  word-wrap: break-word;
+}
+
 @media screen and (max-width: 600px) {
 
   
 
-    table thead {
-        display: none;
-    }
+    // table thead {
+    //     display: none;
+    // }
 
     table,
     tbody,
@@ -146,4 +154,28 @@ tr:hover {
         display: block;
         width: 100%;
     }
+
+
+    .my-table td {
+    display: block;               /* cada célula vira "linha" */
+    text-align: left;
+    padding-left: 120px;          /* espaço pro label */
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .my-table td::before {
+    content: attr(data-label);    /* pega o data-label */
+    position: absolute;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding-left: 2%;
+  }
+
+  /* esconde o cabeçalho no mobile */
+  .my-table thead {
+    display: none;
+  }
 }

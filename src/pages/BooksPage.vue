@@ -11,7 +11,6 @@
                 <label for="searchInput" class="searchInput">
                     <q-icon name="search" class="searchIcon" />
                 </label>
-                <!-- agora está ligado ao Vue -->
                 <input type="text" id="searchInput" v-model="filter" placeholder="Pesquisar">
             </div>
             <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
@@ -19,18 +18,36 @@
 
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">Acervo atual</div>
-            <!-- <q-table :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
-                :rows-per-page-options="[5, 6]" :filter="filter"
-                flat
-                bordered
-                class="my-table shadow-2 rounded-borders"
-                rows-per-page-label="Linhas por página"
-                no-data-label="Sem dados para exibir"
-                /> -->
-            <q-table :rows="rows" :columns="columns" row-key="id" v-model:pagination="pagination"
+            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
-                class="my-table shadow-2 rounded-borders" :grid="$q.screen.lt.md" :hide-bottom="$q.screen.lt.md">
+                class="my-table shadow-2 rounded-borders"  :hide-bottom="$q.screen.lt.md">
+                <!-- Modo tabela normal (desktop) -->
+                <template v-slot:body-cell-actions="props" >
+                    <q-td :props="props" class="text-center" :data-label="props.col.label">
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                    </q-td>
+                </template>
+                 <template v-slot:body-cell="props">
+    <q-td :props="props" :data-label="props.col.label">
+      {{ props.value }}
+    </q-td>
+  </template>
+                <template v-slot:item="props">
+                    <div class="q-pa-sm q-mb-sm rounded-borders shadow-1 bg-grey-1">
+                        <div v-for="col in props.cols" :key="col.name" class="row q-pb-xs">
+                            <div class="col-4 text-weight-bold">{{ col.label }}</div>
+                            <div class="col-8">{{ col.value }}</div>
+                        </div>
+                        <div class="row justify-end q-mt-sm">
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                        </div>
+                    </div>
+                </template>
             </q-table>
+
+
         </div>
 
 
@@ -181,18 +198,19 @@ const columns = [
     { name: "publisher", label: "Editora", field: "publisher", align: "left", sortable: true },
     { name: "author", label: "Autor", field: "author", align: "left", sortable: true },
     { name: "launchDate", label: "Lançamento", field: "launchDate", align: "left", sortable: true },
-    { name: "totalQuantity", label: "Quantidade", field: "totalQuantity", align: "left", sortable: true }
+    { name: "totalQuantity", label: "Quantidade", field: "totalQuantity", align: "left", sortable: true },
+    { name: "actions", label: "Ações", field: "actions", align: "center"}
 ]
 
 // mock
 const rows = ref([
-    { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
-    { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
-    { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 },
-    { name: "Livro 1", publisher: "Editora A", author: "Autor X", launchDate: "2022-01-01", totalQuantity: 10 },
-    { name: "Livro 2", publisher: "Editora B", author: "Autor Y", launchDate: "2023-02-15", totalQuantity: 7 },
-    { name: "Livro 3", publisher: "Editora C", author: "Autor Z", launchDate: "2021-05-30", totalQuantity: 3 },
-    { name: "Livro 4", publisher: "Editora D", author: "Autor W", launchDate: "2020-11-20", totalQuantity: 5 }
+    { name: "Dom Casmurro", publisher: "Editora Garnier", author: "Machado de Assis", launchDate: "1899-01-01", totalQuantity: 12 },
+    { name: "O Alquimista", publisher: "HarperCollins", author: "Paulo Coelho", launchDate: "1988-01-01", totalQuantity: 8 },
+    { name: "Capitães da Areia", publisher: "Companhia das Letras", author: "Jorge Amado", launchDate: "1937-01-01", totalQuantity: 6 },
+    { name: "Grande Sertão: Veredas", publisher: "Livraria José Olympio Editora", author: "João Guimarães Rosa", launchDate: "1956-01-01", totalQuantity: 4 },
+    { name: "Harry Potter e a Pedra Filosofal", publisher: "Rocco", author: "J.K. Rowling", launchDate: "1997-06-26", totalQuantity: 10 },
+    { name: "O Senhor dos Anéis: A Sociedade do Anel", publisher: "Martins Fontes", author: "J.R.R. Tolkien", launchDate: "1954-07-29", totalQuantity: 9 },
+    { name: "A Revolução dos Bichos", publisher: "Companhia Editora Nacional", author: "George Orwell", launchDate: "1945-08-17", totalQuantity: 7 }
 ])
 
 </script>
