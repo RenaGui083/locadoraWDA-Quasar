@@ -82,20 +82,20 @@
     background-color: #121F2F;
 }
 
-.tableTittle {
-    text-align: center;
-    background-color: white;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    font-size: 16px;
-}
+// .tableTittle {
+//     text-align: center;
+//     background-color: white;
+//     // border-top-left-radius: 15px;
+//     // border-top-right-radius: 15px;
+//     // font-size: 16px;
+// }
 
 
 
 .my-table {
     background-color: #f9fafb; // cor do fundo
     border-radius: 12px;
-    font-size: 14px;
+    // font-size: 14px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     border-bottom-left-radius: 15px;
@@ -117,9 +117,9 @@
         cursor: pointer;
     }
 
-    td {
-        padding: 12px;
-    }
+    // td {
+    //     padding: 12px;
+    // }
 }
 
 .text-h6 {

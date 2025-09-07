@@ -10,80 +10,42 @@
                 <label for="" class="searchInput">
                     <q-icon name="search" class="searchIcon" />
                 </label>
-                <input type="text" id="searchInput" placeholder="Pesquisar">
+                <input type="text" id="searchInput" v-model="filter" placeholder="Pesquisar">
             </div>
             <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
-        <div class="gridContainer">
-            <div class="tableTittle">
-                <header>Relação de editoras</header>
-            </div>
-            <table class="tableMain">
-                <thead class="headerTable">
-                    <!-- <td>Id</td> -->
-                    <td class="nome">Nome</td>
-                    <td>E-mail</td>
-                    <td>Telefone</td>
-                    <td>Site</td>
-                    <td>Ações</td>
-                </thead>
-                <tbody id="tbody">
-                    <tr>
-                        <td class="nome" data-label="Nome:">Editora Horizonte</td>
-                        <td data-label="E-mail:">contato@editorahorizonte.com</td>
-                        <td data-label="Telefone:">(11) 3456-7890</td>
-                        <td data-label="Site:">www.editorahorizonte.com</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
+        <div class="tableContainer">
+            <div class="text-h6 text-center full-width">Relação de Editoras</div>
+            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                <!-- Modo tabela normal (desktop) -->
+                <template v-slot:body-cell-actions="props">
+                    <q-td :props="props" class="text-center" :data-label="props.col.label">
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                    </q-td>
+                </template>
+                <template v-slot:body-cell="props">
+                    <q-td :props="props" :data-label="props.col.label">
+                        {{ props.value }}
+                    </q-td>
+                </template>
+                <template v-slot:item="props">
+                    <div class="q-pa-sm q-mb-sm rounded-borders shadow-1 bg-grey-1">
+                        <div v-for="col in props.cols" :key="col.name" class="row q-pb-xs">
+                            <div class="col-4 text-weight-bold">{{ col.label }}</div>
+                            <div class="col-8">{{ col.value }}</div>
+                        </div>
+                        <div class="row justify-end q-mt-sm">
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                        </div>
+                    </div>
+                </template>
+            </q-table>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Editora Aurora</td>
-                        <td data-label="E-mail:">suporte@editoraaurora.com</td>
-                        <td data-label="Telefone:">(21) 3344-5566</td>
-                        <td data-label="Site:">www.editoraaurora.com</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Editora Estrela</td>
-                        <td data-label="E-mail:">atendimento@editoraestrela.com</td>
-                        <td data-label="Telefone:">(31) 9988-7766</td>
-                        <td data-label="Site:">www.editoraestrela.com</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="nome" data-label="Nome:">Editora Lumina</td>
-                        <td data-label="E-mail:">info@editoralumina.com</td>
-                        <td data-label="Telefone:">(41) 91234-5678</td>
-                        <td data-label="Site:">www.editoralumina.com</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="nome" data-label="Nome:">Editora Solaris</td>
-                        <td data-label="E-mail:">contato@editorasolaris.com</td>
-                        <td data-label="Telefone:">(85) 97654-3210</td>
-                        <td data-label="Site:">www.editorasolaris.com</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
 
 
@@ -202,6 +164,9 @@
 </template>
 <script setup>
 import { useCrud } from 'src/utils/publishers.js'
-
-const { email, name, telephone, site, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm } = useCrud()
+const {
+    name, email, telephone, site, 
+    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
+    filter, pagination, columns, rows
+} = useCrud()
 </script>
