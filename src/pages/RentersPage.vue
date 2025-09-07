@@ -14,81 +14,42 @@
             </div>
             <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
-        <div class="gridContainer">
-            <div class="tableTittle">
-                <header>Relação de locatários</header>
-            </div>
-            <table class="tableMain">
-                <thead class="headerTable">
-                    <!-- <td>Id</td> -->
-                    <td class="nome">Nome</td>
-                    <td>E-mail</td>
-                    <td>Telefone</td>
-                    <td>CPF</td>
-                    <td>Ações</td>
-                </thead>
-                <tbody id="tbody">
-                    <tr>
-                        <td class="nome" data-label="Nome:">Marcos Oliveira</td>
-                        <td data-label="E-mail:">marcos.oliveira@email.com</td>
-                        <td data-label="Telefone:">(11) 99876-1234</td>
-                        <td data-label="CPF:">123.456.789-00</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Patrícia Gomes</td>
-                        <td data-label="E-mail:">patricia.gomes@email.com</td>
-                        <td data-label="Telefone:">(85) 91234-5678</td>
-                        <td data-label="CPF:">987.654.321-11</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Ricardo Santos</td>
-                        <td data-label="E-mail:">ricardo.santos@email.com</td>
-                        <td data-label="Telefone:">(21) 93456-7890</td>
-                        <td data-label="CPF:">456.789.123-22</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
+        <div class="tableContainer">
+            <div class="text-h6 text-center full-width">Relação de Locatários</div>
+            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                <!-- Modo tabela normal (desktop) -->
+                <template v-slot:body-cell-actions="props">
+                    <q-td :props="props" class="text-center" :data-label="props.col.label">
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                        <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                    </q-td>
+                </template>
+                <template v-slot:body-cell="props">
+                    <q-td :props="props" :data-label="props.col.label">
+                        {{ props.value }}
+                    </q-td>
+                </template>
+                <template v-slot:item="props">
+                    <div class="q-pa-sm q-mb-sm rounded-borders shadow-1 bg-grey-1">
+                        <div v-for="col in props.cols" :key="col.name" class="row q-pb-xs">
+                            <div class="col-4 text-weight-bold">{{ col.label }}</div>
+                            <div class="col-8">{{ col.value }}</div>
+                        </div>
+                        <div class="row justify-end q-mt-sm">
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                            <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                        </div>
+                    </div>
+                </template>
+            </q-table>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Juliana Almeida</td>
-                        <td data-label="E-mail:">juliana.almeida@email.com</td>
-                        <td data-label="Telefone:">(31) 97654-3210</td>
-                        <td data-label="CPF:">741.852.963-33</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Fernanda Rocha</td>
-                        <td data-label="E-mail:">fernanda.rocha@email.com</td>
-                        <td data-label="Telefone:">(41) 98765-4321</td>
-                        <td data-label="CPF:">852.963.741-44</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F" @click="openModalExclude = true" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
 
         <!-- Modals -->
@@ -294,5 +255,11 @@
 <script setup>
 import { useCrud } from 'src/utils/renters.js'
 
-const { email, name, telephone, address, cpf, $q, openModalCreate, openModalEdit, openModalExclude, openModalView,  openModalConfirm } = useCrud()
+const {
+        email, name, telephone, address, cpf,
+
+        $q, openModalCreate, openModalEdit, openModalExclude, openModalView, openModalConfirm,
+
+        filter, pagination, columns, rows
+    } = useCrud()
 </script>

@@ -14,77 +14,43 @@
             </div>
             <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
-        <div class="gridContainer">
-            <div class="tableTittle">
-                <header>Relação de usuários</header>
-            </div>
-            <table class="tableMain">
-                <thead class="headerTable">
-                    <!-- <td>Id</td> -->
-                    <td class="nome">Nome</td>
-                    <td>E-mail</td>
-                    <td>Nível de acesso</td>
-                    <td>Ações</td>
-                </thead>
-                <tbody id="tbody">
-                    <tr>
-                        <td class="nome" data-label="Nome:">Maria Silva</td>
-                        <td data-label="E-mail:">maria.silva@email.com</td>
-                        <td data-label="Nível de acesso:">Usuário</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true"  />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">João Pereira</td>
-                        <td data-label="E-mail:">joao.pereira@email.com</td>
-                        <td data-label="Nível de acesso:">Administrador</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true"/>
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true"  />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Ana Costa</td>
-                        <td data-label="E-mail:">ana.costa@email.com</td>
-                        <td data-label="Nível de acesso:">Usuário</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true" />
-                        </td>
-                    </tr>
+       <div class="tableContainer">
+            <div class="text-h6 text-center full-width">Relação de Usuários</div>
+            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                <!-- Modo tabela normal (desktop) -->
+                <template v-slot:body-cell-actions="props">
+                    <q-td :props="props" class="text-center" :data-label="props.col.label">
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                        <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                    </q-td>
+                </template>
+                <template v-slot:body-cell="props">
+                    <q-td :props="props" :data-label="props.col.label">
+                        {{ props.value }}
+                    </q-td>
+                </template>
+                <template v-slot:item="props">
+                    <div class="q-pa-sm q-mb-sm rounded-borders shadow-1 bg-grey-1">
+                        <div v-for="col in props.cols" :key="col.name" class="row q-pb-xs">
+                            <div class="col-4 text-weight-bold">{{ col.label }}</div>
+                            <div class="col-8">{{ col.value }}</div>
+                        </div>
+                        <div class="row justify-end q-mt-sm">
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                            <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                        </div>
+                    </div>
+                </template>
+            </q-table>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Carlos Mendes</td>
-                        <td data-label="E-mail:">carlos.mendes@email.com</td>
-                        <td data-label="Nível de acesso:">Administrador</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true" />
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true"  />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="nome" data-label="Nome:">Fernanda Lima</td>
-                        <td data-label="E-mail:">fernanda.lima@email.com</td>
-                        <td data-label="Nível de acesso:">Usuário</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="visibility" color="#121F2F" @click="openModalView = true"/>
-                            <q-btn flat round dense icon="delete" color="#121F2F"  @click="openModalExclude = true" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
-
 
         <!-- Modals -->
         <q-dialog v-model="openModalCreate" persistent :maximized="$q.screen.lt.md">
@@ -274,5 +240,9 @@
 import { useCrud } from 'src/utils/users.js'
 
 
-const { email, name, password, role, $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm} = useCrud()
+const { email, name, password, role,
+
+        $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm,
+
+        filter, pagination, columns, rows } = useCrud()
 </script>

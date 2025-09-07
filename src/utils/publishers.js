@@ -27,27 +27,27 @@ export function useCrud() {
 
     const columns = [
         { name: "name", label: "Nome", field: "name", align: "left", sortable: true },
-        { name: "email", label: "Editora", field: "publisher", align: "left", sortable: true },
-        { name: "telephone", label: "Autor", field: "author", align: "left", sortable: true },
-        { name: "site", label: "Lançamento", field: "launchDate", align: "left", sortable: true },
+        { name: "email", label: "Email", field: "email", align: "left", sortable: true },
+        { name: "telephone", label: "Telefone", field: "telephone", align: "left", sortable: true },
+        { name: "site", label: "Site", field: "site", align: "left", sortable: true },
         { name: "actions", label: "Ações", field: "actions", align: "center" }
     ]
 
     const rows = ref([
-        { name: "Companhia das Letras", publisher: "contato@letras.com.br", author: "(11) 3333-4444", launchDate: "https://www.companhiadasletras.com.br" },
-        { name: "Record", publisher: "info@record.com.br", author: "(21) 2222-5555", launchDate: "https://www.record.com.br" },
-        { name: "Rocco", publisher: "sac@rocco.com.br", author: "(11) 4444-6666", launchDate: "https://www.rocco.com.br" },
-        { name: "Intrínseca", publisher: "contato@intrinseca.com.br", author: "(31) 5555-7777", launchDate: "https://www.intrinseca.com.br" },
-        { name: "DarkSide Books", publisher: "contato@darksidebooks.com.br", author: "(21) 9999-0000", launchDate: "https://www.darksidebooks.com.br" },
-        { name: "Zahar", publisher: "sac@zahar.com.br", author: "(11) 3333-8888", launchDate: "https://www.zahar.com.br" },
-        { name: "Editora Gutenberg", publisher: "contato@gutenberg.com.br", author: "(41) 2222-9999", launchDate: "https://www.gutenberg.com.br" }
+        { name: "Companhia das Letras", email: "contato@letras.com.br", telephone: "(11) 3333-4444", site: "https://www.companhiadasletras.com.br", actions: "" },
+        { name: "Record", email: "info@record.com.br", telephone: "(21) 2222-5555", site: "https://www.record.com.br", actions: "" },
+        { name: "Rocco", email: "sac@rocco.com.br", telephone: "(11) 4444-6666", site: "https://www.rocco.com.br", actions: "" },
+        { name: "Intrínseca", email: "contato@intrinseca.com.br", telephone: "(31) 5555-7777", site: "https://www.intrinseca.com.br", actions: "" },
+        { name: "DarkSide Books", email: "contato@darksidebooks.com.br", telephone: "(21) 9999-0000", site: "https://www.darksidebooks.com.br", actions: "" },
+        { name: "Zahar", email: "sac@zahar.com.br", telephone: "(11) 3333-8888", site: "https://www.zahar.com.br", actions: "" },
+        { name: "Editora Gutenberg", email: "contato@gutenberg.com.br", telephone: "(41) 2222-9999", site: "https://www.gutenberg.com.br", actions: "" }
     ])
 
-    return { 
-        email, name, telephone, site, 
-        
+    return {
+        email, name, telephone, site,
+
         $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
-    
+
         filter, pagination, columns, rows
     }
 }

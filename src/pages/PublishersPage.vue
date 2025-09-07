@@ -14,6 +14,8 @@
             </div>
             <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
+
+        
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">Relação de Editoras</div>
             <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
