@@ -1,4 +1,12 @@
 <template>
+<q-select
+  v-model="locale"
+  :options="localeOptions"
+  label="Idioma"
+  dense
+  borderless
+  style="min-width: 150px"
+/>
   <q-page class="flex flex-center" id="fundoLogin">
 
     <div class="containerLogin">
@@ -8,37 +16,39 @@
           <header>Locadora de Livros</header>
         </div>
         <div class="formLogin" style="max-width: 300px">
-          <p>Bem-vindo(a) de volta!</p>
-          <header style="color: #F7B176;">Login</header>
-          <q-input filled v-model="email" type="email" label="Email" class="input" />
-          <q-input filled v-model="password" type="password" label="Senha" class="input" />
-          <q-btn push label="Entrar"  to="/dashboard-quasar" id="logIn" />
+          <p>{{ $t('login.welcome') }}</p>
+          <header style="color: #F7B176;">{{ $t('login.title') }}</header>
+          <q-input filled v-model="email" type="email" :label="$t('login.email')" class="input" />
+          <q-input filled v-model="password" type="password" :label="$t('login.password')" class="input" />
+          <q-btn push :label="$t('login.button')" to="/dashboard-quasar" id="logIn" />
           <router-link to="/forgot-password" id="forgotPasswordLabel">
-            Esqueceu a senha?
+            {{ $t('login.forgotPassword') }}
           </router-link>
-           <img :src="logoWDA" alt="" class="logo">
+          <img :src="logoWDA" alt="" class="logo">
         </div>
       </div>
       <div class="imgLogin" id="imgLogin">
-         <img :src="logoWDA" alt="">
+        <img :src="logoWDA" alt="">
       </div>
     </div>
-
   </q-page>
 </template>
-<script>
+<script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import logoImg from 'src/assets/logoLocadora.png'
 import logoWDAbranca from 'src/assets/logo.png'
 
-export default {
-  setup() {
-    const email = ref('')
-    const password = ref('')
-    const logo = logoImg
-    const logoWDA = logoWDAbranca
+const { locale } = useI18n({ useScope: 'global' })
 
-    return { email, password, logo, logoWDA }
-  }
-}
+const localeOptions = [
+  { value: 'pt-BR', label: '🇧🇷 Português' },
+  { value: 'en-US', label: '🇺🇸 English' },
+  { value: 'es-ES', label: '🇪🇸 Español' }
+]
+
+const email = ref('')
+const password = ref('')
+const logo = logoImg
+const logoWDA = logoWDAbranca
 </script>
