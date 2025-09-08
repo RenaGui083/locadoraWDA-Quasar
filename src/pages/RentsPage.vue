@@ -6,90 +6,47 @@
             <header class="topTittle">Aluguéis</header>
         </div>
         <div class="searchContainer">
-            <div class="search" id="search">
-                <label for="" class="searchInput">
+             <div class="search" id="search">
+                <label for="searchInput" class="searchInput">
                     <q-icon name="search" class="searchIcon" />
                 </label>
-                <input type="text" id="searchInput" placeholder="Pesquisar">
+                <input type="text" id="searchInput" v-model="filter" placeholder="Pesquisar">
             </div>
             <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
-        <div class="gridContainer">
-            <div class="tableTittle">
-                <header>Relação de aluguéis</header>
-            </div>
-            <table class="tableMain">
-                <thead class="headerTable">
-                    <!-- <td>Id</td> -->
-                    <td class="nome">Livro</td>
-                    <td>Locatário</td>
-                    <td>Data de locação</td>
-                    <td>Data de devolução</td>
-                    <td>Status</td>
-                    <td>Ações</td>
-                </thead>
-                <tbody id="tbody">
-                    <tr>
-                        <td class="name" data-label="Livro:">O Hobbit</td>
-                        <td data-label="Locatário:">Ana Silva</td>
-                        <td data-label="Data de locação:">10/08/2025</td>
-                        <td data-label="Data de devolução:">17/08/2025</td>
-                        <td data-label="Status:">Em andamento</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
-                        </td>
-                    </tr>
+        
+         <div class="tableContainer">
+            <div class="text-h6 text-center full-width">Relação de Aluguéis</div>
+            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                <!-- Modo tabela normal (desktop) -->
+                <template v-slot:body-cell-actions="props">
+                    <q-td :props="props" class="text-center" :data-label="props.col.label">
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                        <q-btn flat round dense icon="check" color="#121f2f" @click="openModalConfirm = true" />
+                    </q-td>
+                </template>
+                <template v-slot:body-cell="props">
+                    <q-td :props="props" :data-label="props.col.label">
+                        {{ props.value }}
+                    </q-td>
+                </template>
+                <template v-slot:item="props">
+                    <div class="q-pa-sm q-mb-sm rounded-borders shadow-1 bg-grey-1">
+                        <div v-for="col in props.cols" :key="col.name" class="row q-pb-xs">
+                            <div class="col-4 text-weight-bold">{{ col.label }}</div>
+                            <div class="col-8">{{ col.value }}</div>
+                        </div>
+                        <div class="row justify-end q-mt-sm">
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="check" color="#121f2f" @click="openModalConfirm = true" />
+                        </div>
+                    </div>
+                </template>
+            </q-table>
 
-                    <tr>
-                        <td class="name" data-label="Livro:">O Código Da Vinci</td>
-                        <td data-label="Locatário:">Bruno Costa</td>
-                        <td data-label="Data de locação:">12/08/2025</td>
-                        <td data-label="Data de devolução:">19/08/2025</td>
-                        <td data-label="Status:">Em andamento</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="name" data-label="Livro:">O Pequeno Príncipe</td>
-                        <td data-label="Locatário:">Carla Mendes</td>
-                        <td data-label="Data de locação:">15/08/2025</td>
-                        <td data-label="Data de devolução:">22/08/2025</td>
-                        <td data-label="Status:">Em andamento</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="name" data-label="Livro:">A Menina que Roubava Livros</td>
-                        <td data-label="Locatário:">Diego Ramos</td>
-                        <td data-label="Data de locação:">18/08/2025</td>
-                        <td data-label="Data de devolução:">25/08/2025</td>
-                        <td data-label="Status:">Em andamento</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="name" data-label="Livro:">Cem Anos de Solidão</td>
-                        <td data-label="Locatário:">Elisa Martins</td>
-                        <td data-label="Data de locação:">20/08/2025</td>
-                        <td data-label="Data de devolução:">27/08/2025</td>
-                        <td data-label="Status:">Em andamento</td>
-                        <td data-label="Ações:">
-                            <q-btn flat round dense icon="edit" color="#121F2F" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="check" color="#121F2F" @click="openModalDevolution = true" />
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
 
 
@@ -206,5 +163,10 @@
 <script setup>
 import { useCrud } from 'src/utils/rents.js'
 
-const { renter, book, deadLine, $q, openModalCreate, openModalEdit, openModalDevolution, openModalConfirm } = useCrud()
+
+const { book,renter, deadLine,
+
+        $q, openModalCreate, openModalEdit, openModalDevolution, openModalConfirm,
+
+        filter, pagination, columns, rows } = useCrud()
 </script>

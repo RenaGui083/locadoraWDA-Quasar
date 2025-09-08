@@ -33,7 +33,7 @@ export function useCrud() {
         { name: "telephone", label: "Telefone", field: "telephone", align: "left", sortable: true },
         { name: "address", label: "Endereço", field: "address", align: "left", sortable: true },
         { name: "cpf", label: "CPF", field: "cpf", align: "left", sortable: true },
-        { name: "actions", label: "Ações", field: "actions", align: "center" }
+        { name: "actions", label: "Ações", field: "actions", align: "center", filter: false }
     ]
 
     const rows = ref([

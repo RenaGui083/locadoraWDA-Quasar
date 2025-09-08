@@ -30,7 +30,7 @@ export function useCrud() {
         { name: "email", label: "Email", field: "email", align: "left", sortable: true },
         { name: "telephone", label: "Telefone", field: "telephone", align: "left", sortable: true },
         { name: "site", label: "Site", field: "site", align: "left", sortable: true },
-        { name: "actions", label: "Ações", field: "actions", align: "center" }
+        { name: "actions", label: "Ações", field: "actions", align: "center", filter: false }
     ]
 
     const rows = ref([

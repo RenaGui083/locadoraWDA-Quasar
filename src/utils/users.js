@@ -34,18 +34,17 @@ export function useCrud() {
     const columns = [
         { name: "name", label: "Nome", field: "name", align: "left", sortable: true },
         { name: "email", label: "Email", field: "email", align: "left", sortable: true },
-        { name: "password", label: "Senha", field: "password", align: "left", sortable: true },
         { name: "role", label: "Nível de acesso", field: "role", align: "left", sortable: true },
-        { name: "actions", label: "Ações", field: "actions", align: "center" }
+        { name: "actions", label: "Ações", field: "actions", align: "center", filter: false }
     ]
 
     const rows = ref([
-        { name: "Renan Guilherme", email: "renan.guilherme@email.com", password: "********", role: "Administrador" },
-        { name: "Ana Silva", email: "ana.silva@email.com", password: "********", role: "Usuário" },
-        { name: "Carlos Souza", email: "carlos.souza@email.com", password: "********", role: "Usuário" },
-        { name: "Mariana Rocha", email: "mariana.rocha@email.com", password: "********", role: "Administrador" },
-        { name: "João Pedro", email: "joao.pedro@email.com", password: "********", role: "Usuário" },
-        { name: "Fernanda Lima", email: "fernanda.lima@email.com", password: "********", role: "Administrador" }
+        { name: "Renan Guilherme", email: "renan.guilherme@email.com", role: "Administrador" },
+        { name: "Ana Silva", email: "ana.silva@email.com", role: "Usuário" },
+        { name: "Carlos Souza", email: "carlos.souza@email.com", role: "Usuário" },
+        { name: "Mariana Rocha", email: "mariana.rocha@email.com", role: "Administrador" },
+        { name: "João Pedro", email: "joao.pedro@email.com", role: "Usuário" },
+        { name: "Fernanda Lima", email: "fernanda.lima@email.com", role: "Administrador" }
     ])
 
     return {

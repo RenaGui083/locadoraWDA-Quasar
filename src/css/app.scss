@@ -223,6 +223,7 @@ body {
 
   #chartPieSection {
     width: 100% !important;
+    margin-top: 4%;
   }
 }
 
@@ -290,7 +291,7 @@ body {
 .sectionBottom {
     display: flex;
     height: 50%;
-    width: 100.5%;
+    width: 100%;
     gap: 0.6%;
 }
 
@@ -318,7 +319,7 @@ body {
     width: 100% !important;
     height: 100% !important;
     max-width: 100%; // trava o tamanho máximo
-    max-height: 190px;
+    max-height: 240px;
     margin: auto;
 }
 
@@ -354,3 +355,4 @@ body {
 #tableDashboard{
     height: 90%;
 }
+

@@ -36,7 +36,7 @@ export function useCrud() {
         { name: "author", label: "Autor", field: "author", align: "left", sortable: true },
         { name: "launchDate", label: "Lançamento", field: "launchDate", align: "left", sortable: true },
         { name: "totalQuantity", label: "Quantidade", field: "totalQuantity", align: "left", sortable: true },
-        { name: "actions", label: "Ações", field: "actions", align: "center" }
+        { name: "actions", label: "Ações", field: "actions", align: "center", filter: false }
     ]
 
     // mock rows

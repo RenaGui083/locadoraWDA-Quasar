@@ -44,63 +44,40 @@
 
             <div class="sectionBottom">
 
-                <div class="gridContainer" id="gridDashboard">
-                    <div class="tableTittle">
-                        <header>Relação de locatários</header>
-                    </div>
-                    <table class="tableMain" id="tableDashboard">
-                        <thead class="headerTable">
-                            <td class="nome">Nome</td>
-                            <td>Total de aluguéis</td>
-                            <td>Aluguéis ativos</td>
-                        </thead>
-                        <tbody id="tbody">
-                            <tr>
-                                <td data-label="Nome:">Maria Silva</td>
-                                <td data-label="Total de aluguéis:">12</td>
-                                <td data-label="Aluguéis ativos:">3</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Nome:">João Pereira</td>
-                                <td data-label="Total de aluguéis:">8</td>
-                                <td data-label="Aluguéis ativos:">1</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Nome:">Fernanda Costa</td>
-                                <td data-label="Total de aluguéis:">15</td>
-                                <td data-label="Aluguéis ativos:">5</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Nome:">Lucas Almeida</td>
-                                <td data-label="Total de aluguéis:">5</td>
-                                <td data-label="Aluguéis ativos:">0</td>
-                            </tr>
-                            <tr>
-                                <td data-label="Nome:">Ana Torres</td>
-                                <td data-label="Total de aluguéis:">10</td>
-                                <td data-label="Aluguéis ativos:">2</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="tableContainer">
+                    <div class="text-h6 text-center full-width">Relação de Locatários</div>
+                    <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+                        :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                        class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                        <template v-slot:body-cell="props">
+                            <q-td :props="props" :data-label="props.col.label">
+                                {{ props.value }}
+                            </q-td>
+                        </template>
+                    </q-table>
                 </div>
-
                 <q-card class="cardSection" id="chartPieSection">
-                    <q-card-section>
-                        <div class="headerContainerChart">
-                            <header>Editoras, livros e locatários cadastrados</header>
-                        </div>
-                        <ChartPie1 id="chartPieBottom" />
-                    </q-card-section>
-                </q-card>
-
+                <q-card-section>
+                    <div class="headerContainerChart">
+                        <header>Editoras, livros e locatários cadastrados</header>
+                    </div>
+                    <ChartPie1 id="chartPieBottom" />
+                </q-card-section>
+            </q-card>
             </div>
 
+
         </div>
+
     </q-page>
 </template>
 
 <script setup>
-import ChartBar1 from "src/components/DashboardChartBar1.vue";
-import ChartBar2 from "src/components/DashboardChartBar2.vue";
-import ChartPie1 from "src/components/DashboardChartPie1.vue";
+import { useCrud } from 'src/utils/dashboard.js'
+
+const {
+    ChartBar1, ChartBar2, ChartPie1,
+    $q,
+    pagination, columns, rows
+} = useCrud()
 </script>

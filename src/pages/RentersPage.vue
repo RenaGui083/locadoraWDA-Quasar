@@ -7,10 +7,10 @@
         </div>
         <div class="searchContainer">
             <div class="search" id="search">
-                <label for="" class="searchInput">
+                <label for="searchInput" class="searchInput">
                     <q-icon name="search" class="searchIcon" />
                 </label>
-                <input type="text" id="searchInput" placeholder="Pesquisar">
+                <input type="text" id="searchInput" v-model="filter" placeholder="Pesquisar">
             </div>
             <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
         </div>
