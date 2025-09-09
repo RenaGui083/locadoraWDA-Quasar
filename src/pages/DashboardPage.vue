@@ -26,8 +26,31 @@
                     </q-card-section>
                 </q-card>
 
+                 <q-card class="cardSection" id="chartPieSection">
+                <q-card-section>
+                    <div class="headerContainerChart">
+                        <header>Editoras, livros e locatários cadastrados</header>
+                    </div>
+                    <ChartPie1 id="chartPieBottom" />
+                </q-card-section>
+            </q-card>
+            </div>
 
-                <q-card class="cardSection">
+            <div class="sectionBottom">
+
+                <div class="tableContainer" id="gridDashboard">
+                    <div class="text-h6 text-center full-width">Relação de Locatários</div>
+                    <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+                        :filter="filter" flat bordered
+                        class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                        <template v-slot:body-cell="props">
+                            <q-td :props="props" :data-label="props.col.label">
+                                {{ props.value }}
+                            </q-td>
+                        </template>
+                    </q-table>
+                </div>
+                <q-card class="cardSection" id="dataChart">
                     <q-card-section>
                         <div class="headerContainerChart">
                             <header class="headerUsers">Número de usuários:</header>
@@ -39,31 +62,7 @@
                         </div>
                     </q-card-section>
                 </q-card>
-
-            </div>
-
-            <div class="sectionBottom">
-
-                <div class="tableContainer">
-                    <div class="text-h6 text-center full-width">Relação de Locatários</div>
-                    <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
-                        :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
-                        class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
-                        <template v-slot:body-cell="props">
-                            <q-td :props="props" :data-label="props.col.label">
-                                {{ props.value }}
-                            </q-td>
-                        </template>
-                    </q-table>
-                </div>
-                <q-card class="cardSection" id="chartPieSection">
-                <q-card-section>
-                    <div class="headerContainerChart">
-                        <header>Editoras, livros e locatários cadastrados</header>
-                    </div>
-                    <ChartPie1 id="chartPieBottom" />
-                </q-card-section>
-            </q-card>
+               
             </div>
 
 

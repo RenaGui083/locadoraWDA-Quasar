@@ -4,11 +4,11 @@ import messages from 'src/i18n'
 
 export default defineBoot(({ app }) => {
   const i18n = createI18n({
-    locale: localStorage.getItem('locale') || 'pt-BR',
+    locale: localStorage.getItem('locale'),
+    fallbackLocale: "pt-BR",
     globalInjection: true,
     messages
   })
 
-  // Set i18n instance on app
   app.use(i18n)
 })

@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
-        <q-toolbar-title>Locadora de Livros</q-toolbar-title>
+        <q-toolbar-title>{{ t('sideBar.header') }}</q-toolbar-title>
 
         <div><img :src="logoWDApreta" alt="" id="toolBarImg"></div>
       </q-toolbar>
@@ -28,39 +28,41 @@
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 
+const { t } = useI18n()
+
 const linksList = [
   {
-    title: 'Dashboard',
+    title: t('sideBar.dashboard'),
     icon: 'insights',
     link: '/dashboard-quasar',
   },
   {
-    title: 'Biblioteca',
+    title: t('sideBar.library'),
     icon: 'book',
     link: '/books-quasar',
   },
   {
-    title: 'Aluguéis',
+    title: t('sideBar.rents'),
     icon: 'assignment',
     link: '/rents-quasar',
   },
   {
-    title: 'Usuários',
+    title: t('sideBar.users'),
     icon: 'badge',
     link: '/users-quasar',
   },
   {
-    title: 'Locatários',
+    title: t('sideBar.users'),
     icon: 'person',
     link: '/renters-quasar',
   },
   {
-    title: 'Editoras',
+    title: t('sideBar.publishers'),
     icon: 'edit',
     link: '/publishers-quasar',
   },
   {
-    title: 'Logout',
+    title: t('sideBar.logout'),
     icon: 'logout',
     link: '/',
   },
@@ -69,10 +71,12 @@ const linksList = [
 const leftDrawerOpen = ref(false)
 import logoImg from 'src/assets/logoLocadora.png'
 import logoPreta from 'src/assets/logo-preta.png'
+import { useI18n } from 'vue-i18n'
 const logo = logoImg
 const logoWDApreta = logoPreta
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
 </script>

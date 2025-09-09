@@ -7,7 +7,7 @@
       <div class="left">
         <div class="logoSection">
           <img :src="logo" alt="Logo" />
-          <header>Locadora de Livros</header>
+          <header>{{ t('login.bookRental') }}</header>
         </div>
         <div class="formLogin" style="max-width: 300px">
           <p>{{ t('login.welcome') }}</p>
@@ -29,13 +29,13 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import logoImg from 'src/assets/logoLocadora.png'
 import logoWDAbranca from 'src/assets/logo.png'
+import { useI18n } from 'vue-i18n'
 
 const {  t, locale: i18nLocale } = useI18n()
 
-const locale = ref(i18nLocale.value || 'pt-BR') // garante string válida
+const locale = ref(i18nLocale.value || 'pt-BR')
 
 
 
