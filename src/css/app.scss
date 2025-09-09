@@ -355,3 +355,12 @@ body {
 #tableDashboard{
     height: 90%;
 }
+.localeSelector {
+  position: absolute;
+  top: 15px;   
+  left: 15px; 
+  z-index: 999; 
+  background-color: #ffffff;
+  padding: 5px;
+  border-radius: 8px;
+}
