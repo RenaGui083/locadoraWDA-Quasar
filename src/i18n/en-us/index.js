@@ -1,3 +1,4 @@
+
 export default {
     login: {
         bookRental: 'Book rental',
@@ -25,5 +26,53 @@ export default {
         publishers: "Publishers",
         logout: "Logout",
         header: "Book rental"
+    },
+    dashboard: {
+        headerTitle: "Dashboard",
+        rentsChart: "Rental data by month",
+        top3Chart: "Top 3 Most Rented Books",
+        publishersBooksRenters: "Publishers, books and renters registered",
+        numberOfUsers: "Number of users:",
+        numberOfAdmins: "Number of admins:",
+        chart: {
+            rented: "Rented",
+            late: "Late",
+            onTime: "Returned on time",
+            returnedLate: "Returned late",
+            publishers: "Publishers",
+            books: "Books",
+            renters: "Renters"
+        },
+        table: {
+            tableTitle: "Renters report",
+            renters: "Renters",
+            rentsQuantity: "Rents quantity",
+            rentsActive: "Rents active",
+        }
+    },
+
+    tables: {
+        noData: "No data available...",
+        rowsPerPage: "Rows per page",
+        of: "of"
+    },
+
+    library: {
+        headerTitle: "Library",
+        table: {
+            tableTitle: "Current Collection",
+            name: "Name",
+            author: "Author",
+            launchDate: "LaunchDate",
+            totalQuantity: "Stock",
+            totalInUse: "Rented",
+            publisher: "Publisher",
+            actions: "Actions"
+        }
+    },
+
+    search: {
+        searchBar: "Search",
+        createButton: " + Create"
     }
 }

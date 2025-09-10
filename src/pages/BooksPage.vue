@@ -3,7 +3,7 @@
         <div class="headerTitle">
             <q-icon name="book" />
             <!-- <h5>Biblioteca</h5> -->
-            <header class="topTittle">Biblioteca</header>
+            <header class="topTittle">{{ t('library.headerTitle') }}</header>
         </div>
 
         <div class="searchContainer">
@@ -11,15 +11,15 @@
                 <label for="searchInput" class="searchInput">
                     <q-icon name="search" class="searchIcon" />
                 </label>
-                <input type="text" id="searchInput" v-model="filter" placeholder="Pesquisar">
+                <input type="text" id="searchInput" v-model="filter" :placeholder="t('search.searchBar')">
             </div>
-            <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
+            <q-btn push :label="t('search.createButton')" class="addButton" @click="openModalCreate = true" />
         </div>
 
         <div class="tableContainer">
-            <div class="text-h6 text-center full-width">Acervo atual</div>
+            <div class="text-h6 text-center full-width">{{ t('library.table.tableTitle') }}</div>
             <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
-                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')" :pagination-label="paginationLabel"
                 class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
@@ -175,7 +175,7 @@ import { useCrud } from 'src/utils/books.js'
 
 const {
     name, publisher, author, launchDate, totalQuantity,
-    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
-    filter, pagination, columns, rows
+    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t,
+    filter, pagination, columns, rows, paginationLabel
 } = useCrud()
 </script>

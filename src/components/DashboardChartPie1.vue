@@ -6,6 +6,8 @@
 
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import {
     Chart as ChartJS,
     Title, Tooltip, Legend,
@@ -17,7 +19,7 @@ import { Pie } from "vue-chartjs";
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
 const chartData = {
-    labels: ["Livros", "Locatários", "Editoras"],
+    labels: [t('dashboard.chart.publishers'),t('dashboard.chart.books'),t('dashboard.chart.renters')],
     datasets: [
         {
             label: "Cadastros",

@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n()
 import {
     Chart as ChartJS,
     Title, Tooltip, Legend,
@@ -16,7 +18,7 @@ import { Bar } from "vue-chartjs";
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 const chartData = {
-    labels: ["Alugados", "Atrasados", "Devolvidos no prazo", "Devolvidos com demora"],
+    labels: [t('dashboard.chart.rented'),t('dashboard.chart.late'),t('dashboard.chart.onTime'),t('dashboard.chart.returnedLate')],
     datasets: [
         {
             label: "Vendas",
