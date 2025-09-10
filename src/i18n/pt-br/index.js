@@ -23,7 +23,7 @@ export default {
         users: "Usuários",
         renters: "Locatários",
         publishers: "Editoras",
-        logout: "Logout",
+        logout: "Sair",
         header: "Locadora de Livros"
     }
 }

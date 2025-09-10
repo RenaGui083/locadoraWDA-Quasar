@@ -20,7 +20,7 @@
             <div class="text-h6 text-center full-width">Relação de Editoras</div>
             <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
-                class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                class="my-table shadow-2 rounded-borders" id="publishersTable" :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">

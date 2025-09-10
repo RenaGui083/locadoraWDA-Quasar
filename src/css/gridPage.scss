@@ -129,19 +129,21 @@
 }
 
 .my-table .q-table__middle table {
-  table-layout: fixed; /* força largura fixa */
-  width: 100%;
+    table-layout: fixed;
+    /* força largura fixa */
+    width: 100%;
 }
 
 .my-table td,
 .my-table th {
-  white-space: normal !important; /* permite quebrar texto */
-  word-wrap: break-word;
+    white-space: normal !important;
+    /* permite quebrar texto */
+    word-wrap: break-word;
 }
 
 @media screen and (max-width: 600px) {
 
-  
+
 
     // table thead {
     //     display: none;
@@ -157,25 +159,37 @@
 
 
     .my-table td {
-    display: block;               /* cada célula vira "linha" */
-    text-align: left;
-    padding-left: 120px;          /* espaço pro label */
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
+        display: block;
+        /* cada célula vira "linha" */
+        text-align: left;
+        padding-left: 130px;
+        /* espaço pro label */
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
 
-  .my-table td::before {
-    content: attr(data-label);    /* pega o data-label */
-    position: absolute;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    padding-left: 2%;
-  }
+    #publishersTable td {
+        padding-left: 90px;
+    }
 
-  /* esconde o cabeçalho no mobile */
-  .my-table thead {
-    display: none;
-  }
+    #gridDashboard td {
+        width: 100% !important;
+        padding-left: 150px;
+    }
+
+    .my-table td::before {
+        content: attr(data-label);
+        /* pega o data-label */
+        position: absolute;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        padding-left: 2%;
+    }
+
+    /* esconde o cabeçalho no mobile */
+    .my-table thead {
+        display: none;
+    }
 }

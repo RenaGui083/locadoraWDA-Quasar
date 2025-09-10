@@ -52,7 +52,7 @@ const linksList = [
     link: '/users-quasar',
   },
   {
-    title: t('sideBar.users'),
+    title: t('sideBar.renters'),
     icon: 'person',
     link: '/renters-quasar',
   },
