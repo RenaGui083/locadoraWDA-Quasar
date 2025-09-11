@@ -63,16 +63,75 @@ export default {
             tableTitle: "Current Collection",
             name: "Name",
             author: "Author",
-            launchDate: "LaunchDate",
+            launchDate: "Launch Date",
             totalQuantity: "Stock",
             totalInUse: "Rented",
             publisher: "Publisher",
             actions: "Actions"
+        },
+        createModal: {
+            title: "Register Book",
+            name: "Name",
+            author: "Author",
+            totalQuantity: "Stock",
+            publisher: "Publisher",
+            launchDate: "Launch date",
+            registerButton: "Register",
+            cancelButton: "Cancel"
+        },
+        editModal: {
+            title: "Edit Book",
+            name: "Name",
+            author: "Author",
+            totalQuantity: "Stock",
+            publisher: "Publisher",
+            launchDate: "Launch date",
+            registerButton: "Save",
+            cancelButton: "Cancel"
+        },
+        excludeModal: {
+            text: "Are you sure you want to delete this?",
+            yesButton: "Yes",
+            noButton: "No"
         }
     },
 
     search: {
         searchBar: "Search",
         createButton: " + Create"
-    }
+    },
+
+    rents: {
+        headerTitle: "Rents",
+        table: {
+            tableTitle: "Rental list",
+            book: "Book",
+            renter: "Renter",
+            rentDate: "Rent date",
+            deadLine: "Dead line",
+            status: "Status",
+            actions: "Actions"
+        },
+        createModal: {
+            title: "Create rental",
+            book: "Book",
+            renter: "Renter",
+            deadLine: "Dead line",
+            registerButton: "Create",
+            cancelButton: "Cancel"
+        },
+        editModal: {
+            title: "Edit rental",
+            book: "Book",
+            renter: "Renter",
+            deadLine: "Dead line",
+            registerButton: "Save",
+            cancelButton: "Cancel"
+        },
+        excludeModal: {
+            text: "Are you sure you want to delete this?",
+            yesButton: "Yes",
+            noButton: "No"
+        }
+    },
 }

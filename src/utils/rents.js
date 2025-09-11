@@ -1,5 +1,7 @@
 import { ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
+// import { useI18n } from 'vue-i18n'
+// import i18n from 'src/i18n';
 
 export function useCrud() {
     const renter = ref('')
@@ -14,6 +16,9 @@ export function useCrud() {
     const openModalConfirm = ref(false)
 
     const filter = ref("")
+
+    // const { t } = useI18n()
+    // const { locale } = useI18n()
 
     const pagination = ref({
         page: 1,

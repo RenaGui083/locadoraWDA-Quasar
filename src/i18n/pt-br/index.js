@@ -67,11 +67,70 @@ export default {
             totalInUse: "Alugados",
             publisher: "Editora",
             actions: "Ações"
+        },
+        createModal: {
+            title: "Cadastrar Livro",
+            name: "Nome",
+            author: "Autor",
+            totalQuantity: "Estoque",
+            publisher: "Editora",
+            launchDate: "Data de lançamento",
+            registerButton: "Cadastrar",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar Livro",
+            name: "Nome",
+            author: "Autor",
+            totalQuantity: "Estoque",
+            publisher: "Editora",
+            launchDate: "Data de lançamento",
+            registerButton: "Salvar",
+            cancelButton: "Cancelar"
+        },
+        excludeModal: {
+            text: "Você tem certeza de que deseja realizar a exclusão?",
+            yesButton: "Sim",
+            noButton: "Não"
         }
     },
 
     search: {
         searchBar: "Pesquisar",
         createButton: " + Criar"
-    }
+    },
+
+    rents: {
+        headerTitle: "Aluguéis",
+        table: {
+            tableTitle: "Relação de aluguéis",
+            book: "Livro",
+            renter: "Locatário",
+            rentDate: "Data de locação",
+            deadLine: "Data de devolução",
+            status: "Status",
+            actions: "Ações"
+        },
+        createModal: {
+            title: "Cadastrar Aluguel",
+            book: "Livro",
+            renter: "Locatário",
+            deadLine: "Data de devolução",
+            registerButton: "Cadastrar",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar Aluguel",
+            book: "Livro",
+            renter: "Locatário",
+            deadLine: "Data de devolução",
+            registerButton: "Salvar",
+            cancelButton: "Cancelar"
+        },
+        excludeModal: {
+            text: "Você tem certeza de que deseja realizar a exclusão?",
+            yesButton: "Sim",
+            noButton: "Não"
+        }
+    },
 }

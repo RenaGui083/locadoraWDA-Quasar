@@ -19,6 +19,8 @@ export function useCrud() {
     const openModalConfirm = ref(false)
 
     const { t } = useI18n()
+    const { locale } = useI18n()
+
 
     // pesquisa
     const filter = ref("")
@@ -61,7 +63,7 @@ export function useCrud() {
         name, publisher, author, launchDate, totalQuantity,
 
         // quasar e estados
-        $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, i18n,
+        $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, i18n, locale,
 
         // tabela
         filter, pagination, columns, rows, paginationLabel

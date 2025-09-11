@@ -70,11 +70,70 @@ export default {
             totalInUse: "Alquilados",
             publisher: "Editorial",
             actions: "Acciones"
+        },
+        createModal: {
+            title: "Registrar Libro",
+            name: "Nombre",
+            author: "Autor",
+            totalQuantity: "Inventário",
+            publisher: "Editorial",
+            launchDate: "Lanzamiento",
+            registerButton: "Registrar",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar Libro",
+            name: "Nombre",
+            author: "Autor",
+            totalQuantity: "Inventario",
+            publisher: "Editorial",
+            launchDate: "Lanzamiento",
+            registerButton: "Guardar",
+            cancelButton: "Cancelar"
+        },
+        excludeModal: {
+            text: "¿Está seguro de que desea eliminar esto?",
+            yesButton: "Sí",
+            noButton: "No"
         }
     },
 
     search: {
         searchBar: "Buscar",
         createButton: " + Crear"
+    },
+
+    rents: {
+        headerTitle: "Alquileres",
+        table: {
+            tableTitle: "Lista de alquileres",
+            book: "Libro",
+            renter: "Arrendatario",
+            rentDate: "Fecha de alquiler",
+            deadLine: "Fecha de devolución",
+            status: "Estado",
+            actions: "Acciones"
+        },
+        createModal: {
+            title: "Crear alquiler",
+            book: "Libro",
+            renter: "Arrendatario",
+            deadLine: "Fecha de devolución",
+            registerButton: "Crear",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar alquiler",
+            book: "Libro",
+            renter: "Arrendatario",
+            deadLine: "Fecha de devolución",
+            registerButton: "Guardar",
+            cancelButton: "Cancelar"
+        },
+        excludeModal: {
+            text: "¿Está seguro de que desea eliminar esto?",
+            yesButton: "Sí",
+            noButton: "No"
+        }
+    },
     }
-}

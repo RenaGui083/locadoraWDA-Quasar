@@ -19,8 +19,10 @@
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">{{ t('library.table.tableTitle') }}</div>
             <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
-                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')" :pagination-label="paginationLabel"
-                class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
+                :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
+                :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders"
+                :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
@@ -56,7 +58,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Cadastrar Livro</div>
+                    <div class="text-h5">{{ t('library.createModal.title') }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -66,22 +68,27 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" label="Nome" class="inputModal" />
-                        <q-input filled v-model="author" type="text" label="Autor" class="inputModal" />
-                        <q-input filled v-model="totalQuantity" type="number" label="Estoque" class="inputModal"
-                            :min="1" />
-                        <q-select filled v-model="publisher" :options="options" type="email" label="Editora"
+                        <q-input filled v-model="name" type="text" :label="t('library.createModal.name')"
                             class="inputModal" />
-                        <q-input filled v-model="launchDate" type="date" label="Data de lançamento"
+                        <q-input filled v-model="author" type="text" :label="t('library.createModal.author')"
                             class="inputModal" />
+                        <q-input filled v-model="totalQuantity" type="number"
+                            :label="t('library.createModal.totalQuantity')" class="inputModal" :min="1" />
+                        <q-select filled v-model="publisher" :options="options" type="text"
+                            :label="t('library.createModal.publisher')" class="inputModal" />
+                        <!-- <q-input filled v-model="launchDate" type="date" :label="t('library.createModal.launchDate')"
+                            class="inputModal" /> -->
+                        <q-input filled v-model="launchDate" :label="t('library.createModal.launchDate')"
+                            :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
+                            :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal" />
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Cadastrar" color="primary" @click="register" class="buttonRegister" />
-                    <q-btn flat label="Cancelar" color="white" v-close-popup />
+                    <q-btn unelevated :label="t('library.createModal.registerButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat :label="t('library.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -93,7 +100,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Editar Livro</div>
+                    <div class="text-h5">{{ t('library.editModal.title') }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -103,23 +110,26 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" label="Nome" class="inputModal" />
-                        <q-input filled v-model="author" type="text" label="Autor" class="inputModal" />
-                        <q-input filled v-model="totalQuantity" type="number" label="Estoque" class="inputModal"
+                        <q-input filled v-model="name" type="text" :label="t('library.editModal.name')" class="inputModal" />
+                        <q-input filled v-model="author" type="text" :label="t('library.editModal.author')" class="inputModal" />
+                        <q-input filled v-model="totalQuantity" type="number" :label="t('library.editModal.totalQuantity')" class="inputModal"
                             :min="1" />
-                        <q-select filled v-model="publisher" :options="options" type="email" label="Editora"
+                        <q-select filled v-model="publisher" :options="options" type="text" :label="t('library.editModal.publisher')"
                             class="inputModal" />
-                        <q-input filled v-model="launchDate" type="date" label="Data de lançamento"
-                            class="inputModal" />
+                        <!-- <q-input filled v-model="launchDate" type="date" label="Data de lançamento"
+                            class="inputModal" /> -->
+                         <q-input filled v-model="launchDate" :label="t('library.editModal.launchDate')"
+                            :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
+                            :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal" />
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Atualizar" color="primary"
+                    <q-btn unelevated :label="t('library.editModal.registerButton')" color="primary"
                         @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
-                    <q-btn flat label="Cancelar" color="white" v-close-popup />
+                    <q-btn flat :label="t('library.editModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -131,7 +141,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Você tem certeza de que deseja realizar a exclusão?</div>
+                    <div class="text-h5">{{ t('library.excludeModal.text') }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -140,8 +150,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
-                    <q-btn flat label="Não" color="white" v-close-popup />
+                    <q-btn unelevated :label="t('library.excludeModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat :label="t('library.excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -175,7 +185,7 @@ import { useCrud } from 'src/utils/books.js'
 
 const {
     name, publisher, author, launchDate, totalQuantity,
-    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t,
+    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, locale,
     filter, pagination, columns, rows, paginationLabel
 } = useCrud()
 </script>
