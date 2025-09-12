@@ -13,7 +13,7 @@ export function useCrud() {
 
     const pagination = ref({
         page: 1,
-        rowsPerPage: 3
+        rowsPerPage: 2
     })
 
     watch(() => $q.screen.lt.md, (isMobile) => {

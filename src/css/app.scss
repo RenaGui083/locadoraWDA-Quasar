@@ -3,6 +3,13 @@
 //Forgot password and login
 @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
 
+.mainContainer {
+  overflow-x: hidden;
+  overflow-y: hidden;
+  max-height: 90vh;
+  padding-top: 10px !important;
+}
+
 body {
     font-family: 'Raleway', sans-serif;
     background-color: #E0E4EB;
@@ -194,37 +201,46 @@ body {
     #imgForgotPassword {
         display: none;
     }
-    .mainContainer{
+
+    // .mainContainer {
+    //     overflow-x: hidden;
+    //     overflow-y: scroll;
+    // }
+
+    .mainContainer {
         overflow-x: hidden;
-        overflow-y: scroll;
+        overflow-y: auto; // pode scrollar no mobile
+        height: auto; // deixa crescer
     }
-    .sectionBottom{
+
+    .sectionBottom {
         display: flex;
         flex-direction: column;
     }
-    .sectionTop{
+
+    .sectionTop {
         display: flex;
         flex-direction: column;
     }
-  
-      .sectionTop,
-  .sectionBottom {
-    display: flex;
-    flex-direction: column; // fica um embaixo do outro
-    gap: 15px;
-    width: 100%;
-  }
 
-  .cardSection,
-  #gridDashboard {
-    width: 100% !important; // ocupa 100% da largura da tela
-    margin-bottom: 15px;
-  }
+    .sectionTop,
+    .sectionBottom {
+        display: flex;
+        flex-direction: column; // fica um embaixo do outro
+        gap: 15px;
+        width: 100%;
+    }
 
-  #chartPieSection {
-    width: 100% !important;
-    margin-top: 4%;
-  }
+    .cardSection,
+    #gridDashboard {
+        width: 100% !important; // ocupa 100% da largura da tela
+        margin-bottom: 15px;
+    }
+
+    #chartPieSection {
+        width: 100% !important;
+        margin-top: 4%;
+    }
 }
 
 //Main layout
@@ -282,9 +298,10 @@ body {
 
 .sectionTop {
     width: 100%;
-    gap: 1%;
     display: flex;
-    margin-bottom: 0.6%;
+    justify-content: space-between; // distribui os cards
+    gap: 15px; // espaçamento entre eles
+    margin-bottom: 15px;
 }
 
 .sectionBottom {
@@ -292,6 +309,7 @@ body {
     height: 50%;
     width: 100%;
     gap: 0.6%;
+    // background: #00ffcc;
 }
 
 .headerContainerChart {
@@ -301,9 +319,13 @@ body {
 }
 
 .cardSection {
-    // padding: 30px;
+    // // padding: 30px;
+    // border-radius: 16px;
+    // width: 33%;
+    flex: 1; // ocupa espaço igual
+    min-width: 0; // evita overflow
     border-radius: 16px;
-    width: 33%;
+    max-height: 250px;
 }
 
 
@@ -311,7 +333,7 @@ body {
     width: 100% !important;
     height: 100% !important;
     max-width: 100%; // trava o tamanho máximo
-    max-height: 180px;
+    max-height: 170px;
     margin: auto;
 }
 
@@ -333,23 +355,24 @@ body {
 }
 
 .localeSelector {
-  position: absolute;
-  top: 15px;   
-  left: 15px; 
-  z-index: 999; 
-  background-color: #ffffff;
-  padding: 5px;
-  border-radius: 8px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 999;
+    background-color: #ffffff;
+    padding: 5px;
+    border-radius: 8px;
 }
 
-#gridDashboard{
-    max-width: 70%;
+#gridDashboard {
+    width: 80%;
 }
 
-.mainContainer{
-    max-height: 90vh;
+#dataChart {
+    width: 20%;
+    max-height: 228px;
 }
 
-// #dataChart{
-//     max-width: fit-content;
+// .mainContainer{
+//     max-height: 90vh;
 // }
