@@ -141,7 +141,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('library.excludeModal.text') }}</div>
+                    <div class="text-h5">{{ t('excludeModal.text') }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -150,8 +150,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('library.excludeModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
-                    <q-btn flat :label="t('library.excludeModal.noButton')" color="white" v-close-popup />
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -161,7 +161,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Você tem certeza de que deseja realizar a edição?</div>
+                    <div class="text-h5">{{ t('confirmModal.text') }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -170,8 +170,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
-                    <q-btn flat label="Não" color="white" v-close-popup />
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>

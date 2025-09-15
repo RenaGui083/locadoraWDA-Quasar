@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import ChartBar1 from "src/components/DashboardChartBar1.vue";
 import ChartBar2 from "src/components/DashboardChartBar2.vue";
@@ -20,6 +20,11 @@ export function useCrud() {
         pagination.value.rowsPerPage = isMobile ? 0 : 5
     })
 
+    onMounted(() => { // onMounted = window.onload do javaScript
+        if ($q.screen.gt.lg) {
+            pagination.value.rowsPerPage = 5
+        }
+    })
     const columns = [
         { name: "renter", label: t('dashboard.table.renters'), field: "renter", align: "left", sortable: true },
         { name: "rentsQuantity", label: t('dashboard.table.rentsQuantity'), field: "rentsQuantity", align: "left", sortable: true },

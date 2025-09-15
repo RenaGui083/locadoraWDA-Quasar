@@ -244,5 +244,6 @@ const { email, name, password, role,
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm,
 
-        filter, pagination, columns, rows } = useCrud()
+        filter, pagination, columns, rows, } = useCrud()
+        //  t, i18n, locale, paginationLabel 
 </script>

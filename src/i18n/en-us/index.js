@@ -87,13 +87,8 @@ export default {
             publisher: "Publisher",
             launchDate: "Launch date",
             registerButton: "Save",
-            cancelButton: "Cancel"
+            cancelButton: "Cancel",
         },
-        excludeModal: {
-            text: "Are you sure you want to delete this?",
-            yesButton: "Yes",
-            noButton: "No"
-        }
     },
 
     search: {
@@ -126,12 +121,66 @@ export default {
             renter: "Renter",
             deadLine: "Dead line",
             registerButton: "Save",
+            cancelButton: "Cancel",
+            returnModal: {
+                yesButton: "Yes",
+                noButton: "No",
+                text: "Are you sure you want to return this book?",
+            }
+        },
+    },
+    Users: {
+        headerTitle: "Users",
+        table: {
+            tableTitle: "User List",
+            name: "Name",
+            email: "Email",
+            role: "Access Level",
+            actions: "Actions"
+        },
+        createModal: {
+            title: "Create User",
+            name: "Name",
+            email: "Email",
+            password: "Password",
+            admin: "Administrator",
+            user: "User",
+            registerButton: "Register",
             cancelButton: "Cancel"
         },
-        excludeModal: {
-            text: "Are you sure you want to delete this?",
-            yesButton: "Yes",
-            noButton: "No"
+        editModal: {
+            title: "Edit User",
+            name: "Name",
+            email: "Email",
+            password: "Password",
+            admin: "Administrator",
+            user: "User",
+            registerButton: "Save",
+            cancelButton: "Cancel",
+            confirmModal: {
+                yesButton: "Yes",
+                noButton: "No",
+                text: "Are you sure you want to perform the edit?"
+            }
+        },
+        viewModal: {
+            title: "User Details",
+            id: "ID",
+            name: "Name",
+            email: "Email",
+            password: "Password",
+            role: "Access Level",
+            cancelButton: "Done"
         }
+    },
+    excludeModal: {
+        text: "Are you sure you want to delete this?",
+        yesButton: "Yes",
+        noButton: "No"
+    },
+    confirmModal: {
+        yesButton: "Yes",
+        noButton: "No",
+        text: "Are you sure you want to edit this?",
     },
 }

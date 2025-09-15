@@ -86,13 +86,8 @@ export default {
             publisher: "Editora",
             launchDate: "Data de lançamento",
             registerButton: "Salvar",
-            cancelButton: "Cancelar"
+            cancelButton: "Cancelar",
         },
-        excludeModal: {
-            text: "Você tem certeza de que deseja realizar a exclusão?",
-            yesButton: "Sim",
-            noButton: "Não"
-        }
     },
 
     search: {
@@ -125,12 +120,66 @@ export default {
             renter: "Locatário",
             deadLine: "Data de devolução",
             registerButton: "Salvar",
+            cancelButton: "Cancelar",
+            returnModal: {
+                yesButton: "Sim",
+                noButton: "Não",
+                text: "Você tem certeza de que deseja realizar a devolução? ",
+            }
+        },
+    },
+    Users: {
+        headerTitle: "Usuários",
+        table: {
+            tableTitle: "Relação de Usuários",
+            name: "Nome",
+            email: "Email",
+            role: "Nível de acesso",
+            actions: "Ações"
+        },
+        createModal: {
+            title: "Cadastrar Usuário",
+            name: "Nome",
+            email: "Email",
+            password: "Senha",
+            admin: "Administrador",
+            user: "Usuário",
+            registerButton: "Cadastrar",
             cancelButton: "Cancelar"
         },
-        excludeModal: {
-            text: "Você tem certeza de que deseja realizar a exclusão?",
-            yesButton: "Sim",
-            noButton: "Não"
+        editModal: {
+            title: "Editar Usuário",
+            name: "Nome",
+            email: "Email",
+            password: "Senha",
+            admin: "Administrador",
+            user: "Usuário",
+            registerButton: "Salvar",
+            cancelButton: "Cancelar",
+            confirmModal: {
+                yesButton: "Sim",
+                noButton: "Não",
+                text: "Você tem certeza de que deseja realizar a edição?",
+            },
+        },
+        viewModal: {
+            title: "Detalhes do Usuário",
+            id: "ID",
+            name: "Nome",
+            email: "Email",
+            password: "Senha",
+            role: "Nível de acesso",
+            cancelButton: "Fechar"
         }
+    },
+    excludeModal: {
+        text: "Você tem certeza de que deseja realizar a exclusão?",
+        yesButton: "Sim",
+        noButton: "Não"
+    },
+    confirmModal: {
+        yesButton: "Sim",
+        noButton: "Não",
+        text: "Você tem certeza de que deseja realizar a edição?",
     },
 }

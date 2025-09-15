@@ -89,13 +89,8 @@ export default {
             publisher: "Editorial",
             launchDate: "Lanzamiento",
             registerButton: "Guardar",
-            cancelButton: "Cancelar"
+            cancelButton: "Cancelar",
         },
-        excludeModal: {
-            text: "¿Está seguro de que desea eliminar esto?",
-            yesButton: "Sí",
-            noButton: "No"
-        }
     },
 
     search: {
@@ -128,12 +123,66 @@ export default {
             renter: "Arrendatario",
             deadLine: "Fecha de devolución",
             registerButton: "Guardar",
+            cancelButton: "Cancelar",
+            returnModal: {
+                yesButton: "Sí",
+                noButton: "No",
+                text: "¿Estás seguro de que deseas realizar la devolución?",
+            }
+        },
+    },
+    Users: {
+        headerTitle: "Usuarios",
+        table: {
+            tableTitle: "Relación de Usuarios",
+            name: "Nombre",
+            email: "Correo electrónico",
+            role: "Nivel de acceso",
+            actions: "Acciones"
+        },
+        createModal: {
+            title: "Registrar Usuario",
+            name: "Nombre",
+            email: "Correo electrónico",
+            password: "Contraseña",
+            admin: "Administrador",
+            user: "Usuario",
+            registerButton: "Registrar",
             cancelButton: "Cancelar"
         },
-        excludeModal: {
-            text: "¿Está seguro de que desea eliminar esto?",
-            yesButton: "Sí",
-            noButton: "No"
+        editModal: {
+            title: "Editar Usuario",
+            name: "Nombre",
+            email: "Correo electrónico",
+            password: "Contraseña",
+            admin: "Administrador",
+            user: "Usuario",
+            registerButton: "Guardar",
+            cancelButton: "Cancelar",
+            confirmModal: {
+                yesButton: "Sí",
+                noButton: "No",
+                text: "¿Está seguro de que desea realizar la edición?",
+            }
+        },
+        viewModal: {
+            title: "Detalles del Usuario",
+            id: "ID",
+            name: "Nombre",
+            email: "Correo electrónico",
+            password: "Contraseña",
+            role: "Nivel de acceso",
+            cancelButton: "Hecho"
         }
     },
-    }
+    excludeModal: {
+        text: "¿Está seguro de que desea eliminar esto?",
+        yesButton: "Sí",
+        noButton: "No"
+    },
+    confirmModal: {
+        yesButton: "Sí",
+        noButton: "No",
+        text: "¿Está seguro de que desea editar esto?",
+    },
+}
