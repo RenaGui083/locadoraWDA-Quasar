@@ -8,6 +8,8 @@ export default {
         button: 'Entrar',
         forgotPassword: 'Esqueceu a senha?'
     },
+
+
     forgotPassword: {
         bookRental: 'Locadora de Livros',
         forgotPasswordTitle: 'Esqueceu a senha?',
@@ -16,6 +18,8 @@ export default {
         button: "Continuar",
         buttonBack: "Voltar"
     },
+
+
     sideBar: {
         dashboard: "Dashboard",
         library: "Biblioteca",
@@ -26,6 +30,8 @@ export default {
         logout: "Sair",
         header: "Locadora de Livros"
     },
+
+
     dashboard: {
         headerTitle: "Dashboard",
         rentsChart: "Aluguéis (mensal)",
@@ -50,11 +56,13 @@ export default {
         }
     },
 
+
     tables: {
         noData: "Sem registros disponíveis...",
         rowsPerPage: "Linhas por página",
         of: "de"
     },
+
 
     library: {
         headerTitle: "Biblioteca",
@@ -90,10 +98,12 @@ export default {
         },
     },
 
+
     search: {
         searchBar: "Pesquisar",
         createButton: " + Criar"
     },
+
 
     rents: {
         headerTitle: "Aluguéis",
@@ -119,7 +129,7 @@ export default {
             book: "Livro",
             renter: "Locatário",
             deadLine: "Data de devolução",
-            registerButton: "Salvar",
+            registerButton: "Atualizar",
             cancelButton: "Cancelar",
             returnModal: {
                 yesButton: "Sim",
@@ -128,6 +138,8 @@ export default {
             }
         },
     },
+
+
     users: {
         headerTitle: "Usuários",
         table: {
@@ -154,13 +166,8 @@ export default {
             password: "Senha",
             admin: "Administrador",
             user: "Usuário",
-            registerButton: "Salvar",
-            cancelButton: "Cancelar",
-            confirmModal: {
-                yesButton: "Sim",
-                noButton: "Não",
-                text: "Você tem certeza de que deseja realizar a edição?",
-            },
+            registerButton: "Atualizar",
+            cancelButton: "Cancelar"
         },
         viewModal: {
             title: "Detalhes do Usuário",
@@ -172,14 +179,92 @@ export default {
             cancelButton: "Fechar"
         }
     },
+
+
     excludeModal: {
         text: "Você tem certeza de que deseja realizar a exclusão?",
         yesButton: "Sim",
         noButton: "Não"
     },
+
+
     confirmModal: {
         yesButton: "Sim",
         noButton: "Não",
         text: "Você tem certeza de que deseja realizar a edição?",
     },
+
+
+    renters: {
+        headerTitle: "Locatários",
+        table: {
+            tableTitle: "Relação de Locatários",
+            name: "Nome",
+            email: "Email",
+            telephone: "Telefone",
+            address: "Endereço",
+            cpf: "CPF",
+            actions: "Ações"
+        },
+        createModal: {
+            title: "Cadastrar Locatário",
+            name: "Nome",
+            email: "Email",
+            telephone: "Telefone",
+            cpf: "CPF",
+            address: "Endereço",
+            registerButton: "Cadastrar",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar Locatário",
+            name: "Nome",
+            email: "Email",
+            telephone: "Telefone",
+            cpf: "CPF",
+            address: "Endereço",
+            registerButton: "Atualizar",
+            cancelButton: "Cancelar",
+        },
+        viewModal: {
+            title: "Detalhes do Locatário",
+            id: "ID",
+            name: "Nome",
+            email: "Email",
+            telephone: "Telefone",
+            cpf: "CPF",
+            address: "Endereço",
+            cancelButton: "Fechar"
+        }
+    },
+
+    publishers: {
+        headerTitle: "Editoras",
+        table: {
+            tableTitle: "Relação de Editoras",
+            name: "Nome",
+            email: "Email",
+            telephone: "Telefone",
+            site: "Site",
+            actions: "Ações"
+        },
+        createModal: {
+            title: "Cadastrar Editora",
+            name: "Nome",
+            email: "Email",
+            telephone: "Telefone",
+            site: "Site",
+            registerButton: "Cadastrar",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar Editora",
+            name: "Nome",
+            email: "Email",
+            telephone: "Telefone",
+            site: "Site",
+            registerButton: "Atualizar",
+            cancelButton: "Cancelar",
+        }
+    }
 }

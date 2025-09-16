@@ -9,6 +9,8 @@ export default {
         button: "Login",
         forgotPassword: "Forgot password?"
     },
+
+
     forgotPassword: {
         bookRental: 'Book rental',
         forgotPasswordTitle: 'Forgot password?',
@@ -17,6 +19,8 @@ export default {
         button: "Continue",
         buttonBack: "Back"
     },
+
+
     sideBar: {
         dashboard: "Dashboard",
         library: "Library",
@@ -27,6 +31,8 @@ export default {
         logout: "Logout",
         header: "Book rental"
     },
+
+
     dashboard: {
         headerTitle: "Dashboard",
         rentsChart: "Rental data by month",
@@ -51,11 +57,13 @@ export default {
         }
     },
 
+
     tables: {
         noData: "No data available...",
         rowsPerPage: "Rows per page",
         of: "of"
     },
+
 
     library: {
         headerTitle: "Library",
@@ -91,10 +99,12 @@ export default {
         },
     },
 
+
     search: {
         searchBar: "Search",
         createButton: " + Create"
     },
+
 
     rents: {
         headerTitle: "Rents",
@@ -129,6 +139,8 @@ export default {
             }
         },
     },
+
+
     users: {
         headerTitle: "Users",
         table: {
@@ -173,14 +185,93 @@ export default {
             cancelButton: "Done"
         }
     },
+
+
     excludeModal: {
         text: "Are you sure you want to delete this?",
         yesButton: "Yes",
         noButton: "No"
     },
+
+
     confirmModal: {
         yesButton: "Yes",
         noButton: "No",
         text: "Are you sure you want to edit this?",
     },
+
+
+    renters: {
+        headerTitle: "Renters",
+        table: {
+            tableTitle: "Renters List",
+            name: "Name",
+            email: "Email",
+            telephone: "Telephone",
+            address: "Address",
+            cpf: "CPF",
+            actions: "Actions"
+        },
+        createModal: {
+            title: "Register Renter",
+            name: "Name",
+            email: "Email",
+            telephone: "Telephone",
+            cpf: "CPF",
+            address: "Address",
+            registerButton: "Register",
+            cancelButton: "Cancel"
+        },
+        editModal: {
+            title: "Edit Renter",
+            name: "Name",
+            email: "Email",
+            telephone: "Telephone",
+            cpf: "CPF",
+            address: "Address",
+            registerButton: "Save",
+            cancelButton: "Cancel",
+        },
+        viewModal: {
+            title: "Renter Details",
+            id: "ID",
+            name: "Name",
+            email: "Email",
+            telephone: "Telephone",
+            cpf: "CPF",
+            address: "Address",
+            cancelButton: "Close"
+        }
+    },
+
+
+    publishers: {
+        headerTitle: "Publishers",
+        table: {
+            tableTitle: "Publishers List",
+            name: "Name",
+            email: "Email",
+            telephone: "Telephone",
+            site: "Site",
+            actions: "Actions"
+        },
+        createModal: {
+            title: "Register Publisher",
+            name: "Name",
+            email: "Email",
+            telephone: "Telephone",
+            site: "Site",
+            registerButton: "Register",
+            cancelButton: "Cancel"
+        },
+        editModal: {
+            title: "Edit Publisher",
+            name: "Name",
+            email: "Email",
+            telephone: "Telephone",
+            site: "Site",
+            registerButton: "Save",
+            cancelButton: "Cancel",
+        }
+    }
 }

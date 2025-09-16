@@ -185,4 +185,79 @@ export default {
         noButton: "No",
         text: "¿Está seguro de que desea editar esto?",
     },
+
+
+    renters: {
+        headerTitle: "Arrendatarios",
+        table: {
+            tableTitle: "Lista de arrendatarios",
+            name: "Nombre",
+            email: "Correo electrónico",
+            telephone: "Teléfono",
+            address: "Dirección",
+            cpf: "CPF",
+            actions: "Acciones"
+        },
+        createModal: {
+            title: "Registrar arrendatario",
+            name: "Nombre",
+            email: "Correo electrónico",
+            telephone: "Teléfono",
+            cpf: "CPF",
+            address: "Dirección",
+            registerButton: "Registrar",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar arrendatario",
+            name: "Nombre",
+            email: "Correo electrónico",
+            telephone: "Teléfono",
+            cpf: "CPF",
+            address: "Dirección",
+            registerButton: "Guardar",
+            cancelButton: "Cancelar",
+        },
+        viewModal: {
+            title: "Detalles del arrendatario",
+            id: "ID",
+            name: "Nombre",
+            email: "Correo electrónico",
+            telephone: "Teléfono",
+            cpf: "CPF",
+            address: "Dirección",
+            cancelButton: "Hecho"
+        }
+    },
+
+
+    publishers: {
+        headerTitle: "Editoriales",
+        table: {
+            tableTitle: "Lista de editoriales",
+            name: "Nombre",
+            email: "Correo electrónico",
+            telephone: "Teléfono",
+            site: "Sitio web",
+            actions: "Acciones"
+        },
+        createModal: {
+            title: "Registrar editorial",
+            name: "Nombre",
+            email: "Correo electrónico",
+            telephone: "Teléfono",
+            site: "Sitio web",
+            registerButton: "Registrar",
+            cancelButton: "Cancelar"
+        },
+        editModal: {
+            title: "Editar editorial",
+            name: "Nombre",
+            email: "Correo electrónico",
+            telephone: "Teléfono",
+            site: "Sitio web",
+            registerButton: "Actualizar",
+            cancelButton: "Cancelar",
+        }
+    }
 }

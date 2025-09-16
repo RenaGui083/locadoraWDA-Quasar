@@ -3,23 +3,25 @@
         <div class="headerTitle">
             <q-icon name="edit" />
             <!-- <h5>Biblioteca</h5> -->
-            <header class="topTittle">Editoras</header>
+            <header class="topTittle">{{ t('publishers.headerTitle') }}</header>
         </div>
         <div class="searchContainer">
             <div class="search" id="search">
                 <label for="" class="searchInput">
                     <q-icon name="search" class="searchIcon" />
                 </label>
-                <input type="text" id="searchInput" v-model="filter" placeholder="Pesquisar">
+                <input type="text" id="searchInput" v-model="filter" :placeholder=" t('search.searchBar')">
             </div>
-            <q-btn push label="+ Criar" class="addButton" @click="openModalCreate = true" />
+            <q-btn push :label="t('search.createButton')" class="addButton" @click="openModalCreate = true" />
         </div>
 
         
         <div class="tableContainer">
-            <div class="text-h6 text-center full-width">Relação de Editoras</div>
+            <div class="text-h6 text-center full-width">{{ t('publishers.table.tableTitle') }}</div>
             <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
+                :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
+                :pagination-label="paginationLabel"
                 class="my-table shadow-2 rounded-borders" id="publishersTable" :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
@@ -56,7 +58,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Cadastrar Editora</div>
+                    <div class="text-h5">{{ t('publishers.createModal.title') }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -66,10 +68,10 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" label="Nome" class="inputModal" />
-                        <q-input filled v-model="email" type="email" label="Email" class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" label="Telefone" class="inputModal" />
-                        <q-input filled v-model="site" type="text" label="Site" class="inputModal" />
+                        <q-input filled v-model="name" type="text" :label="t('publishers.createModal.name')" class="inputModal" />
+                        <q-input filled v-model="email" type="email" :label="t('publishers.createModal.email')" class="inputModal" />
+                        <q-input filled v-model="telephone" type="text" :label="t('publishers.createModal.telephone')" class="inputModal" />
+                        <q-input filled v-model="site" type="text" :label="t('publishers.createModal.site')" class="inputModal" />
 
                     </slot>
                 </q-card-section>
@@ -77,8 +79,8 @@
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Cadastrar" color="primary" @click="register" class="buttonRegister" />
-                    <q-btn flat label="Cancelar" color="white" v-close-popup />
+                    <q-btn unelevated :label="t('publishers.createModal.registerButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat :label="t('publishers.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -90,7 +92,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Editar Editora</div>
+                    <div class="text-h5">{{ t('publishers.editModal.title') }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -100,18 +102,18 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" label="Nome" class="inputModal" />
-                        <q-input filled v-model="email" type="email" label="Email" class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" label="Telefone" class="inputModal" />
-                        <q-input filled v-model="site" type="text" label="Site" class="inputModal" />
+                        <q-input filled v-model="name" type="text" :label=" t('publishers.editModal.name') " class="inputModal" />
+                        <q-input filled v-model="email" type="email" :label=" t('publishers.editModal.email') " class="inputModal" />
+                        <q-input filled v-model="telephone" type="text" :label=" t('publishers.editModal.telephone') " class="inputModal" />
+                        <q-input filled v-model="site" type="text" :label=" t('publishers.editModal.site') " class="inputModal" />
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated label="Atualizar" color="primary"  @click="openModalConfirm = true,openModalEdit = false" class="buttonRegister" />
-                    <q-btn flat label="Cancelar" color="white" v-close-popup />
+                    <q-btn unelevated :label=" t('publishers.editModal.registerButton') " color="primary"  @click="openModalConfirm = true,openModalEdit = false" class="buttonRegister" />
+                    <q-btn flat :label=" t('publishers.editModal.cancelButton') " color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -123,7 +125,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Você tem certeza de que deseja realizar a exclusão?</div>
+                    <div class="text-h5">{{ t('excludeModal.text') }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -132,8 +134,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
-                    <q-btn flat label="Não" color="white" v-close-popup />
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -147,7 +149,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">Você tem certeza de que deseja realizar a edição?</div>
+                    <div class="text-h5">{{ t('confirmModal.text') }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -156,8 +158,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated label="Sim" color="primary" @click="register" class="buttonRegister" />
-                    <q-btn flat label="Não" color="white" v-close-popup />
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -169,6 +171,6 @@ import { useCrud } from 'src/utils/publishers.js'
 const {
     name, email, telephone, site, 
     $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
-    filter, pagination, columns, rows
+    filter, pagination, columns, rows, t, paginationLabel,
 } = useCrud()
 </script>

@@ -1,5 +1,7 @@
 import { ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import i18n from 'src/i18n';
 
 export function useCrud() {
     const email = ref('')
@@ -8,6 +10,9 @@ export function useCrud() {
     const site = ref('')
 
     const $q = useQuasar()
+
+    const { t } = useI18n()
+    const { locale } = useI18n()
 
     const openModalCreate = ref(false)
     const openModalEdit = ref(false)
@@ -26,12 +31,14 @@ export function useCrud() {
     })
 
     const columns = [
-        { name: "name", label: "Nome", field: "name", align: "left", sortable: true },
-        { name: "email", label: "Email", field: "email", align: "left", sortable: true },
-        { name: "telephone", label: "Telefone", field: "telephone", align: "left", sortable: true },
-        { name: "site", label: "Site", field: "site", align: "left", sortable: true },
-        { name: "actions", label: "Ações", field: "actions", align: "center", filter: false }
+        { name: "name", label: t('publishers.table.name'), field: "name", align: "left", sortable: true },
+        { name: "email", label: t('publishers.table.email'), field: "email", align: "left", sortable: true },
+        { name: "telephone", label: t('publishers.table.telephone'), field: "telephone", align: "left", sortable: true },
+        { name: "site", label: t('publishers.table.site'), field: "site", align: "left", sortable: true },
+        { name: "actions", label: t('publishers.table.actions'), field: "actions", align: "center", filter: false }
     ]
+
+    const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
     const rows = ref([
         { name: "Companhia das Letras", email: "contato@letras.com.br", telephone: "(11) 3333-4444", site: "https://www.companhiadasletras.com.br", actions: "" },
@@ -48,6 +55,8 @@ export function useCrud() {
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
 
-        filter, pagination, columns, rows
+        filter, pagination, columns, rows,
+
+        t, i18n, locale, paginationLabel
     }
 }
