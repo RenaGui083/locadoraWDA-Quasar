@@ -1,7 +1,7 @@
 import { ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
-// import { useI18n } from 'vue-i18n'
-// import i18n from 'src/i18n';
+import { useI18n } from 'vue-i18n'
+import i18n from 'src/i18n';
 
 export function useCrud() {
     const email = ref('')
@@ -11,8 +11,8 @@ export function useCrud() {
 
     const $q = useQuasar()
 
-    // const { t } = useI18n()
-    // const { locale } = useI18n()
+    const { t } = useI18n()
+    const { locale } = useI18n()
 
     const openModalCreate = ref(false)
     const openModalEdit = ref(false)
@@ -21,8 +21,8 @@ export function useCrud() {
     const openModalConfirm = ref(false)
 
     const options = [
-        { label: 'Ususário', value: 'USER' },
-        { label: 'Administrador', value: 'ADMIN' }
+        { label: t('users.createModal.user'), value: 'USER' },
+        { label: t('users.createModal.admin'), value: 'ADMIN' }
     ]
 
     const filter = ref("")
@@ -37,13 +37,13 @@ export function useCrud() {
     })
 
     const columns = [
-        { name: "name", label: "Nome", field: "name", align: "left", sortable: true },
-        { name: "email", label: "Email", field: "email", align: "left", sortable: true },
-        { name: "role", label: "Nível de acesso", field: "role", align: "left", sortable: true },
-        { name: "actions", label: "Ações", field: "actions", align: "center", filter: false }
+        { name: "name", label: t('users.table.name'), field: "name", align: "left", sortable: true },
+        { name: "email", label: t('users.table.email'), field: "email", align: "left", sortable: true },
+        { name: "role", label: t('users.table.role'), field: "role", align: "left", sortable: true },
+        { name: "actions", label: t('users.table.actions'), field: "actions", align: "center", filter: false }
     ]
 
-    // const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
+    const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
     const rows = ref([
         { name: "Renan Guilherme", email: "renan.guilherme@email.com", role: "Administrador" },
@@ -58,9 +58,9 @@ export function useCrud() {
         email, name, password, role,
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm, 
-        //  t, i18n, locale,
+         t, i18n, locale,
 
         filter, pagination, columns, rows,
-        //  paginationLabel
+         paginationLabel
     }
 }

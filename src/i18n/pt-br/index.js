@@ -128,7 +128,7 @@ export default {
             }
         },
     },
-    Users: {
+    users: {
         headerTitle: "Usuários",
         table: {
             tableTitle: "Relação de Usuários",

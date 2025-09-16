@@ -129,7 +129,7 @@ export default {
             }
         },
     },
-    Users: {
+    users: {
         headerTitle: "Users",
         table: {
             tableTitle: "User List",
