@@ -256,7 +256,7 @@ body {
 .sideBar {
     background-color: #121F2F;
     color: white;
-    padding-top: 4%;
+    // padding-top: 4%;
     font-size: 120%;
 }
 
@@ -265,12 +265,16 @@ body {
 }
 
 .headerSideBar {
-    padding-left: 10%;
+    // padding-left: 10%;
     display: flex;
     align-items: center;
-    font-size: 140%;
+    // font-size: 140%;
     gap: 25px;
     color: white;
+    background-color: #1F2548;
+    padding: 0;
+    padding-top: 10%;
+    padding-bottom: 10%;
 }
 
 .menu-item {
@@ -398,4 +402,56 @@ body {
   align-self: stretch;  
   min-height: 0;
   max-height: none !important;
+}
+
+//profile
+
+.avatar {
+    width: 100%;
+}
+.avatarImg{
+    height: 60px;
+    width: 60px;
+}
+
+.profileSection{
+    display: flex;
+    align-items: center;
+    padding-top: 6%;
+}
+
+.profileText {
+  display: flex;
+  flex-direction: column; 
+  line-height: 0.2;
+  width: 100%;
+}
+
+.nameProfile{
+    font-size: 15px;
+    // font-weight: bold;
+}
+.roleProfile{
+    font-size: 15px;
+    color: $primary;
+}
+
+#expansionSelect{
+    background-color: #1F2548;
+}
+
+.avatarSelect{
+    gap: 20px;
+}
+
+.preset-avatars {
+  gap: 15px; // espaçamento entre avatares
+  justify-items: center; // centraliza cada avatar na célula
+  margin-top: 10px;
+}
+
+.preset-avatar {
+  transition: transform 0.2s, border 0.2s;
+  border: 2px solid transparent;
+  border-radius: 50%;
 }

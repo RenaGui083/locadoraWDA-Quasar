@@ -23,6 +23,8 @@ export function useCrud() {
     onMounted(() => { // onMounted = window.onload do javaScript
         if ($q.screen.gt.lg) {
             pagination.value.rowsPerPage = 5
+        } else if ($q.screen.lt.lg) {
+            pagination.value.rowsPerPage = 5
         }
     })
     const columns = [

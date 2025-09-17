@@ -266,5 +266,8 @@ export default {
             registerButton: "Atualizar",
             cancelButton: "Cancelar",
         }
-    }
+    },
+
+
+    avatarButton: "Mudar Avatar",
 }

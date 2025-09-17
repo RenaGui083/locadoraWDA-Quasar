@@ -273,5 +273,8 @@ export default {
             registerButton: "Save",
             cancelButton: "Cancel",
         }
-    }
+    },
+
+    
+    avatarButton: "Set avatar",
 }
