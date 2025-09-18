@@ -32,5 +32,7 @@ const props = defineProps({
     type: String,
     default: '',
   },
+
+  action: { type: Function, default: null },
 })
 </script>

@@ -56,6 +56,8 @@
         </q-item-label>
 
         <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
+
+        
       </q-list>
     </q-drawer>
 
@@ -68,6 +70,8 @@
 <script setup>
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import { authenticate } from 'src/stores/auth.js'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 
@@ -106,6 +110,7 @@ const linksList = [
     title: t('sideBar.logout'),
     icon: 'logout',
     link: '/',
+    action: logoutUser
   },
 ]
 
@@ -157,6 +162,13 @@ function setPresetAvatar(preset) {
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
+}
+
+const router = useRouter()
+
+function logoutUser() {
+  authenticate.logout()
+  router.replace('/') // redireciona pra tela de login
 }
 
 </script>

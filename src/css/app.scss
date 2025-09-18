@@ -37,15 +37,17 @@ body {
 }
 
 .input {
-    background-color: #404668;
+    // background-color: #404668;
     width: 150%;
-
     .q-field__label {
         color: #f0f0f0;
-        border-color: #00ffcc;
+        // border-color: #00ffcc;
     }
 }
 
+.input .q-field__control {
+  background-color: #404668;   
+}
 .input .q-field__native {
     color: white;
     /* cor do texto digitado */

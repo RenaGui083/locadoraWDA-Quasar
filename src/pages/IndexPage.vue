@@ -46,9 +46,12 @@
         <div class="formLogin" style="max-width: 300px">
           <p>{{ t('login.welcome') }}</p>
           <header style="color: #F7B176;">{{ t('login.title') }}</header>
-          <q-input filled v-model="email" type="email" :label="t('login.email')" class="input" />
-          <q-input filled v-model="password" type="password" :label="t('login.password')" class="input" />
-          <q-btn push :label="t('login.button')" to="/dashboard-quasar" id="logIn" />
+          <q-input filled v-model="email" type="email" :label="t('login.email')" class="input" :error="!!errorMsg"
+  :error-message="errorMsg"/>
+          <q-input filled v-model="password" type="password" :label="t('login.password')" class="input" :error="!!errorMsg"
+  :error-message="errorMsg"/>
+          <div v-if="errorMsg" class="text-negative q-mb-sm">{{ errorMsg }}</div>
+          <q-btn push :label="t('login.button')" @click="login()" id="logIn" />
           <router-link to="/forgot-password" id="forgotPasswordLabel">
             {{ t('login.forgotPassword') }}
           </router-link>
@@ -69,6 +72,8 @@ import { useI18n } from 'vue-i18n'
 import flagBR from 'src/assets/br.png'
 import flagUS from 'src/assets/us.png'
 import flagES from 'src/assets/es.png'
+import { authenticate } from 'src/stores/auth.js'
+import { useRouter } from 'vue-router'
 
 
 const {  t, locale: i18nLocale } = useI18n()
@@ -94,6 +99,19 @@ function changeLocale(newLocale) {
 
 const email = ref('')
 const password = ref('')
+
+const router = useRouter()
 const logo = logoImg
 const logoWDA = logoWDAbranca
+const errorMsg = ref('')
+
+async function login() {
+  try {
+     const res = await authenticate.login(email.value, password.value)
+    console.log('Logou! Token:', res.token)
+    router.replace('/dashboard-quasar')
+  } catch {
+     errorMsg.value = 'Email ou senha inválidos'
+  }
+}
 </script>
