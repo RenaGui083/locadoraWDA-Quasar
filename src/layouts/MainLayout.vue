@@ -126,9 +126,10 @@ const percy = 'src/assets/percy jackson.jpg'
 const bella = 'src/assets/Bellas.jpg'
 const edward = 'src/assets/Edward.jpg'
 const jacob = 'src/assets/jacob.jpg'
+const malorie = 'src/assets/Malorie.jpg'
 
 const presetAvatars = [
-  harry, hermione, rony, lucy, percy, bella, edward, jacob
+  harry, hermione, rony, bella, edward, jacob, malorie, lucy, percy
 ]
 
 

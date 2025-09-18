@@ -141,6 +141,19 @@
     word-wrap: break-word;
 }
 
+/* borda vertical nas células */
+.my-table .q-td,
+.my-table .q-th {
+  border-left: 1px solid #ccc;
+}
+
+/* remove a borda da primeira coluna */
+.my-table .q-td:first-child,
+.my-table .q-th:first-child {
+  border-left: none;
+}
+
+
 @media screen and (max-width: 600px) {
 
 
