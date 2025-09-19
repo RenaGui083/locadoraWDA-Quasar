@@ -37,12 +37,10 @@ body {
 }
 
 .input {
-    // background-color: #404668;
     width: 150%;
-    .q-field__label {
-        color: #f0f0f0;
-        // border-color: #00ffcc;
-    }
+}
+.q-input--focused .q-field__label {
+  color: var(--q-primary); /* mantém a cor primary quando focado */
 }
 
 .input .q-field__control {
@@ -459,4 +457,12 @@ body {
 //   border-radius: 50%;
   margin: auto;
   margin-bottom: 4%; 
+}
+
+.logout-item {
+  color: white; /* pra garantir contraste */
+}
+
+.label-error .q-field__label {
+  color: red !important;
 }

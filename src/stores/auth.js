@@ -20,5 +20,7 @@ export const authenticate = {
     logout() {
     localStorage.removeItem('authToken')
     delete api.defaults.headers.common['Authorization']
+    window.location.href = '/'
     }
 }
+

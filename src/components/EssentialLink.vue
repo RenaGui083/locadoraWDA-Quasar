@@ -1,5 +1,7 @@
 <template>
-  <q-item :to="link" clickable class="menu-item">
+  <q-item :to="link" clickable class="menu-item" @click="handleClick"
+    :active-class="props.title === 'Logout' ? '' : 'q-item--active'"
+    :class="props.title === 'Logout' ? 'bg-white text-black' : ''" :ripple="props.title === 'Logout' ? false : true">
     <q-item-section v-if="props.icon" avatar>
       <q-icon :name="props.icon" />
     </q-item-section>
@@ -35,4 +37,11 @@ const props = defineProps({
 
   action: { type: Function, default: null },
 })
+function handleClick() {
+  if (props.action) {
+    props.action()
+  } else if (props.link) {
+    this.$router.push(props.link)
+  }
+}
 </script>

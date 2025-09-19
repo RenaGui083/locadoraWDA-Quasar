@@ -2,17 +2,8 @@
   <q-page class="flex flex-center" id="fundoLogin">
     <div class="localeSelector">
 
-      <!-- <q-select v-model="locale" :options="localeOptions" dense borderless style="min-width: 150px" @update:model-value="changeLocale" emit-value map-options/> -->
-          <q-select 
-        v-model="locale"
-        :options="localeOptions"
-        dense
-        borderless
-        style="min-width: 100px"
-        @update:model-value="changeLocale"
-        emit-value
-        map-options
-      >
+      <q-select v-model="locale" :options="localeOptions" dense borderless style="min-width: 100px"
+        @update:model-value="changeLocale" emit-value map-options>
         <!-- Como a opção aparece na lista -->
         <template v-slot:option="scope">
           <q-item v-bind="scope.itemProps">
@@ -34,8 +25,8 @@
         </template>
       </q-select>
 
-      
-      
+
+
     </div>
     <div class="containerLogin">
       <div class="left">
@@ -43,25 +34,30 @@
           <img :src="logo" alt="Logo" />
           <header>{{ t('login.bookRental') }}</header>
         </div>
-        <div class="formLogin" style="max-width: 300px">
+        
+          <q-form ref="loginForm" @submit="onSubmit" @reset="onReset" class="formLogin" style="max-width: 300px">
           <p>{{ t('login.welcome') }}</p>
           <header style="color: #F7B176;">{{ t('login.title') }}</header>
-          <q-input filled v-model="email" type="email" :label="t('login.email')" class="input" :error="!!errorMsg"
-  :error-message="errorMsg"/>
-          <q-input filled v-model="password" type="password" :label="t('login.password')" class="input" :error="!!errorMsg"
-  :error-message="errorMsg"/>
+
+          <q-input filled v-model="email" type="email" :label="t('login.email')" hint="Email de usuário" lazy-rules class="input white-message"
+            :rules="[val => val && val.length > 0 || 'Por favor insira seu email']" />
+
+          <q-input filled v-model="password" type="password" :label="t('login.password')"  hint="Senha de usuário" lazy-rules class="input white-message" :rules="[
+            val => val !== null && val !== '' || 'Por favor insira sua senha']" />
+
           <div v-if="errorMsg" class="text-negative q-mb-sm">{{ errorMsg }}</div>
-          <q-btn push :label="t('login.button')" @click="login()" id="logIn" />
+          <q-btn push type="submit" :label="t('login.button')" id="logIn" />
           <router-link to="/forgot-password" id="forgotPasswordLabel">
             {{ t('login.forgotPassword') }}
           </router-link>
           <img :src="logoWDA" alt="" class="logo">
+        </q-form>
         </div>
-      </div>
       <div class="imgLogin" id="imgLogin">
         <img :src="logoWDA" alt="">
       </div>
     </div>
+    
   </q-page>
 </template>
 <script setup>
@@ -76,11 +72,22 @@ import { authenticate } from 'src/stores/auth.js'
 import { useRouter } from 'vue-router'
 
 
-const {  t, locale: i18nLocale } = useI18n()
 
+const { t, locale: i18nLocale } = useI18n()
 const locale = ref(i18nLocale.value || 'pt-BR')
-
-
+const email = ref('')
+const password = ref('')
+const router = useRouter()
+const logo = logoImg
+const logoWDA = logoWDAbranca
+const errorMsg = ref('')
+// const errorEmail = ref('')
+// const errorPassword = ref('')
+// const errorColor = ref('text-negative')
+// const labelColorPassword = ref('')
+// const labelColorEmail = ref('')
+const loginForm = ref(null)
+//traduction
 
 const localeOptions = [
   { label: 'Português', value: 'pt-BR', icon: flagBR },
@@ -97,21 +104,61 @@ function changeLocale(newLocale) {
   }
 }
 
-const email = ref('')
-const password = ref('')
+//login
 
-const router = useRouter()
-const logo = logoImg
-const logoWDA = logoWDAbranca
-const errorMsg = ref('')
 
-async function login() {
+const onSubmit = async () => {
+  if (!loginForm.value.validate()) return
+
   try {
-     const res = await authenticate.login(email.value, password.value)
+    const res = await authenticate.login(email.value, password.value)
     console.log('Logou! Token:', res.token)
     router.replace('/dashboard-quasar')
   } catch {
-     errorMsg.value = 'Email ou senha inválidos'
+    errorMsg.value = 'Email ou senha inválidos'
   }
 }
+
+const onReset = () => {
+  loginForm.value.reset()
+  errorMsg.value = ''
+}
+// async function login() {
+//   if (!validateFields()) return
+//   try {
+//     const res = await authenticate.login(email.value, password.value)
+//     console.log('Logou! Token:', res.token)
+//     router.replace('/dashboard-quasar')
+//   } catch {
+//     errorMsg.value = 'Email ou senha inválidos'
+//   }
+// }
+
+// function validateFields() {
+//   let isValid = true
+
+//   if (!email.value) {
+//     errorEmail.value = 'O email deve ser preenchido'
+//     errorColor.value = 'text-negative'
+//     labelColorEmail.value = 'red'
+//     isValid = false
+//   } else {
+//     errorEmail.value = ''
+//     labelColorEmail.value = 'white'
+//   }
+
+//   if (!password.value) {
+//     errorPassword.value = 'A senha deve ser preenchida'
+//     errorColor.value = 'text-negative'
+//     labelColorPassword.value = 'red'
+//     isValid = false
+//   } else {
+//     errorPassword.value = ''
+//     labelColorPassword.value = ''
+//   }
+
+//   return isValid
+// }
+
+
 </script>

@@ -71,7 +71,6 @@
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { authenticate } from 'src/stores/auth.js'
-import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
 
@@ -109,8 +108,8 @@ const linksList = [
   {
     title: t('sideBar.logout'),
     icon: 'logout',
-    link: '/',
-    action: logoutUser
+    action: logoutUser,
+    class: 'logout-item'
   },
 ]
 
@@ -164,11 +163,10 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
-const router = useRouter()
+
 
 function logoutUser() {
   authenticate.logout()
-  router.replace('/') // redireciona pra tela de login
 }
 
 </script>
