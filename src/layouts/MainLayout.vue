@@ -47,7 +47,36 @@
 
                 <!-- Botão de upload -->
                 <q-btn :label="t('avatarButton')" @click="triggerFile" color="primary" />
+                
+                  <div class="localeSelectorSideBar">
+
+                  <q-select v-model="locale" :options="localeOptions" dense borderless style="min-width: 100px"
+                    @update:model-value="changeLocale" emit-value map-options>
+                    <!-- Como a opção aparece na lista -->
+                    <template v-slot:option="scope">
+                      <q-item v-bind="scope.itemProps">
+                        <q-item-section avatar>
+                          <img :src="scope.opt.icon" alt="" style="width: 24px; height: 24px;" />
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>{{ scope.opt.label }}</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                    </template>
+
+                    <!-- Como a opção selecionada aparece no select -->
+                    <template v-slot:selected-item="scope">
+                      <div class="flex items-center">
+                        <img :src="scope.opt.icon" alt="" style="width: 20px; height: 20px; margin-right: 8px;" />
+                        <span>{{ scope.opt.label }}</span>
+                      </div>
+                    </template>
+                  </q-select>
+
+                </div>
+              
               </q-card-section>
+              
             </q-card>
           </q-expansion-item>
 
@@ -57,7 +86,7 @@
 
         <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
 
-        
+
       </q-list>
     </q-drawer>
 
@@ -71,8 +100,12 @@
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { authenticate } from 'src/stores/auth.js'
+import flagBR from 'src/assets/br.png'
+import flagUS from 'src/assets/us.png'
+import flagES from 'src/assets/es.png'
+const { t, locale: i18nLocale } = useI18n()
 
-const { t } = useI18n()
+const locale = ref(i18nLocale.value || 'pt-BR')
 
 const linksList = [
   {
@@ -136,8 +169,6 @@ const presetAvatars = [
   harry, hermione, rony, bella, edward, jacob, malorie, lucy, percy
 ]
 
-
-
 function triggerFile() {
   fileInput.value.click()
 }
@@ -163,10 +194,23 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
-
-
 function logoutUser() {
   authenticate.logout()
+}
+
+const localeOptions = [
+  { label: 'Português', value: 'pt-BR', icon: flagBR },
+  { label: 'English', value: 'en-US', icon: flagUS },
+  { label: 'Español', value: 'es-ES', icon: flagES }
+]
+
+function changeLocale(newLocale) {
+  if (typeof newLocale === 'string') {
+    i18nLocale.value = newLocale
+    localStorage.setItem('locale', newLocale)
+  } else {
+    console.warn('Locale inválido:', newLocale)
+  }
 }
 
 </script>

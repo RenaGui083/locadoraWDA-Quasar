@@ -32,6 +32,7 @@ body {
     width: 50%;
 }
 
+
 .formLogin img {
     display: none;
 }
@@ -39,18 +40,10 @@ body {
 .input {
     width: 150%;
 }
-.q-input--focused .q-field__label {
-  color: var(--q-primary); /* mantém a cor primary quando focado */
-}
 
 .input .q-field__control {
   background-color: #404668;   
 }
-.input .q-field__native {
-    color: white;
-    /* cor do texto digitado */
-}
-
 
 #logIn {
     width: 50%;
@@ -363,9 +356,19 @@ body {
     top: 15px;
     left: 15px;
     z-index: 999;
-    background-color: #ffffff;
+    // background-color: #ffffff;
     padding: 5px;
     border-radius: 8px;
+}
+
+.localeSelectorSideBar{
+
+    // top: 10px;
+    // left: 15px;
+    background-color: #ffffff;
+    padding: 2px 6px ;
+    border-radius: 5px;
+    margin-top: 2%;
 }
 
 #gridDashboard {
@@ -460,7 +463,8 @@ body {
 }
 
 .logout-item {
-  color: white; /* pra garantir contraste */
+  color: white !important; /* pra garantir contraste */
+  background-color: #121F2F !important;
 }
 
 .label-error .q-field__label {

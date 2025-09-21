@@ -34,16 +34,17 @@
           <img :src="logo" alt="Logo" />
           <header>{{ t('login.bookRental') }}</header>
         </div>
-        
-          <q-form ref="loginForm" @submit="onSubmit" @reset="onReset" class="formLogin" style="max-width: 300px">
+
+        <q-form ref="loginForm" @submit="onSubmit" @reset="onReset" class="formLogin" style="max-width: 300px">
           <p>{{ t('login.welcome') }}</p>
           <header style="color: #F7B176;">{{ t('login.title') }}</header>
 
-          <q-input filled v-model="email" type="email" :label="t('login.email')" hint="Email de usuário" lazy-rules class="input white-message"
-            :rules="[val => val && val.length > 0 || 'Por favor insira seu email']" />
+          <q-input filled v-model="email" type="email" :label="t('login.email')" hint="Email de usuário" lazy-rules
+            class="input white-message" :rules="[val => val && val.length > 0 || 'Por favor insira seu email']" />
 
-          <q-input filled v-model="password" type="password" :label="t('login.password')"  hint="Senha de usuário" lazy-rules class="input white-message" :rules="[
-            val => val !== null && val !== '' || 'Por favor insira sua senha']" />
+          <q-input filled v-model="password" type="password" :label="t('login.password')" hint="Senha de usuário"
+            lazy-rules class="input white-message" :rules="[
+              val => val !== null && val !== '' || 'Por favor insira sua senha']" />
 
           <div v-if="errorMsg" class="text-negative q-mb-sm">{{ errorMsg }}</div>
           <q-btn push type="submit" :label="t('login.button')" id="logIn" />
@@ -52,12 +53,12 @@
           </router-link>
           <img :src="logoWDA" alt="" class="logo">
         </q-form>
-        </div>
+      </div>
       <div class="imgLogin" id="imgLogin">
         <img :src="logoWDA" alt="">
       </div>
     </div>
-    
+
   </q-page>
 </template>
 <script setup>
@@ -71,8 +72,6 @@ import flagES from 'src/assets/es.png'
 import { authenticate } from 'src/stores/auth.js'
 import { useRouter } from 'vue-router'
 
-
-
 const { t, locale: i18nLocale } = useI18n()
 const locale = ref(i18nLocale.value || 'pt-BR')
 const email = ref('')
@@ -81,12 +80,10 @@ const router = useRouter()
 const logo = logoImg
 const logoWDA = logoWDAbranca
 const errorMsg = ref('')
-// const errorEmail = ref('')
-// const errorPassword = ref('')
-// const errorColor = ref('text-negative')
-// const labelColorPassword = ref('')
-// const labelColorEmail = ref('')
 const loginForm = ref(null)
+import { Dark } from 'quasar'
+
+Dark.set(true)
 //traduction
 
 const localeOptions = [
@@ -123,42 +120,5 @@ const onReset = () => {
   loginForm.value.reset()
   errorMsg.value = ''
 }
-// async function login() {
-//   if (!validateFields()) return
-//   try {
-//     const res = await authenticate.login(email.value, password.value)
-//     console.log('Logou! Token:', res.token)
-//     router.replace('/dashboard-quasar')
-//   } catch {
-//     errorMsg.value = 'Email ou senha inválidos'
-//   }
-// }
-
-// function validateFields() {
-//   let isValid = true
-
-//   if (!email.value) {
-//     errorEmail.value = 'O email deve ser preenchido'
-//     errorColor.value = 'text-negative'
-//     labelColorEmail.value = 'red'
-//     isValid = false
-//   } else {
-//     errorEmail.value = ''
-//     labelColorEmail.value = 'white'
-//   }
-
-//   if (!password.value) {
-//     errorPassword.value = 'A senha deve ser preenchida'
-//     errorColor.value = 'text-negative'
-//     labelColorPassword.value = 'red'
-//     isValid = false
-//   } else {
-//     errorPassword.value = ''
-//     labelColorPassword.value = ''
-//   }
-
-//   return isValid
-// }
-
 
 </script>

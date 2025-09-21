@@ -75,6 +75,10 @@
 <script setup>
 import { useCrud } from 'src/utils/dashboard.js'
 
+import { Dark } from 'quasar'
+
+Dark.set(false)
+
 const {
     ChartBar1, ChartBar2, ChartPie1,
     $q, t,

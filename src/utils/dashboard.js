@@ -6,7 +6,9 @@ import ChartPie1 from "src/components/DashboardChartPie1.vue";
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
 
+
 export function useCrud() {
+    
     const { t } = useI18n()
 
     const $q = useQuasar()
