@@ -10,18 +10,18 @@
                 <label for="" class="searchInput">
                     <q-icon name="search" class="searchIcon" />
                 </label>
-                <input type="text" id="searchInput" v-model="filter" :placeholder=" t('search.searchBar')">
+                <input type="text" id="searchInput" v-model="filter" :placeholder="t('search.searchBar')">
             </div>
             <q-btn push :label="t('search.createButton')" class="addButton" @click="openModalCreate = true" />
         </div>
 
-        
+
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">{{ t('publishers.table.tableTitle') }}</div>
-            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+            <q-table :rows="publishers" :columns="columns" row-key="name" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
                 :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
-                :pagination-label="paginationLabel"
+                :pagination-label="paginationLabel" :loading="loading" :loading-label="t('tables.loading')"
                 class="my-table shadow-2 rounded-borders" id="publishersTable" :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
@@ -68,10 +68,14 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('publishers.createModal.name')" class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label="t('publishers.createModal.email')" class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" :label="t('publishers.createModal.telephone')" class="inputModal" />
-                        <q-input filled v-model="site" type="text" :label="t('publishers.createModal.site')" class="inputModal" />
+                        <q-input filled v-model="name" type="text" :label="t('publishers.createModal.name')"
+                            class="inputModal" />
+                        <q-input filled v-model="email" type="email" :label="t('publishers.createModal.email')"
+                            class="inputModal" />
+                        <q-input filled v-model="telephone" type="text" :label="t('publishers.createModal.telephone')"
+                            class="inputModal" />
+                        <q-input filled v-model="site" type="text" :label="t('publishers.createModal.site')"
+                            class="inputModal" />
 
                     </slot>
                 </q-card-section>
@@ -79,7 +83,8 @@
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated :label="t('publishers.createModal.registerButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('publishers.createModal.registerButton')" color="primary"
+                        @click="register" class="buttonRegister" />
                     <q-btn flat :label="t('publishers.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -102,18 +107,23 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label=" t('publishers.editModal.name') " class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label=" t('publishers.editModal.email') " class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" :label=" t('publishers.editModal.telephone') " class="inputModal" />
-                        <q-input filled v-model="site" type="text" :label=" t('publishers.editModal.site') " class="inputModal" />
+                        <q-input filled v-model="name" type="text" :label="t('publishers.editModal.name')"
+                            class="inputModal" />
+                        <q-input filled v-model="email" type="email" :label="t('publishers.editModal.email')"
+                            class="inputModal" />
+                        <q-input filled v-model="telephone" type="text" :label="t('publishers.editModal.telephone')"
+                            class="inputModal" />
+                        <q-input filled v-model="site" type="text" :label="t('publishers.editModal.site')"
+                            class="inputModal" />
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated :label=" t('publishers.editModal.registerButton') " color="primary"  @click="openModalConfirm = true,openModalEdit = false" class="buttonRegister" />
-                    <q-btn flat :label=" t('publishers.editModal.cancelButton') " color="white" v-close-popup />
+                    <q-btn unelevated :label="t('publishers.editModal.registerButton')" color="primary"
+                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
+                    <q-btn flat :label="t('publishers.editModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -134,7 +144,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -143,7 +154,7 @@
 
 
 
-        
+
 
         <q-dialog v-model="openModalConfirm" persistent :maximized="$q.screen.lt.md">
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
@@ -158,7 +169,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -169,8 +181,9 @@
 <script setup>
 import { useCrud } from 'src/utils/publishers.js'
 const {
-    name, email, telephone, site, 
+    name, email, telephone, site,
     $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
-    filter, pagination, columns, rows, t, paginationLabel,
+    filter, pagination, columns, t, paginationLabel, publishers, loading
+    // rows, 
 } = useCrud()
 </script>

@@ -56,7 +56,8 @@ export default {
     tables: {
         noData: "Sin registros disponibles...",
         rowsPerPage: "filas por página",
-        of: "de"
+        of: "de",
+        loading: "Cargando..."
     },
 
     library: {

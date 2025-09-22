@@ -61,7 +61,8 @@ export default {
     tables: {
         noData: "No data available...",
         rowsPerPage: "Rows per page",
-        of: "of"
+        of: "of",
+        loading: "Loading..."
     },
 
 
