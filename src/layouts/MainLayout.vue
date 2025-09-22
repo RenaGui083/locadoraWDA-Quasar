@@ -24,8 +24,8 @@
 
               <q-item-section class="profileSection">
                 <div class="profileText">
-                  <p class="nameProfile">Jhon Doe</p>
-                  <p class="roleProfile">Administrador</p>
+                  <p class="nameProfile">{{ nameProfile }}</p>
+                  <p class="roleProfile">{{ roleProfile }}</p>
                 </div>
               </q-item-section>
             </template>
@@ -42,11 +42,11 @@
                   </q-avatar>
                 </div>
 
-                <!-- Input escondido -->
                 <input ref="fileInput" type="file" accept="image/*" @change="handleFile" style="display: none" />
 
-                <!-- Botão de upload -->
-                <q-btn :label="t('avatarButton')" @click="triggerFile" color="primary" />
+                 <div class="sideBarButtons">
+
+                                  <q-btn :label="t('avatarButton')" @click="triggerFile" color="primary" />
                 
                   <div class="localeSelectorSideBar">
 
@@ -74,6 +74,9 @@
                   </q-select>
 
                 </div>
+
+                 </div>
+
               
               </q-card-section>
               
@@ -99,10 +102,11 @@
 <script setup>
 import { ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
-import { authenticate } from 'src/stores/auth.js'
+import { authenticate } from 'src/stores/authStore.js'
 import flagBR from 'src/assets/br.png'
 import flagUS from 'src/assets/us.png'
 import flagES from 'src/assets/es.png'
+import { onMounted } from 'vue'
 const { t, locale: i18nLocale } = useI18n()
 
 const locale = ref(i18nLocale.value || 'pt-BR')
@@ -212,5 +216,22 @@ function changeLocale(newLocale) {
     console.warn('Locale inválido:', newLocale)
   }
 }
+const nameProfile = ref('')
+let roleProfile = ref('')
+
+function getNameRole() {
+  nameProfile.value = localStorage.getItem('nameUser')
+  roleProfile.value = localStorage.getItem('roleUser')
+
+  if (roleProfile.value == "ADMIN") {
+    roleProfile.value = (t('roleAdmin'))
+  } else {
+    roleProfile.value = (t('roleUser'))
+  }
+}
+
+onMounted(() => {
+  getNameRole()
+})
 
 </script>

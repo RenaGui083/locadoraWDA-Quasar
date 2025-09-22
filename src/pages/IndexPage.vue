@@ -69,7 +69,7 @@ import { useI18n } from 'vue-i18n'
 import flagBR from 'src/assets/br.png'
 import flagUS from 'src/assets/us.png'
 import flagES from 'src/assets/es.png'
-import { authenticate } from 'src/stores/auth.js'
+import { authenticate } from 'src/stores/authStore.js'
 import { useRouter } from 'vue-router'
 
 const { t, locale: i18nLocale } = useI18n()

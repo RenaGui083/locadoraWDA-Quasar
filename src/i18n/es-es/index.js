@@ -261,6 +261,7 @@ export default {
         }
     },
 
-
+    roleUser: "Usuario",
+    roleAdmin: "Administrador",
     avatarButton: "Establecer avatar",
 }

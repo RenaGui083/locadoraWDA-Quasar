@@ -2,6 +2,8 @@ import { ref, watch } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
+// import { storeToRefs } from 'pinia'
+// import { usePublisherStore } from 'src/stores/publishersStore'
 
 export function useCrud() {
     const email = ref('')
@@ -9,6 +11,11 @@ export function useCrud() {
     const telephone = ref('')
     const site = ref('')
 
+    // const publisherStore = usePublisherStore()
+
+    // const { publishers, loading, error } = storeToRefs(publisherStore)
+
+    const rows = ref([])
     const $q = useQuasar()
 
     const { t } = useI18n()
@@ -21,14 +28,9 @@ export function useCrud() {
 
     const filter = ref("")
 
-    const pagination = ref({
-        page: 1,
-        rowsPerPage: $q.screen.lt.md ? 0 : 5
-    })
+    const pagination = ref({ page: 1, rowsPerPage: $q.screen.lt.md ? 0 : 5 })
 
-    watch(() => $q.screen.lt.md, (isMobile) => {
-        pagination.value.rowsPerPage = isMobile ? 0 : 5
-    })
+    watch(() => $q.screen.lt.md, (isMobile) => { pagination.value.rowsPerPage = isMobile ? 0 : 5 })
 
     const columns = [
         { name: "name", label: t('publishers.table.name'), field: "name", align: "left", sortable: true },
@@ -40,15 +42,9 @@ export function useCrud() {
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
-    const rows = ref([
-        { name: "Companhia das Letras", email: "contato@letras.com.br", telephone: "(11) 3333-4444", site: "https://www.companhiadasletras.com.br", actions: "" },
-        { name: "Record", email: "info@record.com.br", telephone: "(21) 2222-5555", site: "https://www.record.com.br", actions: "" },
-        { name: "Rocco", email: "sac@rocco.com.br", telephone: "(11) 4444-6666", site: "https://www.rocco.com.br", actions: "" },
-        { name: "Intrínseca", email: "contato@intrinseca.com.br", telephone: "(31) 5555-7777", site: "https://www.intrinseca.com.br", actions: "" },
-        { name: "DarkSide Books", email: "contato@darksidebooks.com.br", telephone: "(21) 9999-0000", site: "https://www.darksidebooks.com.br", actions: "" },
-        { name: "Zahar", email: "sac@zahar.com.br", telephone: "(11) 3333-8888", site: "https://www.zahar.com.br", actions: "" },
-        { name: "Editora Gutenberg", email: "contato@gutenberg.com.br", telephone: "(41) 2222-9999", site: "https://www.gutenberg.com.br", actions: "" }
-    ])
+    // onMounted(() => {
+    //     publisherStore.fetchPublishers()
+    // })
 
     return {
         email, name, telephone, site,
@@ -57,6 +53,8 @@ export function useCrud() {
 
         filter, pagination, columns, rows,
 
-        t, i18n, locale, paginationLabel
+        t, i18n, locale, paginationLabel,
+        
+        // publishers, loading, error
     }
 }
