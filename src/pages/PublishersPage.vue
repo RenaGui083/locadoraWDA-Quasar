@@ -24,6 +24,7 @@
                 :pagination-label="paginationLabel" :loading="loading" :loading-label="t('tables.loading')"
                 class="my-table shadow-2 rounded-borders" id="publishersTable" :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
+
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
                         <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
@@ -68,15 +69,17 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('publishers.createModal.name')"
-                            class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label="t('publishers.createModal.email')"
-                            class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" :label="t('publishers.createModal.telephone')"
-                            class="inputModal" />
-                        <q-input filled v-model="site" type="text" :label="t('publishers.createModal.site')"
-                            class="inputModal" />
+                        <q-form @submit="onSubmit" @reset="onReset">
+                            <q-input filled v-model="newPublisher.name" type="text" color="primary"
+                                :label="t('publishers.createModal.name')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o nome da editora']"/>
+                            <q-input filled v-model="newPublisher.email" type="email"
+                                :label="t('publishers.createModal.email')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o email da editora']"/>
+                            <q-input filled v-model="newPublisher.telephone" type="text"
+                                :label="t('publishers.createModal.telephone')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o email da editora']"/>
+                            <q-input filled v-model="newPublisher.site" type="text"
+                                :label="t('publishers.createModal.site')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o site da editora']"/>
 
+                        </q-form>
                     </slot>
                 </q-card-section>
 
@@ -84,7 +87,7 @@
                 <q-separator />
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('publishers.createModal.registerButton')" color="primary"
-                        @click="register" class="buttonRegister" />
+                        @click="addPublisher" class="buttonRegister" />
                     <q-btn flat :label="t('publishers.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -107,13 +110,13 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('publishers.editModal.name')"
+                        <q-input filled v-model="newPublisher.name" type="text" :label="t('publishers.editModal.name')"
                             class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label="t('publishers.editModal.email')"
-                            class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" :label="t('publishers.editModal.telephone')"
-                            class="inputModal" />
-                        <q-input filled v-model="site" type="text" :label="t('publishers.editModal.site')"
+                        <q-input filled v-model="newPublisher.email" type="email"
+                            :label="t('publishers.editModal.email')" class="inputModal" />
+                        <q-input filled v-model="newPublisher.telephone" type="text"
+                            :label="t('publishers.editModal.telephone')" class="inputModal" />
+                        <q-input filled v-model="newPublisher.site" type="text" :label="t('publishers.editModal.site')"
                             class="inputModal" />
                     </slot>
                 </q-card-section>
@@ -181,9 +184,8 @@
 <script setup>
 import { useCrud } from 'src/utils/publishers.js'
 const {
-    name, email, telephone, site,
-    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
-    filter, pagination, columns, t, paginationLabel, publishers, loading
-    // rows, 
+    // name, email, telephone, site,
+    newPublisher, addPublisher, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
+    filter, pagination, columns, t, paginationLabel, publishers, loading,
 } = useCrud()
 </script>

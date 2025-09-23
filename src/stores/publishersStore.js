@@ -13,13 +13,11 @@ export const usePublisherStore = defineStore('publisher', {
             this.loading = true
             this.error = null
             try {
-                const token = localStorage.getItem('authToken')
-                if (!token) throw new Error('Token não encontrado')
-                api.defaults.headers.common['Authorization'] = `Bearer ${token}`
                 const res = await api.get('/publisher')
                 this.publishers = res.data
             } catch (err) {
-                this.error = err
+                console.error(err)
+                throw err 
             } finally {
                 this.loading = false
             }

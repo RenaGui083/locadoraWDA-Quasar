@@ -2,6 +2,11 @@
     background-color: #2B324E;
 }
 
+// .inputModal::placeholder {
+//   color: #ffffff !important;
+//   opacity: 1; // garante que fique visível mesmo em dark mode
+// }
+
 .text-h5{
     color: #F7B176;
     font-weight: bold;
@@ -17,19 +22,25 @@
 
 
 .inputModal {
-    background-color: #404668;
+    // background-color: #404668;
     width: 100%;
     margin-bottom: 2%;
 
     .q-field__label {
         color: #f0f0f0;
+        opacity: 60%;
         border-color: #00ffcc;
     }
+    margin-top: -3px;
 }
 
 .inputModal .q-field__native {
     color: white;
     /* cor do texto digitado */
+}
+
+.inputModal .q-field__control {
+  background-color: #404668;   
 }
 
 .viewInput{
