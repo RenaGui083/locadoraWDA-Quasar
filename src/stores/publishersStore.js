@@ -44,7 +44,7 @@ export const usePublisherStore = defineStore('publisher', {
 
         async deletePublisher(id) {
             try {
-                await api.delete(`/api/publishers/${id}`)
+                await api.delete(`/publisher/${id}`)
                 this.publishers = this.publishers.filter(p => p.id !== id)
             } catch (err) {
                 this.error = err

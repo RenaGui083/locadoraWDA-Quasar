@@ -18,7 +18,7 @@
 
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">{{ t('publishers.table.tableTitle') }}</div>
-            <q-table :rows="publishers" :columns="columns" row-key="name" v-model:pagination="pagination"
+            <q-table :rows="publishers" :columns="columns" row-key="id" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
                 :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
                 :pagination-label="paginationLabel" :loading="loading" :loading-label="t('tables.loading')"
@@ -28,7 +28,7 @@
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
                         <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
-                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="deletePublisher(props.row)" />
                     </q-td>
                 </template>
                 <template v-slot:body-cell="props">
@@ -44,7 +44,7 @@
                         </div>
                         <div class="row justify-end q-mt-sm">
                             <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="deletePublisher(props.row)" />
                         </div>
                     </div>
                 </template>
@@ -69,15 +69,26 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-form @submit="onSubmit" @reset="onReset">
+                        <q-form @submit="onSubmit" @reset="onReset" ref="formRef">
                             <q-input filled v-model="newPublisher.name" type="text" color="primary"
-                                :label="t('publishers.createModal.name')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o nome da editora']"/>
+                                :label="t('publishers.createModal.name')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || 'Por favor insira o nome da editora'
+                                ]" />
                             <q-input filled v-model="newPublisher.email" type="email"
-                                :label="t('publishers.createModal.email')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o email da editora']"/>
+                                :label="t('publishers.createModal.email')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || 'Por favor insira o email da editora',
+                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || 'Email inválido'
+                                ]" />
                             <q-input filled v-model="newPublisher.telephone" type="text"
-                                :label="t('publishers.createModal.telephone')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o email da editora']"/>
+                                :label="t('publishers.createModal.telephone')" class="inputModal" mask="(##) #####-####"
+                                unmasked-value :rules="[
+                                    val => !!val || 'Por favor insira o telefone da editora',
+                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || 'Telefone inválido'
+                                ]" />
                             <q-input filled v-model="newPublisher.site" type="text"
-                                :label="t('publishers.createModal.site')" class="inputModal" :rules="[val => val && val.length > 0 || 'Por favor insira o site da editora']"/>
+                                :label="t('publishers.createModal.site')" class="inputModal" :rules="[
+                                    val => !val || /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w- .\/?%&=]*)?$/.test(val) || 'Site inválido'
+                                ]" />
 
                         </q-form>
                     </slot>
@@ -147,8 +158,12 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register"
-                        class="buttonRegister" />
+                   <q-btn unelevated
+       :label="t('excludeModal.yesButton')"
+       color="primary"
+       @click="confirmDelete"
+       class="buttonRegister"
+/>
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -184,8 +199,7 @@
 <script setup>
 import { useCrud } from 'src/utils/publishers.js'
 const {
-    // name, email, telephone, site,
     newPublisher, addPublisher, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
-    filter, pagination, columns, t, paginationLabel, publishers, loading,
+    filter, pagination, columns, t, paginationLabel, publishers, loading, formRef, deletePublisher,confirmDelete
 } = useCrud()
 </script>

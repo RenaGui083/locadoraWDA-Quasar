@@ -4,13 +4,9 @@ import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
 import { storeToRefs } from 'pinia'
 import { usePublisherStore } from 'src/stores/publishersStore'
-import { getSuccess, getError } from 'src/utils/toasts'
+import { getSuccess, getError, postSuccess, postError, deleteSuccess, deleteError } from 'src/utils/toasts'
 
 export function useCrud() {
-    // const email = ref('')
-    // const name = ref('')
-    // const telephone = ref('')
-    // const site = ref('')
 
     const publisherStore = usePublisherStore()
     const newPublisher = ref({
@@ -25,6 +21,10 @@ export function useCrud() {
     const $q = useQuasar()
 
     const { t, locale } = useI18n()
+
+    const formRef = ref(null)
+
+    const selectPublisher = ref(null)
 
     const openModalCreate = ref(false)
     const openModalEdit = ref(false)
@@ -58,19 +58,40 @@ export function useCrud() {
     })
 
     async function addPublisher() {
-        await publisherStore.addPublisher({ ...newPublisher.value })
-        getSuccess()
-        newPublisher.value = { name: '', email: '', telephone: '', site: '' }
-        openModalCreate.value = false
-        newPublisher.value = { name: '', email: '', telephone: '', site: '' }
+        const success = await formRef.value.validate()
+        if (success) {
+            await publisherStore.addPublisher({ ...newPublisher.value })
+            await publisherStore.fetchPublishers()
+            postSuccess()
+            newPublisher.value = { name: '', email: '', telephone: '', site: '' }
+            openModalCreate.value = false
+        } else {
+            postError()
+        }
     }
 
-    // function validateFields() {
+    function deletePublisher(publisher) {
+        selectPublisher.value = publisher
+        openModalExclude.value = true
+    }
 
-    // }
+    async function confirmDelete() {
+        if (!selectPublisher.value) return console.warn('Nenhum publisher selecionado')
+
+        try {
+            await publisherStore.deletePublisher(selectPublisher.value.id)
+            await publisherStore.fetchPublishers()
+            deleteSuccess()
+            openModalExclude.value = false
+            selectPublisher.value = null
+        } catch (err) {
+            deleteError()
+            console.error(err)
+        }
+    }
 
     return {
-        newPublisher, addPublisher,
+        newPublisher, addPublisher, formRef, deletePublisher, selectPublisher, confirmDelete,
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
 
