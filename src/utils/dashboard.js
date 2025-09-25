@@ -26,7 +26,7 @@ export function useCrud() {
         if ($q.screen.gt.lg) {
             pagination.value.rowsPerPage = 5
         } else if ($q.screen.lt.lg) {
-            pagination.value.rowsPerPage = 5
+            pagination.value.rowsPerPage = 3
         }
     })
     const columns = [

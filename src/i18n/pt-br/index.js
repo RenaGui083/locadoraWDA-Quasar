@@ -6,7 +6,14 @@ export default {
         email: 'Email',
         password: 'Senha',
         button: 'Entrar',
-        forgotPassword: 'Esqueceu a senha?'
+        forgotPassword: 'Esqueceu a senha?',
+        hints: {
+            email: "Email do usuário",
+            password: "Senha do usuário",
+            errorEmail: "Por favor insira seu email",
+            errorPassword: "Por favor insira sua senha",
+            alert: "Algo deu errado..."
+        }
     },
 
 

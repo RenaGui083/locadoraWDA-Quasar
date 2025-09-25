@@ -32,6 +32,21 @@ const chartOptions = {
         legend: { position: "none" },
         title: { display: false, text: "Aluguéis (mensal)" },
     },
+    scales: {
+        x: {
+            ticks: {
+                callback: function(value) {
+                    const label = this.getLabelForValue(value);
+                    return label.length > 12 ? label.substr(0, 12) + "…" : label
+                },
+            },
+        },
+        y: {
+            ticks: {
+                padding: 4,
+            }
+        }
+    }
 };
 
 const BarChart = Bar;

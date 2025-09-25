@@ -22,7 +22,7 @@
                         <div class="headerContainerChart">
                             <header>{{ t('dashboard.top3Chart') }}</header>
                         </div>
-                        <ChartBar2 style="height: 200px;" />
+                        <ChartBar2 style="min-height: 200px;" />
                     </q-card-section>
                 </q-card>
 

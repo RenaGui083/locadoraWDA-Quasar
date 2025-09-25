@@ -77,6 +77,14 @@
     // background-color: #121F2F;
 }
 
+.tableContainer{
+    border-radius: 10px;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    background-color: white;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
 
 .headerTable :hover {
     background-color: #121F2F;
@@ -93,13 +101,12 @@
 
 
 .my-table {
-    background-color: #f9fafb; // cor do fundo
-    border-radius: 12px;
-    // font-size: 14px;
+    background-color: transparent; // cor do fundo
+    border-radius: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-bottom-left-radius: 15px;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    // border-bottom-left-radius: 15px;
+    box-shadow: none;
 
 
     thead th {
@@ -123,7 +130,7 @@
 }
 
 .text-h6 {
-    background-color: white;
+    background-color: transparent;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
@@ -153,6 +160,18 @@
   border-left: none;
 }
 
+.my-table thead tr:first-child th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.my-table thead tr:first-child th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.my-table {
+//   border: none !important;
+border-radius: 10px;
+}
 
 @media screen and (max-width: 600px) {
 

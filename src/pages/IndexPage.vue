@@ -39,12 +39,12 @@
           <p>{{ t('login.welcome') }}</p>
           <header style="color: #F7B176;">{{ t('login.title') }}</header>
 
-          <q-input filled v-model="email" type="email" :label="t('login.email')" hint="Email de usuário" lazy-rules
-            class="input white-message" :rules="[val => val && val.length > 0 || 'Por favor insira seu email']" />
+          <q-input filled v-model="email" type="email" :label="t('login.email')" :hint="t('login.hints.email')" lazy-rules
+            class="input white-message" :rules="[val => val && val.length > 0 || t('login.hints.errorEmail')]" />
 
-          <q-input filled v-model="password" type="password" :label="t('login.password')" hint="Senha de usuário"
+          <q-input filled v-model="password" type="password" :label="t('login.password')" :hint="t('login.hints.password')"
             lazy-rules class="input white-message" :rules="[
-              val => val !== null && val !== '' || 'Por favor insira sua senha']" />
+              val => val !== null && val !== '' || t('login.hints.errorPassword')]" />
 
           <div v-if="errorMsg" class="text-negative q-mb-sm">{{ errorMsg }}</div>
           <q-btn push type="submit" :label="t('login.button')" id="logIn" />
@@ -112,7 +112,7 @@ const onSubmit = async () => {
     console.log('Logou! Token:', res.token)
     router.replace('/dashboard-quasar')
   } catch {
-    errorMsg.value = 'Email ou senha inválidos'
+    errorMsg.value = t('login.hints.alert')
   }
 }
 

@@ -6,7 +6,14 @@ export default {
         email: 'Correo electrónico',
         password: 'Contraseña',
         button: 'Entrada',
-        forgotPassword: '¿Olvidaste tu contraseña?'
+        forgotPassword: '¿Olvidaste tu contraseña?',
+        hints: {
+            email: "Correo electrónico del usuario",
+            password: "Contraseña del usuario",
+            errorEmail: "Por favor ingrese su correo electrónico",
+            errorPassword: "Por favor ingrese su contraseña",
+            alert: "Algo salió mal..."
+        }
     },
 
     forgotPassword: {

@@ -7,7 +7,14 @@ export default {
         email: "Email",
         password: "Password",
         button: "Login",
-        forgotPassword: "Forgot password?"
+        forgotPassword: "Forgot password?",
+        hints: {
+            email: "User email",
+            password: "User password",
+            errorEmail: "Please enter your email",
+            errorPassword: "Please enter your password",
+            alert: "Something is wrong..."
+        }
     },
 
 

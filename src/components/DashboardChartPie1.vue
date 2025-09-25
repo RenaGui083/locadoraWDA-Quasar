@@ -33,7 +33,7 @@ const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
-        legend: { position: "top" },
+        legend: { position: "bottom" },
         title: { display: false, text: "Aluguéis (mensal)" },
     },
 
