@@ -53,11 +53,11 @@
                 </div>
                 <q-card class="cardSection" id="dataChart">
                     <q-card-section>
-                        <div class="headerContainerChart">
+                        <div class="headerContainerChart" id="usersChart">
                             <header class="headerUsers">{{ t('dashboard.numberOfUsers') }}</header>
                             <p>29</p>
                         </div>
-                        <div class="headerContainerChart">
+                        <div class="headerContainerChart" id="adminsChart">
                             <header class="headerUsers">{{ t('dashboard.numberOfAdmins') }}</header>
                             <p>18</p>
                         </div>

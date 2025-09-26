@@ -1,15 +1,29 @@
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted} from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
 import { storeToRefs } from 'pinia'
 import { usePublisherStore } from 'src/stores/publishersStore'
-import { getSuccess, getError, postSuccess, postError, deleteSuccess, deleteError } from 'src/utils/toasts'
+import { getSuccess, getError, postSuccess, postError, deleteSuccess, deleteError, putSuccess, putError } from 'src/utils/toasts'
 
 export function useCrud() {
 
     const publisherStore = usePublisherStore()
     const newPublisher = ref({
+        name: '',
+        email: '',
+        telephone: '',
+        site: ''
+    })
+
+    const editPublisher = ref({
+        name: '',
+        email: '',
+        telephone: '',
+        site: ''
+    })
+
+    const editedPublisher = ref({
         name: '',
         email: '',
         telephone: '',
@@ -23,6 +37,7 @@ export function useCrud() {
     const { t, locale } = useI18n()
 
     const formRef = ref(null)
+    const formRefEdit = ref(null)
 
     const selectPublisher = ref(null)
 
@@ -47,6 +62,7 @@ export function useCrud() {
         { name: "actions", label: t('publishers.table.actions'), field: "actions", align: "center", filter: false }
     ]
 
+    //get publishers on load
 
     onMounted(async () => {
         try {
@@ -57,6 +73,7 @@ export function useCrud() {
         }
     })
 
+    //add publisher
     async function addPublisher() {
         const success = await formRef.value.validate()
         if (success) {
@@ -70,6 +87,7 @@ export function useCrud() {
         }
     }
 
+    //delete publisher
     function deletePublisher(publisher) {
         selectPublisher.value = publisher
         openModalExclude.value = true
@@ -90,8 +108,52 @@ export function useCrud() {
         }
     }
 
+    //update publisher
+
+    async function tryOpenConfirm() {
+    if (!formRefEdit.value) return
+    const valid = await formRefEdit.value.validate()
+    if (valid) {
+        openModalConfirm.value = true
+        openModalEdit.value = false
+    } else {
+        // opcional: toast de erro
+        console.warn('Formulário inválido')
+    }
+}
+
+    function prepareEditPublisher(publisher) {
+        openModalEdit.value = true
+        selectPublisher.value = publisher
+
+        editPublisher.value = {
+            name: publisher.name,
+            email: publisher.email,
+            telephone: publisher.telephone,
+            site: publisher.site
+        }
+    }
+
+    async function updatePublisher() {
+        editedPublisher.value = { ...editPublisher.value }
+        try {
+            await publisherStore.updatePublisher(selectPublisher.value.id, editPublisher.value)
+            await publisherStore.fetchPublishers()
+            openModalEdit.value = false
+            openModalConfirm.value = false
+            editPublisher.value = { name: '', email: '', telephone: '', site: '' }
+            selectPublisher.value = null
+            putSuccess()
+        } catch (err) {
+            putError()
+            console.error(err)
+        }
+    }
+
     return {
-        newPublisher, addPublisher, formRef, deletePublisher, selectPublisher, confirmDelete,
+        newPublisher, addPublisher, formRef, formRefEdit, deletePublisher, selectPublisher, confirmDelete, editPublisher, prepareEditPublisher,
+
+        updatePublisher, tryOpenConfirm,
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
 

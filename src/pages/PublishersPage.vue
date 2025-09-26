@@ -27,7 +27,7 @@
 
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
-                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditPublisher(props.row)"/>
                         <q-btn flat round dense icon="delete" color="#121f2f" @click="deletePublisher(props.row)" />
                     </q-td>
                 </template>
@@ -43,7 +43,7 @@
                             <div class="col-8">{{ col.value }}</div>
                         </div>
                         <div class="row justify-end q-mt-sm">
-                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditPublisher(props.row)"/>
                             <q-btn flat round dense icon="delete" color="#121f2f" @click="deletePublisher(props.row)" />
                         </div>
                     </div>
@@ -121,14 +121,27 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="newPublisher.name" type="text" :label="t('publishers.editModal.name')"
-                            class="inputModal" />
-                        <q-input filled v-model="newPublisher.email" type="email"
-                            :label="t('publishers.editModal.email')" class="inputModal" />
-                        <q-input filled v-model="newPublisher.telephone" type="text"
-                            :label="t('publishers.editModal.telephone')" class="inputModal" />
-                        <q-input filled v-model="newPublisher.site" type="text" :label="t('publishers.editModal.site')"
-                            class="inputModal" />
+                        <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
+                            <q-input filled v-model="editPublisher.name" type="text" color="primary"
+                                :label="t('publishers.createModal.name')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || 'Por favor insira o nome da editora'
+                                ]" />
+                            <q-input filled v-model="editPublisher.email" type="email"
+                                :label="t('publishers.createModal.email')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || 'Por favor insira o email da editora',
+                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || 'Email inválido'
+                                ]" />
+                            <q-input filled v-model="editPublisher.telephone" type="text"
+                                :label="t('publishers.createModal.telephone')" class="inputModal" mask="(##) #####-####"
+                                unmasked-value :rules="[
+                                    val => !!val || 'Por favor insira o telefone da editora',
+                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || 'Telefone inválido'
+                                ]" />
+                            <q-input filled v-model="editPublisher.site" type="text"
+                                :label="t('publishers.createModal.site')" class="inputModal" :rules="[
+                                    val => !val || /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w- .\/?%&=]*)?$/.test(val) || 'Site inválido'
+                                ]" />
+                        </q-form>
                     </slot>
                 </q-card-section>
 
@@ -136,7 +149,7 @@
                 <q-separator />
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('publishers.editModal.registerButton')" color="primary"
-                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
+                         @click="tryOpenConfirm" class="buttonRegister" />
                     <q-btn flat :label="t('publishers.editModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -158,12 +171,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                   <q-btn unelevated
-       :label="t('excludeModal.yesButton')"
-       color="primary"
-       @click="confirmDelete"
-       class="buttonRegister"
-/>
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="confirmDelete"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -187,7 +196,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="updatePublisher"
                         class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -200,6 +209,7 @@
 import { useCrud } from 'src/utils/publishers.js'
 const {
     newPublisher, addPublisher, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
-    filter, pagination, columns, t, paginationLabel, publishers, loading, formRef, deletePublisher,confirmDelete
+    filter, pagination, columns, t, paginationLabel, publishers, loading, formRef, deletePublisher, confirmDelete,
+     editPublisher,prepareEditPublisher, formRefEdit, updatePublisher,tryOpenConfirm
 } = useCrud()
 </script>
