@@ -1,5 +1,6 @@
 import { api } from 'boot/axios'
 import { defineStore } from 'pinia'
+import { successMsg, errorMsg } from 'src/utils/toasts'
 
 export const usePublisherStore = defineStore('publisher', {
     state: () => ({
@@ -9,46 +10,62 @@ export const usePublisherStore = defineStore('publisher', {
     }),
 
     actions: {
-        async fetchPublishers() {
+        fetchPublishers() {
             this.loading = true
             this.error = null
-            try {
-                const res = await api.get('/publisher')
-                this.publishers = res.data
-            } catch (err) {
-                console.error(err)
-                throw err 
-            } finally {
-                this.loading = false
-            }
+
+            return api.get('/publisher')
+                .then(response => {
+                    this.publishers = response.data
+                    console.log("Publishers fetched on mount")
+                })
+                .catch(e => {
+                    console.error('Erro:', e.response?.data || e.message);
+                    errorMsg("Erro ao obter dados!");
+                })
+                .finally(() => {
+                    this.loading = false
+                })
         },
 
-        async addPublisher(publisher) {
-            try {
-                const res = await api.post('/publisher', publisher)
-                this.publishers.push(res.data)
-            } catch (err) {
-                this.error = err
-            }
+        addPublisher(publisher) {
+            return api.post('/publisher', publisher)
+                .then(response => {
+                    this.publishers.push(response.data)
+                    successMsg('Cadastro realizado com sucesso!')
+                })
+                .catch(error => {
+                    const msg = error.response?.data?.error || error.message;
+                    errorMsg(msg);
+                    console.error('Erro:', error.response?.data || error.message);
+                })
         },
 
-        async updatePublisher(id, updated) {
-            try {
-                const res = await api.put(`/publisher/${id}`, updated)
-                const index = this.publishers.findIndex(p => p.id === id)
-                if (index !== -1) this.publishers[index] = res.data
-            } catch (err) {
-                this.error = err
-            }
+        updatePublisher(id, updated) {
+            return api.put(`/publisher/${id}`, updated)
+                .then(response => {
+                    const index = this.publishers.findIndex(p => p.id === id)
+                    if (index !== -1) this.publishers[index] = response.data
+                    successMsg('Atualização realizada com sucesso!')
+                })
+                .catch(error => {
+                    const msg = error.response?.data?.error || error.message;
+                    errorMsg(msg);
+                })
         },
 
-        async deletePublisher(id) {
-            try {
-                await api.delete(`/publisher/${id}`)
-                this.publishers = this.publishers.filter(p => p.id !== id)
-            } catch (err) {
-                this.error = err
-            }
+        deletePublisher(id) {
+
+            return api.delete(`/publisher/${id}`)
+                .then(() => {
+                    this.publishers = this.publishers.filter(p => p.id !== id)
+                    successMsg('Exclusão realizada com sucesso!')
+                })
+                .catch(error => {
+                    const msg = error.response?.data?.error || error.message;
+                    errorMsg(msg);
+                })
+
         }
     }
 })

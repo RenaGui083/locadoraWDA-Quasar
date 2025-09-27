@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
 import { storeToRefs } from 'pinia'
 import { usePublisherStore } from 'src/stores/publishersStore'
-import { getSuccess, getError, postSuccess, postError, deleteSuccess, deleteError, putSuccess, putError } from 'src/utils/toasts'
+// import { postSuccess, postError, deleteSuccess, deleteError, putSuccess, putError } from 'src/utils/toasts'
 
 export function useCrud() {
 
@@ -67,9 +67,9 @@ export function useCrud() {
     onMounted(async () => {
         try {
             await publisherStore.fetchPublishers()
-            getSuccess()
-        } catch {
-            getError()
+            console.log('Publishers fetched on mount')
+        } catch (error) {
+            console.log(error)('Failed to fetch publishers on mount')
         }
     })
 
@@ -79,11 +79,12 @@ export function useCrud() {
         if (success) {
             await publisherStore.addPublisher({ ...newPublisher.value })
             await publisherStore.fetchPublishers()
-            postSuccess()
+            // postSuccess()
             newPublisher.value = { name: '', email: '', telephone: '', site: '' }
             openModalCreate.value = false
         } else {
-            postError()
+            // postError()
+            console.log('Formulário inválido')
         }
     }
 
@@ -99,13 +100,13 @@ export function useCrud() {
         try {
             await publisherStore.deletePublisher(selectPublisher.value.id)
             await publisherStore.fetchPublishers()
-            deleteSuccess()
+            // deleteSuccess()
             openModalExclude.value = false
             selectPublisher.value = null
-        } catch (err) {
-            deleteError()
-            console.error(err)
-        }
+        }  catch (error) {
+            // deleteError()
+            console.error(error)
+          }
     }
 
     //update publisher
@@ -143,9 +144,9 @@ export function useCrud() {
             openModalConfirm.value = false
             editPublisher.value = { name: '', email: '', telephone: '', site: '' }
             selectPublisher.value = null
-            putSuccess()
+            // putSuccess()
         } catch (err) {
-            putError()
+            // putError()
             console.error(err)
         }
     }
