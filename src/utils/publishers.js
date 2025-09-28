@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
 import { storeToRefs } from 'pinia'
 import { usePublisherStore } from 'src/stores/publishersStore'
-// import { postSuccess, postError, deleteSuccess, deleteError, putSuccess, putError } from 'src/utils/toasts'
+// import { successMsg, errorMsg } from 'src/utils/toasts'
 
 export function useCrud() {
 
@@ -79,12 +79,10 @@ export function useCrud() {
         if (success) {
             await publisherStore.addPublisher({ ...newPublisher.value })
             await publisherStore.fetchPublishers()
-            // postSuccess()
             newPublisher.value = { name: '', email: '', telephone: '', site: '' }
             openModalCreate.value = false
         } else {
-            // postError()
-            console.log('Formulário inválido')
+            console.log('Invalid form')
         }
     }
 
@@ -95,16 +93,14 @@ export function useCrud() {
     }
 
     async function confirmDelete() {
-        if (!selectPublisher.value) return console.warn('Nenhum publisher selecionado')
+        if (!selectPublisher.value) return console.warn('No publisher selected for deletion')
 
         try {
             await publisherStore.deletePublisher(selectPublisher.value.id)
             await publisherStore.fetchPublishers()
-            // deleteSuccess()
             openModalExclude.value = false
             selectPublisher.value = null
         }  catch (error) {
-            // deleteError()
             console.error(error)
           }
     }
@@ -118,7 +114,6 @@ export function useCrud() {
         openModalConfirm.value = true
         openModalEdit.value = false
     } else {
-        // opcional: toast de erro
         console.warn('Formulário inválido')
     }
 }
@@ -144,9 +139,7 @@ export function useCrud() {
             openModalConfirm.value = false
             editPublisher.value = { name: '', email: '', telephone: '', site: '' }
             selectPublisher.value = null
-            // putSuccess()
         } catch (err) {
-            // putError()
             console.error(err)
         }
     }

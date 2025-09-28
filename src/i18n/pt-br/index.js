@@ -1,3 +1,5 @@
+
+
 export default {
     login: {
         bookRental: 'Locadora de Livros',
@@ -279,4 +281,18 @@ export default {
     roleUser: "Usuário",
     roleAdmin: "Administrador",
     avatarButton: "Mudar Avatar",
+
+    toasts: {
+        success: {
+            postSuccess: "Cadastro realizado com sucesso!",
+            deleteSuccess: "Exclusão realizada com sucesso!",
+            putSuccess: "Atualização realizada com sucesso!"
+        },
+        error: {
+            getError: "Erro ao obter os dados!",
+            postError: "Erro ao realizar cadastro!",
+            deleteError: "Erro ao realizar exclusão!",
+            putError: "Erro ao realizar atualização!"
+        }
+    },
 }

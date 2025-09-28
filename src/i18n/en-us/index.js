@@ -1,4 +1,5 @@
 
+
 export default {
     login: {
         bookRental: 'Book rental',
@@ -286,4 +287,19 @@ export default {
     roleUser: "User",
     roleAdmin: "Administrator",
     avatarButton: "Set avatar",
+
+    toasts: {
+        success: {
+            postSuccess: "Registration completed successfully!",
+            deleteSuccess: "Deletion completed successfully!",
+            putSuccess: "Update completed successfully!"
+        },
+        error: {
+            getError: "Error fetching data!",
+            postError: "Error during registration!",
+            deleteError: "Error during deletion!",
+            putError: "Error during update!"
+        },
+    },
+
 }

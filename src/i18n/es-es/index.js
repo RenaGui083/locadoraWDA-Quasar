@@ -272,4 +272,18 @@ export default {
     roleUser: "Usuario",
     roleAdmin: "Administrador",
     avatarButton: "Establecer avatar",
+
+    toasts: {
+        success: {
+            postSuccess: "¡Registro realizado con éxito!",
+            deleteSuccess: "¡Eliminación realizada con éxito!",
+            putSuccess: "¡Actualización realizada con éxito!"
+        },
+        error: {
+            getError: "¡Error al obtener los datos!",
+            postError: "¡Error durante el registro!",
+            deleteError: "¡Error durante la eliminación!",
+            putError: "¡Error durante la actualización!"
+        },
+    }
 }
