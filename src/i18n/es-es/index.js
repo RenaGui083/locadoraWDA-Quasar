@@ -1,3 +1,5 @@
+
+
 export default {
     login: {
         bookRental: "Alquiler de libros",
@@ -268,7 +270,7 @@ export default {
             cancelButton: "Cancelar",
         }
     },
-
+    errorDuplicate: "Este campo ya existe. Por favor, utilice un valor diferente.",
     roleUser: "Usuario",
     roleAdmin: "Administrador",
     avatarButton: "Establecer avatar",
@@ -281,9 +283,9 @@ export default {
         },
         error: {
             getError: "¡Error al obtener los datos!",
-            postError: "¡Error durante el registro!",
-            deleteError: "¡Error durante la eliminación!",
-            putError: "¡Error durante la actualización!"
+            postError: "¡Error durante el registro! Verifique si hay campos duplicados.",
+            deleteError: "¡Error durante la eliminación! Verifique si no hay libros vinculados.",
+            putError: "¡Error durante la actualización! Verifique si hay campos duplicados.",
         },
     }
 }

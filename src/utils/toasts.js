@@ -6,7 +6,7 @@ export function successMsg(msg) {
         type: 'positive',
         message: msg,
         position: 'bottom-right',
-        timeout: 3000,
+        timeout: 4000,
         color: 'green',
         textColor: 'white',
         icon: 'check'
@@ -17,7 +17,7 @@ export function errorMsg(msg) {
         type: 'negative',
         message: msg,
         position: 'bottom-right',
-        timeout: 3000,
+        timeout: 4000,
         color: 'red',
         textColor: 'white',
         icon: 'error'

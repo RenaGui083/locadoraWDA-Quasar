@@ -277,7 +277,7 @@ export default {
             cancelButton: "Cancelar",
         }
     },
-
+    errorDuplicate: "Este campo já existe. Por favor, utilize um valor diferente.",
     roleUser: "Usuário",
     roleAdmin: "Administrador",
     avatarButton: "Mudar Avatar",
@@ -290,9 +290,9 @@ export default {
         },
         error: {
             getError: "Erro ao obter os dados!",
-            postError: "Erro ao realizar cadastro!",
-            deleteError: "Erro ao realizar exclusão!",
-            putError: "Erro ao realizar atualização!"
+            postError: "Erro ao realizar cadastro! Verifique se não há campos duplicados.",
+            deleteError: "Erro ao realizar exclusão! Verifique se não existem livros vinculados.",
+            putError: "Erro ao realizar atualização! Verifique se não há campos duplicados.",
         }
     },
 }

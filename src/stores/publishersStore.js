@@ -1,6 +1,8 @@
 import { api } from 'boot/axios'
 import { defineStore } from 'pinia'
 import { successMsg, errorMsg } from 'src/utils/toasts'
+import { i18n } from 'boot/i18n'
+
 
 export const usePublisherStore = defineStore('publisher', {
     state: () => ({
@@ -17,11 +19,10 @@ export const usePublisherStore = defineStore('publisher', {
             return api.get('/publisher')
                 .then(response => {
                     this.publishers = response.data
-                    console.log("Publishers fetched on mount")
                 })
                 .catch(e => {
                     console.error('Erro:', e.response?.data || e.message);
-                    errorMsg("Erro ao obter dados!");
+                    errorMsg(i18n.global.t('toasts.error.getError'));
                 })
                 .finally(() => {
                     this.loading = false
@@ -32,12 +33,13 @@ export const usePublisherStore = defineStore('publisher', {
             return api.post('/publisher', publisher)
                 .then(response => {
                     this.publishers.push(response.data)
-                    successMsg('Cadastro realizado com sucesso!')
+                    successMsg(i18n.global.t('toasts.success.postSuccess'))
+                    return true
                 })
                 .catch(error => {
-                    const msg = error.response?.data?.error || error.message;
-                    errorMsg(msg);
+                    errorMsg(i18n.global.t('toasts.error.postError'));
                     console.error('Erro:', error.response?.data || error.message);
+                    return false
                 })
         },
 
@@ -46,11 +48,14 @@ export const usePublisherStore = defineStore('publisher', {
                 .then(response => {
                     const index = this.publishers.findIndex(p => p.id === id)
                     if (index !== -1) this.publishers[index] = response.data
-                    successMsg('Atualização realizada com sucesso!')
+                    successMsg(i18n.global.t('toasts.success.putSuccess'))
+                    return true
                 })
                 .catch(error => {
                     const msg = error.response?.data?.error || error.message;
-                    errorMsg(msg);
+                    console.error('Erro:', msg);
+                    errorMsg(i18n.global.t('toasts.error.putError'));
+                    return false
                 })
         },
 
@@ -59,11 +64,12 @@ export const usePublisherStore = defineStore('publisher', {
             return api.delete(`/publisher/${id}`)
                 .then(() => {
                     this.publishers = this.publishers.filter(p => p.id !== id)
-                    successMsg('Exclusão realizada com sucesso!')
+                    successMsg(i18n.global.t('toasts.success.deleteSuccess'))
                 })
                 .catch(error => {
                     const msg = error.response?.data?.error || error.message;
-                    errorMsg(msg);
+                    console.error('Erro:', msg);
+                    errorMsg(i18n.global.t('toasts.error.deleteError'));
                 })
 
         }

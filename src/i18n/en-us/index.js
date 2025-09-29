@@ -283,7 +283,7 @@ export default {
             cancelButton: "Cancel",
         }
     },
-
+    errorDuplicate: "This field already exists. Please use a different value.",
     roleUser: "User",
     roleAdmin: "Administrator",
     avatarButton: "Set avatar",
@@ -296,9 +296,9 @@ export default {
         },
         error: {
             getError: "Error fetching data!",
-            postError: "Error during registration!",
-            deleteError: "Error during deletion!",
-            putError: "Error during update!"
+            postError: "Error during registration! Check for duplicate fields.",
+            deleteError: "Error during deletion! Check for linked books.",
+            putError: "Error during update! Check for duplicate fields.",
         },
     },
 

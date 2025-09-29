@@ -52,6 +52,10 @@ export function useCrud() {
 
     const pagination = ref({ page: 1, rowsPerPage: $q.screen.lt.md ? 0 : 5 })
 
+    function isDuplicate(field, value) {
+    return !publishers.value.some(p => p[field] === value) || t('errorDuplicate');
+}
+
     watch(() => $q.screen.lt.md, (isMobile) => { pagination.value.rowsPerPage = isMobile ? 0 : 5 })
 
     const columns = [
@@ -155,7 +159,7 @@ export function useCrud() {
 
         t, i18n, locale, paginationLabel,
 
-        publishers, loading, error,
+        publishers, loading, error, isDuplicate
 
     }
 }

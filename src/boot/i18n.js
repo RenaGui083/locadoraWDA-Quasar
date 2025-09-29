@@ -2,13 +2,14 @@ import { defineBoot } from '#q-app/wrappers'
 import { createI18n } from 'vue-i18n'
 import messages from 'src/i18n'
 
-export default defineBoot(({ app }) => {
-  const i18n = createI18n({
-    locale: localStorage.getItem('locale'),
-    fallbackLocale: "pt-BR",
-    globalInjection: true,
-    messages
-  })
+export const i18n = createI18n({
+  locale: localStorage.getItem('locale') || 'pt-BR',
+  fallbackLocale: 'pt-BR',
+  globalInjection: true,
+  legacy: false, 
+  messages
+})
 
+export default defineBoot(({ app }) => {
   app.use(i18n)
 })
