@@ -237,7 +237,17 @@ export default {
             cpf: "CPF",
             address: "Dirección",
             cancelButton: "Hecho"
-        }
+        },
+        errorInput: {
+            name: "El nombre es obligatorio",
+            email: "El correo electrónico es obligatorio",  
+            telephone: "El teléfono es obligatorio",
+            cpf: "El CPF es obligatorio",
+            address: "La dirección es obligatoria",
+            invalidEmail: "Correo electrónico inválido",
+            invalidTelephone: "Teléfono inválido",
+            invalidCpf: "CPF inválido"
+        },
     },
 
 
@@ -268,6 +278,14 @@ export default {
             site: "Sitio web",
             registerButton: "Actualizar",
             cancelButton: "Cancelar",
+        },
+        errorInput: {
+            name: "El nombre es obligatorio",
+            email: "El correo electrónico es obligatorio",
+            telephone: "El teléfono es obligatorio",
+            invalidEmail: "Correo electrónico inválido",
+            invalidTelephone: "Teléfono inválido",
+            invalidSite: "Sitio web inválido"
         }
     },
     errorDuplicate: "Este campo ya existe. Por favor, utilice un valor diferente.",
@@ -286,6 +304,7 @@ export default {
             postError: "¡Error durante el registro! Verifique si hay campos duplicados.",
             deleteError: "¡Error durante la eliminación! Verifique si no hay libros vinculados.",
             putError: "¡Error durante la actualización! Verifique si hay campos duplicados.",
+            postErrorCpf: "¡Error durante el registro! Verifique si el CPF es válido.",
         },
     }
 }

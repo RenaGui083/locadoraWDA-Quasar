@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { ref, watch,computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
@@ -29,14 +29,14 @@ export function useCrud() {
         pagination.value.rowsPerPage = isMobile ? 0 : 5
     })
 
-    const columns = [
+    const columns = computed(() => [
         { name: "book", label: t('rents.table.book'), field: "book", align: "left", sortable: true },
         { name: "renter", label: t('rents.table.renter'), field: "renter", align: "left", sortable: true },
         { name: "rentDate", label: t('rents.table.rentDate'), field: "rentDate", align: "left", sortable: true },
         { name: "deadLine", label: t('rents.table.deadLine'), field: "deadLine", align: "left", sortable: true },
         { name: "status", label: t('rents.table.status'), field: "status", align: "left", sortable: true },
         { name: "actions", label: t('rents.table.actions'), field: "actions", align: "center" , filter: false}
-    ]
+    ])
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 

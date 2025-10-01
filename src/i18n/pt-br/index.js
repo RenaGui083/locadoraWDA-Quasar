@@ -275,7 +275,15 @@ export default {
             site: "Site",
             registerButton: "Atualizar",
             cancelButton: "Cancelar",
-        }
+        },
+        errorInput: {
+            name: "O nome é obrigatório",
+            email: "O email é obrigatório",
+            telephone: "O telefone é obrigatório",
+            invalidEmail: "Email inválido",
+            invalidTelephone: "Telefone inválido",
+            invalidSite: "Site inválido"
+        } 
     },
     errorDuplicate: "Este campo já existe. Por favor, utilize um valor diferente.",
     roleUser: "Usuário",
@@ -293,6 +301,7 @@ export default {
             postError: "Erro ao realizar cadastro! Verifique se não há campos duplicados.",
             deleteError: "Erro ao realizar exclusão! Verifique se não existem livros vinculados.",
             putError: "Erro ao realizar atualização! Verifique se não há campos duplicados.",
+            postErrorCpf: "Erro ao realizar cadastro! Verifique se o CPF é válido.",
         }
     },
 }

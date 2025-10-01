@@ -5,6 +5,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import {
@@ -17,7 +18,7 @@ import { Bar } from "vue-chartjs";
 // registrar os módulos do Chart.js
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
-const chartData = {
+const chartData = computed(() => ({
     labels: [t('dashboard.chart.rented'),t('dashboard.chart.late'),t('dashboard.chart.onTime'),t('dashboard.chart.returnedLate')],
     datasets: [
         {
@@ -26,7 +27,7 @@ const chartData = {
             backgroundColor: ['#404668', '#121F2F', '#F7B176', '#4B6B92'],
         },
     ],
-};
+}));
 
 const chartOptions = {
     responsive: true,

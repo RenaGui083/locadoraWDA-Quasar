@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
@@ -20,10 +20,10 @@ export function useCrud() {
     const openModalView = ref(false)
     const openModalConfirm = ref(false)
 
-    const options = [
+    const options = computed(() => [
         { label: t('users.createModal.user'), value: 'USER' },
         { label: t('users.createModal.admin'), value: 'ADMIN' }
-    ]
+    ])
 
     const filter = ref("")
 
@@ -36,12 +36,12 @@ export function useCrud() {
         pagination.value.rowsPerPage = isMobile ? 0 : 5
     })
 
-    const columns = [
+    const columns = computed(() => [
         { name: "name", label: t('users.table.name'), field: "name", align: "left", sortable: true },
         { name: "email", label: t('users.table.email'), field: "email", align: "left", sortable: true },
         { name: "role", label: t('users.table.role'), field: "role", align: "left", sortable: true },
         { name: "actions", label: t('users.table.actions'), field: "actions", align: "center", filter: false }
-    ]
+    ])
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 

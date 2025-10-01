@@ -100,7 +100,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref,computed } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import { authenticate } from 'src/stores/authStore.js'
 import flagBR from 'src/assets/br.png'
@@ -109,9 +109,10 @@ import flagES from 'src/assets/es.png'
 import { onMounted } from 'vue'
 const { t, locale: i18nLocale } = useI18n()
 
+
 const locale = ref(i18nLocale.value || 'pt-BR')
 
-const linksList = [
+const linksList = computed(() => [
   {
     title: t('sideBar.dashboard'),
     icon: 'insights',
@@ -148,7 +149,7 @@ const linksList = [
     action: logoutUser,
     class: 'logout-item'
   },
-]
+])
 
 const leftDrawerOpen = ref(false)
 // import logoImg from 'src/assets/logoLocadora.png'
@@ -217,18 +218,16 @@ function changeLocale(newLocale) {
   }
 }
 const nameProfile = ref('')
-let roleProfile = ref('')
+const roleKey = ref('')
 
 function getNameRole() {
   nameProfile.value = localStorage.getItem('nameUser')
-  roleProfile.value = localStorage.getItem('roleUser')
-
-  if (roleProfile.value == "ADMIN") {
-    roleProfile.value = (t('roleAdmin'))
-  } else {
-    roleProfile.value = (t('roleUser'))
-  }
+  roleKey.value = localStorage.getItem('roleUser')
 }
+
+const roleProfile = computed(() => {
+  return roleKey.value === 'ADMIN' ? t('roleAdmin') : t('roleUser')
+})
 
 onMounted(() => {
   getNameRole()

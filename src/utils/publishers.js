@@ -1,4 +1,4 @@
-import { ref, watch, onMounted} from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
@@ -29,8 +29,8 @@ export function useCrud() {
         telephone: '',
         site: ''
     })
-
-    const { publishers, loading, error } = storeToRefs(publisherStore)
+const { publishers, loading, error } = storeToRefs(publisherStore)
+    
 
     const $q = useQuasar()
 
@@ -53,18 +53,24 @@ export function useCrud() {
     const pagination = ref({ page: 1, rowsPerPage: $q.screen.lt.md ? 0 : 5 })
 
     function isDuplicate(field, value) {
-    return !publishers.value.some(p => p[field] === value) || t('errorDuplicate');
-}
+        if (!value) return true
+
+        const isDuplicated = publishers.value.some(
+            p => p[field] === value && p.id !== (selectPublisher.value?.id ?? null)
+        )
+
+        return isDuplicated ? t('errorDuplicate') : true
+    }
 
     watch(() => $q.screen.lt.md, (isMobile) => { pagination.value.rowsPerPage = isMobile ? 0 : 5 })
 
-    const columns = [
+    const columns = computed(() => [
         { name: "name", label: t('publishers.table.name'), field: "name", align: "left", sortable: true },
         { name: "email", label: t('publishers.table.email'), field: "email", align: "left", sortable: true },
         { name: "telephone", label: t('publishers.table.telephone'), field: "telephone", align: "left", sortable: true },
         { name: "site", label: t('publishers.table.site'), field: "site", align: "left", sortable: true },
         { name: "actions", label: t('publishers.table.actions'), field: "actions", align: "center", filter: false }
-    ]
+    ])
 
     //get publishers on load
 
@@ -104,23 +110,23 @@ export function useCrud() {
             await publisherStore.fetchPublishers()
             openModalExclude.value = false
             selectPublisher.value = null
-        }  catch (error) {
+        } catch (error) {
             console.error(error)
-          }
+        }
     }
 
     //update publisher
 
     async function tryOpenConfirm() {
-    if (!formRefEdit.value) return
-    const valid = await formRefEdit.value.validate()
-    if (valid) {
-        openModalConfirm.value = true
-        openModalEdit.value = false
-    } else {
-        console.warn('Formulário inválido')
+        if (!formRefEdit.value) return
+        const valid = await formRefEdit.value.validate()
+        if (valid) {
+            openModalConfirm.value = true
+            openModalEdit.value = false
+        } else {
+            console.warn('Formulário inválido')
+        }
     }
-}
 
     function prepareEditPublisher(publisher) {
         openModalEdit.value = true

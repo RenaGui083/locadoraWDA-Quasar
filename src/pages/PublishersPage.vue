@@ -72,25 +72,25 @@
                         <q-form @submit="onSubmit" @reset="onReset" ref="formRef">
                             <q-input filled v-model="newPublisher.name" type="text" color="primary"
                                 :label="t('publishers.createModal.name')" class="inputModal" :rules="[
-                                    val => val && val.length > 0 || 'Por favor insira o nome da editora',
+                                    val => val && val.length > 0 ||  t('publishers.errorInput.name'),
                                     val => isDuplicate('name', val)
                                 ]" />
                             <q-input filled v-model="newPublisher.email" type="email"
                                 :label="t('publishers.createModal.email')" class="inputModal" :rules="[
-                                    val => val && val.length > 0 || 'Por favor insira o email da editora',
-                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || 'Email inválido',
+                                    val => val && val.length > 0 ||  t('publishers.errorInput.email'),
+                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || t('publishers.errorInput.invalidEmail'),
                                     val => isDuplicate('email', val)
                                 ]" />
                             <q-input filled v-model="newPublisher.telephone" type="text"
                                 :label="t('publishers.createModal.telephone')" class="inputModal" mask="(##) #####-####"
                                 unmasked-value :rules="[
-                                    val => !!val || 'Por favor insira o telefone da editora',
-                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || 'Telefone inválido',
+                                    val => !!val ||  t('publishers.errorInput.telephone'),
+                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || t('publishers.errorInput.invalidTelephone'),
                                     val => isDuplicate('telephone', val)
                                 ]" />
                             <q-input filled v-model="newPublisher.site" type="text"
                                 :label="t('publishers.createModal.site')" class="inputModal" :rules="[
-                                    val => !val || /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w- .\/?%&=]*)?$/.test(val) || 'Site inválido',
+                                    val => !val || /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w- .\/?%&=]*)?$/.test(val) || t('publishers.errorInput.invalidSite'),
                                     val => isDuplicate('site', val)
                                 ]" />
 
@@ -128,25 +128,25 @@
                         <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
                             <q-input filled v-model="editPublisher.name" type="text" color="primary"
                                 :label="t('publishers.createModal.name')" class="inputModal" :rules="[
-                                    val => val && val.length > 0 || 'Por favor insira o nome da editora',
+                                    val => val && val.length > 0 || t('publishers.errorInput.name'),
                                     val => isDuplicate('name', val)
                                 ]" />
                             <q-input filled v-model="editPublisher.email" type="email"
                                 :label="t('publishers.createModal.email')" class="inputModal" :rules="[
-                                    val => val && val.length > 0 || 'Por favor insira o email da editora',
-                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || 'Email inválido',
+                                    val => val && val.length > 0 ||  t('publishers.errorInput.email'),
+                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || t('publishers.errorInput.invalidEmail'),
                                     val => isDuplicate('email', val)
                                 ]" />
                             <q-input filled v-model="editPublisher.telephone" type="text"
                                 :label="t('publishers.createModal.telephone')" class="inputModal" mask="(##) #####-####"
                                 unmasked-value :rules="[
-                                    val => !!val || 'Por favor insira o telefone da editora',
-                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || 'Telefone inválido',
+                                    val => !!val ||  t('publishers.errorInput.telephone'),
+                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || t('publishers.errorInput.invalidTelephone'),
                                     val => isDuplicate('telephone', val)
                                 ]" />
                             <q-input filled v-model="editPublisher.site" type="text"
                                 :label="t('publishers.createModal.site')" class="inputModal" :rules="[
-                                    val => !val || /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w- .\/?%&=]*)?$/.test(val) || 'Site inválido',
+                                    val => !val || /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w- .\/?%&=]*)?$/.test(val) || t('publishers.errorInput.invalidSite'),
                                     val => isDuplicate('site', val)
                                 ]" />
                         </q-form>

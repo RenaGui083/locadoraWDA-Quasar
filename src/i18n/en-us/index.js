@@ -250,6 +250,16 @@ export default {
             cpf: "CPF",
             address: "Address",
             cancelButton: "Close"
+        },
+        errorInput: {
+            name: "Name is required",
+            email: "Email is required",
+            telephone: "Telephone is required",
+            cpf: "CPF is required",
+            address: "Address is required",
+            invalidEmail: "Invalid email",
+            invalidTelephone: "Invalid telephone",
+            invalidCpf: "Invalid CPF"
         }
     },
 
@@ -281,6 +291,14 @@ export default {
             site: "Site",
             registerButton: "Save",
             cancelButton: "Cancel",
+        },
+        errorInput: {
+            name: "Name is required",
+            email: "Email is required",
+            telephone: "Telephone is required",
+            invalidEmail: "Invalid email",
+            invalidTelephone: "Invalid telephone",
+            invalidSite: "Invalid site"
         }
     },
     errorDuplicate: "This field already exists. Please use a different value.",
@@ -299,7 +317,10 @@ export default {
             postError: "Error during registration! Check for duplicate fields.",
             deleteError: "Error during deletion! Check for linked books.",
             putError: "Error during update! Check for duplicate fields.",
+            postErrorCpf: "Error during registration! Check if the CPF is valid.",
         },
     },
+
+
 
 }

@@ -18,11 +18,11 @@
 
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">{{ t('renters.table.tableTitle') }}</div>
-            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+            <q-table :rows="renters" :columns="columns" row-key="id" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
                 :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
-                :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders"
-                :hide-bottom="$q.screen.lt.md">
+                :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders" :loading="loading"
+                :loading-label="t('tables.loading')" :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
@@ -69,19 +69,49 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('renters.createModal.name')" class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label="t('renters.createModal.email')" class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" :label="t('renters.createModal.telephone')" class="inputModal" />
-                        <q-input filled v-model="cpf" type="text" :label="t('renters.createModal.cpf')" class="inputModal" />
-                        <q-input filled v-model="address" type="text" :label="t('renters.createModal.address')" class="inputModal" />
+                        <q-form @submit="onSubmit" @reset="onReset" ref="formRef">
+                            <q-input filled v-model="newRenter.name" type="text" color="primary"
+                                :label="t('renters.createModal.name')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || t('renters.errorInput.name'),
+                                    val => isDuplicate('name', val)
+                                ]" />
 
+                            <q-input filled v-model="newRenter.email" type="email" color="primary"
+                                :label="t('renters.createModal.email')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || t('renters.errorInput.email'),
+                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || t('renters.errorInput.invalidEmail'),
+                                    val => isDuplicate('email', val)
+                                ]" />
+
+                            <q-input filled v-model="newRenter.telephone" type="text" color="primary"
+                                :label="t('renters.createModal.telephone')" class="inputModal" mask="(##) #####-####"
+                                unmasked-value :rules="[
+                                    val => !!val || t('renters.errorInput.telephone'),
+                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || t('renters.errorInput.invalidTelephone'),
+                                    val => isDuplicate('telephone', val)
+                                ]" />
+
+                            <q-input filled v-model="newRenter.cpf" type="text" color="primary"
+                                :label="t('renters.createModal.cpf')" class="inputModal" mask="###.###.###-##"
+                                unmasked-value :rules="[
+                                    val => !!val || t('renters.errorInput.cpf'),
+                                    val => /^\d{11}$/.test(val.replace(/\D/g, '')) || t('renters.errorInput.invalidCpf'),
+                                    val => isDuplicate('cpf', val)
+                                ]" />
+
+                            <q-input filled v-model="newRenter.address" type="text" color="primary"
+                                :label="t('renters.createModal.address')" class="inputModal" :rules="[
+                                    val => !!val || t('renters.errorInput.address')
+                                ]" />
+                        </q-form>
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated :label="t('renters.createModal.registerButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('renters.createModal.registerButton')" color="primary"
+                        @click="addRenter" class="buttonRegister" />
                     <q-btn flat :label="t('renters.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -104,18 +134,24 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('renters.editModal.name')" class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label="t('renters.editModal.email')" class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" :label="t('renters.editModal.telephone')" class="inputModal" />
-                        <q-input filled v-model="cpf" type="text" :label="t('renters.editModal.cpf')" class="inputModal" />
-                        <q-input filled v-model="address" type="text" :label="t('renters.editModal.address')" class="inputModal" />
+                        <q-input filled v-model="name" type="text" :label="t('renters.editModal.name')"
+                            class="inputModal" />
+                        <q-input filled v-model="email" type="email" :label="t('renters.editModal.email')"
+                            class="inputModal" />
+                        <q-input filled v-model="telephone" type="text" :label="t('renters.editModal.telephone')"
+                            class="inputModal" />
+                        <q-input filled v-model="cpf" type="text" :label="t('renters.editModal.cpf')"
+                            class="inputModal" />
+                        <q-input filled v-model="address" type="text" :label="t('renters.editModal.address')"
+                            class="inputModal" />
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated :label="t('renters.editModal.registerButton')" color="primary" @click="openModalConfirm = true,openModalEdit = false" class="buttonRegister" />
+                    <q-btn unelevated :label="t('renters.editModal.registerButton')" color="primary"
+                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
                     <q-btn flat :label="t('renters.editModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -137,7 +173,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -246,7 +283,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -258,11 +296,14 @@
 import { useCrud } from 'src/utils/renters.js'
 
 const {
-        email, name, telephone, address, cpf,
+    email, name, telephone, address, cpf,
 
-        $q, openModalCreate, openModalEdit, openModalExclude, openModalView, openModalConfirm,
+    $q, openModalCreate, openModalEdit, openModalExclude, openModalView, openModalConfirm,
 
-        filter, pagination, columns, rows,
-         t, paginationLabel,
-    } = useCrud()
+    filter, pagination, columns, addRenter, newRenter, formRef,
+
+    t, paginationLabel, isDuplicate,
+
+    renters, loading
+} = useCrud()
 </script>

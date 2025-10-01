@@ -6,6 +6,7 @@
 
 
 <script setup>
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import {
@@ -18,7 +19,7 @@ import { Pie } from "vue-chartjs";
 // registrar os módulos do Chart.js
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
-const chartData = {
+const chartData = computed(() => ({
     labels: [t('dashboard.chart.publishers'),t('dashboard.chart.books'),t('dashboard.chart.renters')],
     datasets: [
         {
@@ -27,7 +28,7 @@ const chartData = {
             backgroundColor: ['#404668', '#121F2F', '#F7B176'],
         },
     ],
-};
+}));
 
 const chartOptions = {
     responsive: true,

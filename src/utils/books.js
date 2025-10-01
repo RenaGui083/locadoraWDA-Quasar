@@ -1,4 +1,4 @@
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
@@ -36,7 +36,7 @@ export function useCrud() {
     })
 
     // colunas
-    const columns = [
+    const columns = computed(() => [
         { name: "name", label: t('library.table.name'), field: "name", align: "left", sortable: true },
         { name: "publisher", label: t('library.table.publisher'), field: "publisher", align: "left", sortable: true },
         { name: "author", label: t('library.table.author'), field: "author", align: "left", sortable: true },
@@ -44,7 +44,7 @@ export function useCrud() {
         { name: "totalQuantity", label: t('library.table.totalQuantity'), field: "totalQuantity", align: "left", sortable: true },
         { name: "totalInUse", label: t('library.table.totalInUse'), field: "totalInUse", align: "left", sortable: true },
         { name: "actions", label: t('library.table.actions'), field: "actions", align: "center", filter: false }
-    ]
+    ])
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 

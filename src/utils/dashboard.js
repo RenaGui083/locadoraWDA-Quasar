@@ -1,4 +1,4 @@
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
 import { useQuasar } from 'quasar'
 import ChartBar1 from "src/components/DashboardChartBar1.vue";
 import ChartBar2 from "src/components/DashboardChartBar2.vue";
@@ -29,11 +29,11 @@ export function useCrud() {
             pagination.value.rowsPerPage = 3
         }
     })
-    const columns = [
+    const columns = computed(() =>[
         { name: "renter", label: t('dashboard.table.renters'), field: "renter", align: "left", sortable: true },
         { name: "rentsQuantity", label: t('dashboard.table.rentsQuantity'), field: "rentsQuantity", align: "left", sortable: true },
         { name: "rentsActive", label: t('dashboard.table.rentsActive'), field: "rentsActive", align: "left", sortable: true }
-    ]
+    ])
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 

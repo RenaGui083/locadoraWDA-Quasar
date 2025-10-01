@@ -1,9 +1,23 @@
-import { ref, watch } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
+import { useRenterStore } from 'src/stores/rentersStore';
+import { storeToRefs } from 'pinia'
 
 export function useCrud() {
+
+    const renterStore = useRenterStore()
+    const { renters, loading, error } = storeToRefs(renterStore)
+
+    const newRenter = ref({
+        name: '',
+        email: '',  
+        telephone: '',
+        address: '',
+        cpf: ''
+    })
+
     const email = ref('')
     const name = ref('')
     const telephone = ref('')
@@ -22,6 +36,8 @@ export function useCrud() {
     const openModalConfirm = ref(false)
 
     const filter = ref("")
+    const formRef = ref(null)
+    const selectRenter = ref(null)
 
     const pagination = ref({
         page: 1,
@@ -32,25 +48,50 @@ export function useCrud() {
         pagination.value.rowsPerPage = isMobile ? 0 : 5
     })
 
-    const columns = [
+    function isDuplicate(field, value) {
+        if (!value) return true
+
+        const isDuplicated = renters.value.some(
+            p => p[field] === value && p.id !== (selectRenter.value?.id ?? null)
+        )
+
+        return isDuplicated ? t('errorDuplicate') : true
+    }
+
+    const columns = computed(() => [
         { name: "name", label: t('renters.table.name'), field: "name", align: "left", sortable: true },
         { name: "email", label: t('renters.table.email'), field: "email", align: "left", sortable: true },
         { name: "telephone", label: t('renters.table.telephone'), field: "telephone", align: "left", sortable: true },
         { name: "cpf", label: t('renters.table.cpf'), field: "cpf", align: "left", sortable: true },
         { name: "actions", label: t('renters.table.actions'), field: "actions", align: "center", filter: false }
-    ]
+    ])
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
-    const rows = ref([
-        { name: "Companhia das Letras", email: "contato@letras.com.br", telephone: "(11) 3333-4444", cpf: "12.345.678/0001-90" },
-        { name: "Record", email: "info@record.com.br", telephone: "(21) 2222-5555", cpf: "98.765.432/0001-12" },
-        { name: "Rocco", email: "sac@rocco.com.br", telephone: "(11) 4444-6666",  cpf: "56.789.123/0001-45" },
-        { name: "Intrínseca", email: "contato@intrinseca.com.br", telephone: "(31) 5555-7777", cpf: "34.567.890/0001-67" },
-        { name: "DarkSide Books", email: "contato@darksidebooks.com.br", telephone: "(21) 9999-0000", cpf: "45.678.901/0001-23" },
-        { name: "Zahar", email: "sac@zahar.com.br", telephone: "(11) 3333-8888", cpf: "23.456.789/0001-56" },
-        { name: "Editora Gutenberg", email: "contato@gutenberg.com.br", telephone: "(41) 2222-9999",cpf: "67.890.123/0001-89" }
-    ])
+    //get renters on load
+
+    onMounted(async () => {
+        try {
+            await renterStore.fetchRenters()
+            console.log('renters fetched on mount')
+        } catch (error) {
+            console.log(error)('Failed to fetch publishers on mount')
+        }
+    })
+
+    //add renter
+
+    async function addRenter() {
+        const success = await formRef.value.validate()
+        if (success) {
+            await renterStore.addRenter({ ...newRenter.value })
+            await renterStore.fetchRenters()
+            newRenter.value = { name: '', email: '', telephone: '', address: '', cpf: '' }
+            openModalCreate.value = false
+        } else {
+            console.log('Invalid form')
+        }
+    }
 
 
     return {
@@ -58,8 +99,12 @@ export function useCrud() {
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalView, openModalConfirm,
 
-        filter, pagination, columns, rows,
+        filter, pagination, columns,
 
-        t, i18n, locale, paginationLabel
+        t, i18n, locale, paginationLabel,
+
+        renters, loading, error,
+
+        addRenter, newRenter, formRef, isDuplicate, selectRenter
     }
 }
