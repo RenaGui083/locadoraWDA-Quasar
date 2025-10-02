@@ -26,7 +26,7 @@
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
-                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditRenter(props.row)" />
                         <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
                         <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
                     </q-td>
@@ -43,7 +43,7 @@
                             <div class="col-8">{{ col.value }}</div>
                         </div>
                         <div class="row justify-end q-mt-sm">
-                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditRenter(props.row)" />
                             <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
                             <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
                         </div>
@@ -133,25 +133,48 @@
 
 
                 <q-card-section class="scroll">
-                    <slot>
-                        <q-input filled v-model="name" type="text" :label="t('renters.editModal.name')"
-                            class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label="t('renters.editModal.email')"
-                            class="inputModal" />
-                        <q-input filled v-model="telephone" type="text" :label="t('renters.editModal.telephone')"
-                            class="inputModal" />
-                        <q-input filled v-model="cpf" type="text" :label="t('renters.editModal.cpf')"
-                            class="inputModal" />
-                        <q-input filled v-model="address" type="text" :label="t('renters.editModal.address')"
-                            class="inputModal" />
-                    </slot>
+                     <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
+                            <q-input filled v-model="editRenter.name" type="text" color="primary"
+                                :label="t('renters.createModal.name')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || t('renters.errorInput.name'),
+                                    val => isDuplicate('name', val)
+                                ]" />
+
+                            <q-input filled v-model="editRenter.email" type="email" color="primary"
+                                :label="t('renters.createModal.email')" class="inputModal" :rules="[
+                                    val => val && val.length > 0 || t('renters.errorInput.email'),
+                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || t('renters.errorInput.invalidEmail'),
+                                    val => isDuplicate('email', val)
+                                ]" />
+
+                            <q-input filled v-model="editRenter.telephone" type="text" color="primary"
+                                :label="t('renters.createModal.telephone')" class="inputModal" mask="(##) #####-####"
+                                unmasked-value :rules="[
+                                    val => !!val || t('renters.errorInput.telephone'),
+                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || t('renters.errorInput.invalidTelephone'),
+                                    val => isDuplicate('telephone', val)
+                                ]" />
+
+                            <q-input filled v-model="editRenter.cpf" type="text" color="primary"
+                                :label="t('renters.createModal.cpf')" class="inputModal" mask="###.###.###-##"
+                                unmasked-value :rules="[
+                                    val => !!val || t('renters.errorInput.cpf'),
+                                    val => /^\d{11}$/.test(val.replace(/\D/g, '')) || t('renters.errorInput.invalidCpf'),
+                                    val => isDuplicate('cpf', val)
+                                ]" />
+
+                            <q-input filled v-model="editRenter.address" type="text" color="primary"
+                                :label="t('renters.createModal.address')" class="inputModal" :rules="[
+                                    val => !!val || t('renters.errorInput.address')
+                                ]" />
+                        </q-form>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('renters.editModal.registerButton')" color="primary"
-                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
+                        @click="tryOpenConfirm" class="buttonRegister" />
                     <q-btn flat :label="t('renters.editModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -296,13 +319,12 @@
 import { useCrud } from 'src/utils/renters.js'
 
 const {
-    email, name, telephone, address, cpf,
 
     $q, openModalCreate, openModalEdit, openModalExclude, openModalView, openModalConfirm,
 
-    filter, pagination, columns, addRenter, newRenter, formRef,
+    filter, pagination, columns, addRenter, newRenter, formRef, formRefEdit,
 
-    t, paginationLabel, isDuplicate,
+    t, paginationLabel, isDuplicate, editRenter, tryOpenConfirm, prepareEditRenter,
 
     renters, loading
 } = useCrud()

@@ -29,8 +29,8 @@ export function useCrud() {
         telephone: '',
         site: ''
     })
-const { publishers, loading, error } = storeToRefs(publisherStore)
-    
+    const { publishers, loading, error } = storeToRefs(publisherStore)
+
 
     const $q = useQuasar()
 

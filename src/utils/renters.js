@@ -12,17 +12,28 @@ export function useCrud() {
 
     const newRenter = ref({
         name: '',
-        email: '',  
+        email: '',
         telephone: '',
         address: '',
         cpf: ''
     })
 
-    const email = ref('')
-    const name = ref('')
-    const telephone = ref('')
-    const address = ref('')
-    const cpf = ref('')
+    const editRenter = ref({
+        name: '',
+        email: '',
+        telephone: '',
+        cpf: '',
+        address: ''
+    })
+
+    // const editedRenter = ref({
+    //     name: '',
+    //     email: '',
+    //     telephone: '',
+    //     cpf: '',
+    //     address: ''
+    // })
+
 
     const $q = useQuasar()
 
@@ -37,6 +48,7 @@ export function useCrud() {
 
     const filter = ref("")
     const formRef = ref(null)
+    const formRefEdit = ref(null)
     const selectRenter = ref(null)
 
     const pagination = ref({
@@ -84,18 +96,46 @@ export function useCrud() {
     async function addRenter() {
         const success = await formRef.value.validate()
         if (success) {
-            await renterStore.addRenter({ ...newRenter.value })
-            await renterStore.fetchRenters()
-            newRenter.value = { name: '', email: '', telephone: '', address: '', cpf: '' }
-            openModalCreate.value = false
+            const added = await renterStore.addRenter({ ...newRenter.value })
+            if (added) {
+                await renterStore.fetchRenters()
+                newRenter.value = { name: '', email: '', telephone: '', address: '', cpf: '' }
+                openModalCreate.value = false
+            }
         } else {
             console.log('Invalid form')
         }
     }
 
+    //update renter
+
+    async function tryOpenConfirm() {
+        if (!formRefEdit.value) return
+        const valid = await formRefEdit.value.validate()
+        if (valid) {
+            openModalConfirm.value = true
+            openModalEdit.value = false
+        } else {
+            console.warn('Formulário inválido')
+        }
+    }
+
+    function prepareEditRenter(renter) {
+        openModalEdit.value = true
+        selectRenter.value = renter
+
+        editRenter.value = {
+            name: renter.name,
+            email: renter.email,
+            telephone: renter.telephone,
+            cpf: renter.cpf,
+            address: renter.address
+        }
+    }
+
+
 
     return {
-        email, name, telephone, address, cpf,
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalView, openModalConfirm,
 
@@ -105,6 +145,6 @@ export function useCrud() {
 
         renters, loading, error,
 
-        addRenter, newRenter, formRef, isDuplicate, selectRenter
+        addRenter, newRenter, formRef, isDuplicate, selectRenter, editRenter, tryOpenConfirm, formRefEdit, prepareEditRenter
     }
 }
