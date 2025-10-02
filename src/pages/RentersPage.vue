@@ -27,8 +27,9 @@
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
                         <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditRenter(props.row)" />
-                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
-                        <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteRenter(props.row)" />
+                        <q-btn flat round dense icon="visibility" color="#121f2f"
+                            @click="viewRenterFunction(props.row)" />
                     </q-td>
                 </template>
                 <template v-slot:body-cell="props">
@@ -44,8 +45,9 @@
                         </div>
                         <div class="row justify-end q-mt-sm">
                             <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditRenter(props.row)" />
-                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
-                            <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteRenter(props.row)" />
+                            <q-btn flat round dense icon="visibility" color="#121f2f"
+                                @click="viewRenterFunction(props.row)" />
                         </div>
                     </div>
                 </template>
@@ -112,7 +114,8 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('renters.createModal.registerButton')" color="primary"
                         @click="addRenter" class="buttonRegister" />
-                    <q-btn flat :label="t('renters.createModal.cancelButton')" color="white" v-close-popup />
+                    <q-btn flat :label="t('renters.createModal.cancelButton')" color="white" @click="cancel"
+                        v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -124,7 +127,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('renters.editModal.title') }}</div>
+                    <div class="text-h5">{{ t('renters.editModal.title') + " " + (editRenter.name) + "?" }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -133,41 +136,41 @@
 
 
                 <q-card-section class="scroll">
-                     <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
-                            <q-input filled v-model="editRenter.name" type="text" color="primary"
-                                :label="t('renters.createModal.name')" class="inputModal" :rules="[
-                                    val => val && val.length > 0 || t('renters.errorInput.name'),
-                                    val => isDuplicate('name', val)
-                                ]" />
+                    <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
+                        <q-input filled v-model="editRenter.name" type="text" color="primary"
+                            :label="t('renters.createModal.name')" class="inputModal" :rules="[
+                                val => val && val.length > 0 || t('renters.errorInput.name'),
+                                val => isDuplicate('name', val)
+                            ]" />
 
-                            <q-input filled v-model="editRenter.email" type="email" color="primary"
-                                :label="t('renters.createModal.email')" class="inputModal" :rules="[
-                                    val => val && val.length > 0 || t('renters.errorInput.email'),
-                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || t('renters.errorInput.invalidEmail'),
-                                    val => isDuplicate('email', val)
-                                ]" />
+                        <q-input filled v-model="editRenter.email" type="email" color="primary"
+                            :label="t('renters.createModal.email')" class="inputModal" :rules="[
+                                val => val && val.length > 0 || t('renters.errorInput.email'),
+                                val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || t('renters.errorInput.invalidEmail'),
+                                val => isDuplicate('email', val)
+                            ]" />
 
-                            <q-input filled v-model="editRenter.telephone" type="text" color="primary"
-                                :label="t('renters.createModal.telephone')" class="inputModal" mask="(##) #####-####"
-                                unmasked-value :rules="[
-                                    val => !!val || t('renters.errorInput.telephone'),
-                                    val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || t('renters.errorInput.invalidTelephone'),
-                                    val => isDuplicate('telephone', val)
-                                ]" />
+                        <q-input filled v-model="editRenter.telephone" type="text" color="primary"
+                            :label="t('renters.createModal.telephone')" class="inputModal" mask="(##) #####-####"
+                            unmasked-value :rules="[
+                                val => !!val || t('renters.errorInput.telephone'),
+                                val => /^\(?\d{2}\)?\s?9?\d{4}-?\d{4}$/.test(val) || t('renters.errorInput.invalidTelephone'),
+                                val => isDuplicate('telephone', val)
+                            ]" />
 
-                            <q-input filled v-model="editRenter.cpf" type="text" color="primary"
-                                :label="t('renters.createModal.cpf')" class="inputModal" mask="###.###.###-##"
-                                unmasked-value :rules="[
-                                    val => !!val || t('renters.errorInput.cpf'),
-                                    val => /^\d{11}$/.test(val.replace(/\D/g, '')) || t('renters.errorInput.invalidCpf'),
-                                    val => isDuplicate('cpf', val)
-                                ]" />
+                        <q-input filled v-model="editRenter.cpf" type="text" color="primary"
+                            :label="t('renters.createModal.cpf')" class="inputModal" mask="###.###.###-##"
+                            unmasked-value :rules="[
+                                val => !!val || t('renters.errorInput.cpf'),
+                                val => /^\d{11}$/.test(val.replace(/\D/g, '')) || t('renters.errorInput.invalidCpf'),
+                                val => isDuplicate('cpf', val)
+                            ]" />
 
-                            <q-input filled v-model="editRenter.address" type="text" color="primary"
-                                :label="t('renters.createModal.address')" class="inputModal" :rules="[
-                                    val => !!val || t('renters.errorInput.address')
-                                ]" />
-                        </q-form>
+                        <q-input filled v-model="editRenter.address" type="text" color="primary"
+                            :label="t('renters.createModal.address')" class="inputModal" :rules="[
+                                val => !!val || t('renters.errorInput.address')
+                            ]" />
+                    </q-form>
                 </q-card-section>
 
 
@@ -175,7 +178,8 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('renters.editModal.registerButton')" color="primary"
                         @click="tryOpenConfirm" class="buttonRegister" />
-                    <q-btn flat :label="t('renters.editModal.cancelButton')" color="white" v-close-popup />
+                    <q-btn flat :label="t('renters.editModal.cancelButton')" color="white" @click="cancel"
+                        v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -187,7 +191,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('excludeModal.text') }}</div>
+                    <div class="text-h5">{{ t('excludeModal.text') + " " + "(" +(selectRenter.name) + ")"}}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -196,7 +200,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="confirmDelete"
                         class="buttonRegister" />
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -210,7 +214,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('renters.viewModal.title') }}</div>
+                    <div class="text-h5">{{ t('renters.viewModal.title') + " " + (viewRenter?.name ??'') }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -219,65 +223,57 @@
 
                 <q-card-section class="scroll">
 
-
-
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('renters.viewModal.id')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="key" class="viewFont" />
+                            <q-icon name="key" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('renters.viewModal.id') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewRenter?.id ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('renters.viewModal.name')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="person" class="viewFont" />
+                            <q-icon name="person" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('renters.viewModal.name') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewRenter?.name ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('renters.viewModal.email')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="email" class="viewFont" />
+                            <q-icon name="email" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('renters.viewModal.email') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewRenter?.email ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('renters.viewModal.telephone')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="phone" class="viewFont" />
+                            <q-icon name="phone" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('renters.viewModal.telephone') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewRenter?.telephone ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('renters.viewModal.cpf')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="article" class="viewFont" />
+                            <q-icon name="article" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('renters.viewModal.cpf') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewRenter?.cpf ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('renters.viewModal.address')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="map" class="viewFont" />
+                            <q-icon name="map" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('renters.viewModal.address') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewRenter?.address ??'') }}</div>
                         </template>
                     </q-field>
 
@@ -306,7 +302,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="upadteRenter"
                         class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -326,6 +322,8 @@ const {
 
     t, paginationLabel, isDuplicate, editRenter, tryOpenConfirm, prepareEditRenter,
 
-    renters, loading
+    renters, loading, upadteRenter, cancel,
+
+    deleteRenter, confirmDelete, viewRenter, viewRenterFunction, selectRenter
 } = useCrud()
 </script>

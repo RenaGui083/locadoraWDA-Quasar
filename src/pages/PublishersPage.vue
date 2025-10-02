@@ -103,7 +103,7 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('publishers.createModal.registerButton')" color="primary"
                         @click="addPublisher" class="buttonRegister" />
-                    <q-btn flat :label="t('publishers.createModal.cancelButton')" color="white" v-close-popup />
+                    <q-btn flat :label="t('publishers.createModal.cancelButton')" color="white" @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -115,7 +115,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('publishers.editModal.title') }}</div>
+                    <div class="text-h5">{{ t('publishers.editModal.title')  + " " + (editPublisher.name) + "?"}}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -158,7 +158,7 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('publishers.editModal.registerButton')" color="primary"
                          @click="tryOpenConfirm" class="buttonRegister" />
-                    <q-btn flat :label="t('publishers.editModal.cancelButton')" color="white" v-close-popup />
+                    <q-btn flat :label="t('publishers.editModal.cancelButton')" color="white" @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -170,7 +170,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('excludeModal.text') }}</div>
+                    <div class="text-h5">{{ t('excludeModal.text') + " " + "(" +(selectPublisher.name) + ")" }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -218,6 +218,6 @@ import { useCrud } from 'src/utils/publishers.js'
 const {
     newPublisher, addPublisher, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
     filter, pagination, columns, t, paginationLabel, publishers, loading, formRef, deletePublisher, confirmDelete,
-     editPublisher,prepareEditPublisher, formRefEdit, updatePublisher,tryOpenConfirm, isDuplicate
+     editPublisher,prepareEditPublisher, formRefEdit, updatePublisher,tryOpenConfirm, isDuplicate, cancel, selectPublisher
 } = useCrud()
 </script>

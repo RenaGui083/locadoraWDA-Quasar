@@ -69,7 +69,7 @@ export const usePublisherStore = defineStore('publisher', {
                 .catch(error => {
                     const msg = error.response?.data?.error || error.message;
                     console.error('Erro:', msg);
-                    errorMsg(i18n.global.t('toasts.error.deleteError'));
+                    errorMsg(i18n.global.t('toasts.error.deleteErrorPublishers'));
                 })
 
         }

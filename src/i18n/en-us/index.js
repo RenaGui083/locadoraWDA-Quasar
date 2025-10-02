@@ -314,10 +314,15 @@ export default {
         },
         error: {
             getError: "Error fetching data!",
-            postError: "Error during registration! Check for duplicate fields.",
-            deleteError: "Error during deletion! Check for linked books.",
-            putError: "Error during update! Check for duplicate fields.",
+    
+            deleteErrorPublishers: "Error during deletion! Check for linked books.",
+            deleteErrorRenters: "Error during deletion! Check if this tenant has active rentals.",
+
+            postError: "Error during registration!",
+            putError: "Error during update!",
+
             postErrorCpf: "Error during registration! Check if the CPF is valid.",
+            putErrorCpf: "Error during update! Check if the CPF is valid.",
         },
     },
 

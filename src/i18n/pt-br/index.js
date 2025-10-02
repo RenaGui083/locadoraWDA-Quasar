@@ -298,10 +298,16 @@ export default {
         },
         error: {
             getError: "Erro ao obter os dados!",
-            postError: "Erro ao realizar cadastro! Verifique se não há campos duplicados.",
-            deleteError: "Erro ao realizar exclusão! Verifique se não existem livros vinculados.",
-            putError: "Erro ao realizar atualização! Verifique se não há campos duplicados.",
+
+            deleteErrorPublishers: "Erro ao realizar exclusão! Verifique se não existem livros vinculados.",
+
+            deleteErrorRenters: "Erro ao realizar exclusão! Verifique se este locatário possui aluguéis ativos.",
+
+            putError: "Erro ao realizar atualização!",
+            postError: "Erro ao realizar cadastro!",
+            
             postErrorCpf: "Erro ao realizar cadastro! Verifique se o CPF é válido.",
+            putErrorCpf: "Erro ao realizar atualização! Verifique se o CPF é válido.",
         }
     },
 }

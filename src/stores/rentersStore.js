@@ -52,7 +52,7 @@ export const useRenterStore = defineStore('renter', {
                 .catch(error => {
                     const msg = error.response?.data?.error || error.message;
                     console.error('Erro:', msg);
-                    errorMsg(i18n.global.t('toasts.error.putError'));
+                    errorMsg(i18n.global.t('toasts.error.putErrorCpf'));
                     return false
                 })
         },
@@ -66,7 +66,7 @@ export const useRenterStore = defineStore('renter', {
                 .catch(error => {
                     const msg = error.response?.data?.error || error.message;
                     console.error('Erro:', msg);
-                    errorMsg(i18n.global.t('toasts.error.deleteError'));
+                    errorMsg(i18n.global.t('toasts.error.deleteErrorRenters'));
                 })
         }
     }

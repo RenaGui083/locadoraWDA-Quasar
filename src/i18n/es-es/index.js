@@ -301,10 +301,16 @@ export default {
         },
         error: {
             getError: "¡Error al obtener los datos!",
-            postError: "¡Error durante el registro! Verifique si hay campos duplicados.",
-            deleteError: "¡Error durante la eliminación! Verifique si no hay libros vinculados.",
-            putError: "¡Error durante la actualización! Verifique si hay campos duplicados.",
+
+            deleteErrorPublishers: "¡Error durante la eliminación! Verifique si no hay libros vinculados.",
+
+            deleteErrorRenters: "¡Error durante la eliminación! Verifique si este arrendatario tiene alquileres activos.",
+
+            postError: "¡Error durante el registro!",
+            putError: "¡Error durante la actualización!",
+
             postErrorCpf: "¡Error durante el registro! Verifique si el CPF es válido.",
+            putErrorCpf: "¡Error durante la actualización! Verifique si el CPF es válido.",
         },
     }
 }

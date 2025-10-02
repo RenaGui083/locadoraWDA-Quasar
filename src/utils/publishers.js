@@ -154,6 +154,16 @@ export function useCrud() {
         }
     }
 
+    //cancel
+
+    function cancel() {
+        openModalEdit.value = false
+        openModalCreate.value = false
+        editPublisher.value = { name: '', email: '', telephone: '', site: '' }
+        newPublisher.value = { name: '', email: '', telephone: '', site: '' }
+        selectPublisher.value = null                             
+    }
+
     return {
         newPublisher, addPublisher, formRef, formRefEdit, deletePublisher, selectPublisher, confirmDelete, editPublisher, prepareEditPublisher,
 
@@ -165,7 +175,7 @@ export function useCrud() {
 
         t, i18n, locale, paginationLabel,
 
-        publishers, loading, error, isDuplicate
+        publishers, loading, error, isDuplicate, cancel
 
     }
 }

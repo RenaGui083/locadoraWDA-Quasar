@@ -26,13 +26,14 @@ export function useCrud() {
         address: ''
     })
 
-    // const editedRenter = ref({
-    //     name: '',
-    //     email: '',
-    //     telephone: '',
-    //     cpf: '',
-    //     address: ''
-    // })
+    const viewRenter = ref({
+        id: null,
+        name: '',
+        email: '',
+        telephone: '',
+        cpf: '',
+        address: ''
+    })
 
 
     const $q = useQuasar()
@@ -133,7 +134,69 @@ export function useCrud() {
         }
     }
 
+    async function upadteRenter() {
+        editRenter.value = { ...editRenter.value }
+        const updated = await renterStore.updateRenter(selectRenter.value.id, editRenter.value)
+            if(updated == true) {
+                await renterStore.fetchRenters()
+                openModalEdit.value = false
+                openModalConfirm.value = false
+                editRenter.value = { name: '', email: '', telephone: '', cpf: '', address: '' }
+                selectRenter.value = null
+            } else {
+                console.error('Failed to update renter:', error)
+                openModalConfirm.value = false
+                openModalEdit.value = true
+            }
 
+    }
+
+    //cancel
+
+    function cancel() {
+        openModalEdit.value = false
+        openModalCreate.value = false
+        editRenter.value = { name: '', email: '', telephone: '', cpf: '', address: '' }
+        newRenter.value = { name: '', email: '', telephone: '', address: '', cpf: '' }
+        selectRenter.value = null                             
+    }
+
+    //delete renter
+
+    function deleteRenter(renter) {
+        selectRenter.value = renter
+        openModalExclude.value = true
+    }
+
+    async function confirmDelete() {
+        if (!selectRenter.value) return console.warn('No renter selected for deletion')
+
+        try {
+            await renterStore.deleteRenter(selectRenter.value.id)
+            await renterStore.fetchRenters()
+            openModalExclude.value = false
+            selectRenter.value = null
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    //view renter
+
+    function viewRenterFunction(renter) {
+        selectRenter.value = renter
+        openModalView.value = true
+
+        viewRenter.value = {
+            id: renter.id,
+            name: renter.name,
+            email: renter.email,
+            telephone: renter.telephone,
+            cpf: renter.cpf,
+            address: renter.address
+        }
+
+    }
 
     return {
 
@@ -145,6 +208,10 @@ export function useCrud() {
 
         renters, loading, error,
 
-        addRenter, newRenter, formRef, isDuplicate, selectRenter, editRenter, tryOpenConfirm, formRefEdit, prepareEditRenter
+        addRenter, newRenter, formRef, isDuplicate, selectRenter, editRenter, tryOpenConfirm, formRefEdit,
+
+        prepareEditRenter, upadteRenter, cancel,
+
+        deleteRenter, confirmDelete, viewRenter, viewRenterFunction
     }
 }
