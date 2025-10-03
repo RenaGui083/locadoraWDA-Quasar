@@ -1,13 +1,17 @@
-import { ref, watch, computed } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
+import { useUserStore } from 'src/stores/usersStore';
+import { storeToRefs } from 'pinia'
 
 export function useCrud() {
-    const email = ref('')
-    const name = ref('')
-    const password = ref('')
-    const role = ref('')
+    const newUser = ref({
+        name: '',
+        email: '',
+        password: '',
+        role: ''
+    })
 
     const $q = useQuasar()
 
@@ -25,7 +29,11 @@ export function useCrud() {
         { label: t('users.createModal.admin'), value: 'ADMIN' }
     ])
 
+    const userStore = useUserStore()
+    const { users, loading, error } = storeToRefs(userStore)
+
     const filter = ref("")
+    const formRef = ref(null)
 
     const pagination = ref({
         page: 1,
@@ -45,22 +53,41 @@ export function useCrud() {
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
-    const rows = ref([
-        { name: "Renan Guilherme", email: "renan.guilherme@email.com", role: "Administrador" },
-        { name: "Ana Silva", email: "ana.silva@email.com", role: "Usuário" },
-        { name: "Carlos Souza", email: "carlos.souza@email.com", role: "Usuário" },
-        { name: "Mariana Rocha", email: "mariana.rocha@email.com", role: "Administrador" },
-        { name: "João Pedro", email: "joao.pedro@email.com", role: "Usuário" },
-        { name: "Fernanda Lima", email: "fernanda.lima@email.com", role: "Administrador" }
-    ])
+    // get users on mount
+    onMounted(async () => {
+        try {
+            await userStore.fetchUsers()
+            console.log('Users fetched successfully on mount.')
+        } catch (error) {
+            console.error('Error fetching users on mount:', error)
+        }
+    })
+
+    //add user
+
+    async function addUser() {
+        const success = await formRef.value.validate()
+        if (success) {
+            const added = await userStore.addUser(newUser.value)
+            if (added) {
+                await userStore.fetchUsers()
+                newUser.value = { name: '', email: '', password: '', role: '' }
+                openModalCreate.value = false
+            }
+        } else {
+            console.log('Invalid form')
+        }
+    }
 
     return {
-        email, name, password, role,
+        newUser, addUser,
 
-        $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm, 
-         t, i18n, locale,
+        $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm,
 
-        filter, pagination, columns, rows,
-         paginationLabel
+        t, i18n, locale,
+
+        filter, pagination, columns,
+
+        paginationLabel, users, loading, error
     }
 }

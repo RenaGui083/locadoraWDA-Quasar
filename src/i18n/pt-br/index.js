@@ -302,7 +302,7 @@ export default {
             deleteErrorPublishers: "Erro ao realizar exclusão! Verifique se não existem livros vinculados.",
 
             deleteErrorRenters: "Erro ao realizar exclusão! Verifique se este locatário possui aluguéis ativos.",
-
+            deleteError: "Erro ao realizar exclusão!",
             putError: "Erro ao realizar atualização!",
             postError: "Erro ao realizar cadastro!",
             

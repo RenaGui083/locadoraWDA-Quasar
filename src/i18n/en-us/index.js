@@ -317,6 +317,7 @@ export default {
     
             deleteErrorPublishers: "Error during deletion! Check for linked books.",
             deleteErrorRenters: "Error during deletion! Check if this tenant has active rentals.",
+            deleteError: "Error during deletion!",
 
             postError: "Error during registration!",
             putError: "Error during update!",

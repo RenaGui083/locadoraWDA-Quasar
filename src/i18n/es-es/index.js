@@ -303,6 +303,7 @@ export default {
             getError: "¡Error al obtener los datos!",
 
             deleteErrorPublishers: "¡Error durante la eliminación! Verifique si no hay libros vinculados.",
+            deleteError: "¡Error durante la eliminación!",
 
             deleteErrorRenters: "¡Error durante la eliminación! Verifique si este arrendatario tiene alquileres activos.",
 
