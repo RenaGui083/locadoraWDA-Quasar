@@ -10,7 +10,7 @@ export function useCrud() {
         name: '',
         email: '',
         password: '',
-        role: ''
+        role: 'USER'
     })
 
     const $q = useQuasar()
@@ -34,6 +34,7 @@ export function useCrud() {
 
     const filter = ref("")
     const formRef = ref(null)
+    const selectUser = ref(null)
 
     const pagination = ref({
         page: 1,
@@ -43,6 +44,17 @@ export function useCrud() {
     watch(() => $q.screen.lt.md, (isMobile) => {
         pagination.value.rowsPerPage = isMobile ? 0 : 5
     })
+
+    function isDuplicate(field, value) {
+        if (!value) return true
+
+        const isDuplicated = users.value.some(
+            p => p[field] === value && p.id !== (selectUser.value?.id ?? null)
+        )
+
+        return isDuplicated ? t('errorDuplicate') : true
+    }
+
 
     const columns = computed(() => [
         { name: "name", label: t('users.table.name'), field: "name", align: "left", sortable: true },
@@ -88,6 +100,6 @@ export function useCrud() {
 
         filter, pagination, columns,
 
-        paginationLabel, users, loading, error
+        paginationLabel, users, loading, error, formRef, isDuplicate
     }
 }

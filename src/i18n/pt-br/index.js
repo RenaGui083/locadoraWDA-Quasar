@@ -187,6 +187,14 @@ export default {
             password: "Senha",
             role: "Nível de acesso",
             cancelButton: "Fechar"
+        },
+        errorInput: {
+            name: "O nome é obrigatório",
+            email: "O email é obrigatório",
+            password: "A senha é obrigatória",
+            weakPassword: "A senha deve ter no mínimo 8 caracteres",
+            invalidEmail: "Email inválido",
+            invalidRole: "O nível de acesso é obrigatório"
         }
     },
 
@@ -245,6 +253,16 @@ export default {
             cpf: "CPF",
             address: "Endereço",
             cancelButton: "Fechar"
+        },
+        errorInput: {
+            name: "O nome é obrigatório",
+            email: "O email é obrigatório",
+            telephone: "O telefone é obrigatório",
+            cpf: "O CPF é obrigatório",
+            invalidEmail: "Email inválido",
+            invalidTelephone: "Telefone inválido",
+            invalidCpf: "CPF inválido",
+            address: "O endereço é obrigatório"
         }
     },
 

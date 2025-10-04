@@ -72,7 +72,9 @@
                         <q-form @submit="onSubmit" @reset="onReset" ref="formRef">
                             <q-input filled v-model="newUser.name" type="text" color="primary"
                                 :label="t('users.createModal.name')" class="inputModal" :rules="[
-                                    val => !!val || t('users.errorInput.name')
+
+                                    val => !!val || t('users.errorInput.name'),
+                                    val => isDuplicate('name', val)
                                 ]" />
 
                             <q-input filled v-model="newUser.email" type="email" color="primary"
@@ -85,7 +87,7 @@
                             <q-input filled v-model="newUser.password" type="password" color="primary"
                                 :label="t('users.createModal.password')" class="inputModal" :rules="[
                                     val => !!val || t('users.errorInput.password'),
-                                    val => val.length >= 6 || t('users.errorInput.weakPassword')
+                                    val => val.length >= 8 || t('users.errorInput.weakPassword')
                                 ]" />
 
                             <div class="q-pa-lg radio-container">
@@ -268,10 +270,10 @@
 import { useCrud } from 'src/utils/users.js'
 
 
-const { newUser, addUser,
+const { newUser, addUser, isDuplicate,
 
     $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm,
 
-    filter, pagination, columns, t, paginationLabel, users, loading } = useCrud()
+    filter, pagination, columns, t, paginationLabel, users, loading, formRef } = useCrud()
 
 </script>

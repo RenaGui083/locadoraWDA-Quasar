@@ -192,6 +192,14 @@ export default {
             password: "Password",
             role: "Access Level",
             cancelButton: "Done"
+        },
+        errorInput: {
+            name: "Name is required",
+            email: "Email is required",
+            password: "Password is required",
+            weakPassword: "Password must be at least 8 characters",
+            invalidEmail: "Invalid email",
+            invalidRole: "Access level is required"
         }
     },
 

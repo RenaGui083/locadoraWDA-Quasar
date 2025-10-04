@@ -183,8 +183,16 @@ export default {
             password: "Contraseña",
             role: "Nivel de acceso",
             cancelButton: "Hecho"
-        }
-    },
+        },
+        errorInput: {
+            name: "El nombre es obligatorio",
+            email: "El correo electrónico es obligatorio",
+            password: "La contraseña es obligatoria",
+            weakPassword: "La contraseña debe tener al menos 8 caracteres",
+            invalidEmail: "Correo electrónico inválido",
+            invalidRole: "El nivel de acceso es obligatorio"
+    }
+},
     excludeModal: {
         text: "¿Está seguro de que desea eliminar esto?",
         yesButton: "Sí",
