@@ -154,13 +154,13 @@ export default {
         headerTitle: "Users",
         table: {
             tableTitle: "User List",
-            name: "Name",
-            email: "Email",
-            role: "Access Level",
+            name: "Name*",
+            email: "Email*",
+            role: "Access Level*",
             actions: "Actions"
         },
         createModal: {
-            title: "Create User",
+            title: "Create new user",
             name: "Name",
             email: "Email",
             password: "Password",
@@ -170,10 +170,10 @@ export default {
             cancelButton: "Cancel"
         },
         editModal: {
-            title: "Edit User",
-            name: "Name",
-            email: "Email",
-            password: "Password",
+            title: "Edit user",
+            name: "Name*",
+            email: "Email*",
+            password: "Password*",
             admin: "Administrator",
             user: "User",
             registerButton: "Save",
@@ -185,7 +185,7 @@ export default {
             }
         },
         viewModal: {
-            title: "User Details",
+            title: "User details",
             id: "ID",
             name: "Name",
             email: "Email",
@@ -222,35 +222,35 @@ export default {
         headerTitle: "Renters",
         table: {
             tableTitle: "Renters List",
-            name: "Name",
-            email: "Email",
-            telephone: "Telephone",
-            address: "Address",
+            name: "Name*",
+            email: "Email*",
+            telephone: "Telephone*",
+            address: "Address*",
             cpf: "CPF",
             actions: "Actions"
         },
         createModal: {
-            title: "Register Renter",
-            name: "Name",
-            email: "Email",
-            telephone: "Telephone",
-            cpf: "CPF",
-            address: "Address",
+            title: "Register new renter",
+            name: "Name*",
+            email: "Email*",
+            telephone: "Telephone*",
+            cpf: "CPF*",
+            address: "Address*",
             registerButton: "Register",
             cancelButton: "Cancel"
         },
         editModal: {
-            title: "Edit Renter",
-            name: "Name",
-            email: "Email",
-            telephone: "Telephone",
-            cpf: "CPF",
-            address: "Address",
+            title: "Edit renter",
+            name: "Name*",
+            email: "Email*",
+            telephone: "Telephone*",
+            cpf: "CPF*",
+            address: "Address*",
             registerButton: "Save",
             cancelButton: "Cancel",
         },
         viewModal: {
-            title: "Renter Details",
+            title: "Renter details",
             id: "ID",
             name: "Name",
             email: "Email",
@@ -283,7 +283,7 @@ export default {
             actions: "Actions"
         },
         createModal: {
-            title: "Register Publisher",
+            title: "Register new publisher",
             name: "Name*",
             email: "Email*",
             telephone: "Telephone*",
@@ -292,7 +292,7 @@ export default {
             cancelButton: "Cancel"
         },
         editModal: {
-            title: "Edit Publisher",
+            title: "Edit publisher",
             name: "Name*",
             email: "Email*",
             telephone: "Telephone*",
@@ -326,6 +326,8 @@ export default {
             deleteErrorPublishers: "Error during deletion! Check for linked books.",
             deleteErrorRenters: "Error during deletion! Check if this tenant has active rentals.",
             deleteError: "Error during deletion!",
+
+            deleteErrorOwnUser: "You cannot delete your own user!",
 
             postError: "Error during registration!",
             putError: "Error during update!",

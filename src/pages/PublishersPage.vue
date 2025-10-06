@@ -115,7 +115,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('publishers.editModal.title')  + " " + (editPublisher.name) + "?"}}</div>
+                    <div class="text-h5">{{ t('publishers.editModal.title')  + " " + (fixedName) + "?"}}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -216,7 +216,7 @@
 <script setup>
 import { useCrud } from 'src/utils/publishers.js'
 const {
-    newPublisher, addPublisher, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm,
+    newPublisher, addPublisher, $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, fixedName,
     filter, pagination, columns, t, paginationLabel, publishers, loading, formRef, deletePublisher, confirmDelete,
      editPublisher,prepareEditPublisher, formRefEdit, updatePublisher,tryOpenConfirm, isDuplicate, cancel, selectPublisher
 } = useCrud()

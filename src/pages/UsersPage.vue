@@ -26,9 +26,9 @@
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
-                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
-                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
-                        <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditUser(props.row)" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteUser(props.row)" />
+                        <q-btn flat round dense icon="visibility" color="#121f2f" @click="viewUserFunction(props.row)" />
                     </q-td>
                 </template>
                 <template v-slot:body-cell="props">
@@ -43,9 +43,9 @@
                             <div class="col-8">{{ col.value }}</div>
                         </div>
                         <div class="row justify-end q-mt-sm">
-                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
-                            <q-btn flat round dense icon="visibility" color="#121f2f" @click="openModalView = true" />
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditUser(props.row)" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteUser(props.row)" />
+                            <q-btn flat round dense icon="visibility" color="#121f2f" @click="viewUserFunction(props.row)" />
                         </div>
                     </div>
                 </template>
@@ -91,8 +91,8 @@
                                 ]" />
 
                             <div class="q-pa-lg radio-container">
-                                <q-option-group v-model="newUser.role" :options="options" color="primary" inline class="radio"
-                                    :rules="[val => !!val || t('users.errorInput.role')]" />
+                                <q-option-group v-model="newUser.role" :options="options" color="primary" inline
+                                    class="radio" :rules="[val => !!val || t('users.errorInput.role')]" />
                             </div>
 
                         </q-form>
@@ -104,7 +104,7 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('users.createModal.registerButton')" color="primary" @click="addUser"
                         class="buttonRegister" />
-                    <q-btn flat :label="t('users.createModal.cancelButton')" color="white" v-close-popup />
+                    <q-btn flat :label="t('users.createModal.cancelButton')" color="white" @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -116,7 +116,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('users.editModal.title') }}</div>
+                    <div class="text-h5">{{ t('users.editModal.title') + " " + (fixedName) + "?" }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -126,15 +126,29 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('users.editModal.name')"
-                            class="inputModal" />
-                        <q-input filled v-model="email" type="email" :label="t('users.editModal.email')"
-                            class="inputModal" />
-                        <q-input filled v-model="password" type="password" :label="t('users.editModal.password')"
-                            class="inputModal" />
-                        <div class="q-pa-lg radio-container">
-                            <q-option-group v-model="role" :options="options" color="primary" inline class="radio" />
-                        </div>
+
+                        <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
+                            <q-input filled v-model="editUser.name" type="text" color="primary"
+                                :label="t('users.createModal.name')" class="inputModal" :rules="[
+                                    val => !!val || t('users.errorInput.name'),
+                                    val => isDuplicate('name', val)
+                                ]" />
+
+                            <q-input filled v-model="editUser.email" type="email" color="primary"
+                                :label="t('users.createModal.email')" class="inputModal" :rules="[
+                                    val => !!val || t('users.errorInput.email'),
+                                    val => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(val) || t('users.errorInput.invalidEmail'),
+                                    val => isDuplicate('email', val)
+                                ]" />
+
+
+                            <div class="q-pa-lg radio-container">
+                                <q-option-group v-model="editUser.role" :options="options" color="primary" inline 
+                                    class="radio" :rules="[val => !!val || t('users.errorInput.role')]" />
+                            </div>
+
+                        </q-form>
+
                     </slot>
                 </q-card-section>
 
@@ -142,8 +156,8 @@
                 <q-separator />
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('users.editModal.registerButton')" color="primary"
-                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
-                    <q-btn flat :label="t('users.editModal.cancelButton')" color="white" v-close-popup />
+                        @click="tryOpenConfirm" class="buttonRegister" />
+                    <q-btn flat :label="t('users.editModal.cancelButton')" color="white" @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -155,7 +169,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('excludeModal.text') }}</div>
+                    <div class="text-h5">{{ t('excludeModal.text') + " " + "(" +(selectUser.name) + ")" }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -164,7 +178,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="confirmDelete"
                         class="buttonRegister" />
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -178,7 +192,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('users.viewModal.title') }}</div>
+                    <div class="text-h5">{{ t('users.viewModal.title') + " " + (viewUser?.name ??'')  }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -189,43 +203,39 @@
 
 
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                     <q-field class="viewInput" filled :label="t('users.viewModal.id')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="key" class="viewFont" />
+                            <q-icon name="key" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('users.viewModal.id') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.id ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('users.viewModal.name')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="person" class="viewFont" />
+                            <q-icon name="person" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('users.viewModal.name') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.name ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('users.viewModal.email')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="email" class="viewFont" />
+                            <q-icon name="email" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('users.viewModal.email') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.email ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field outlined :dense="dense" class="viewInput">
+                    <q-field class="viewInput" filled :label="t('users.viewModal.role')" label-color="primary" stack-label>
                         <template v-slot:prepend>
-                            <q-icon name="work" class="viewFont" />
+                            <q-icon name="work" color="primary" />
                         </template>
-
                         <template v-slot:control>
-                            <div class="viewFont" tabindex="0">{{ t('users.viewModal.password') + ":" + "" }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.role ??'') }}</div>
                         </template>
                     </q-field>
 
@@ -255,7 +265,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="updateUser"
                         class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -270,9 +280,9 @@
 import { useCrud } from 'src/utils/users.js'
 
 
-const { newUser, addUser, isDuplicate,
+const { newUser, addUser, isDuplicate, prepareEditUser, editUser, formRefEdit,tryOpenConfirm, updateUser, cancel, fixedName, viewUserFunction, viewUser,
 
-    $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm,
+    $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm, deleteUser, confirmDelete, selectUser,
 
     filter, pagination, columns, t, paginationLabel, users, loading, formRef } = useCrud()
 

@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
 import { useUserStore } from 'src/stores/usersStore';
 import { storeToRefs } from 'pinia'
+import { errorMsg } from 'src/utils/toasts'
 
 export function useCrud() {
     const newUser = ref({
@@ -12,6 +13,21 @@ export function useCrud() {
         password: '',
         role: 'USER'
     })
+
+    const editUser = ref({
+        name: '',
+        email: '',
+        role: ''
+    })
+
+    const viewUser = ref({
+        id: null,
+        name: '',
+        email: '',
+        role: ''
+    })
+
+    const fixedName = ref('')
 
     const $q = useQuasar()
 
@@ -34,6 +50,7 @@ export function useCrud() {
 
     const filter = ref("")
     const formRef = ref(null)
+    const formRefEdit = ref(null)
     const selectUser = ref(null)
 
     const pagination = ref({
@@ -91,14 +108,103 @@ export function useCrud() {
         }
     }
 
+    //edit user
+
+    function prepareEditUser(user) {
+        openModalEdit.value = true
+        selectUser.value = user
+
+        editUser.value = {
+            name: user.name,
+            email: user.email,
+            role: user.role
+        }
+
+        fixedName.value = user.name
+    }
+
+    async function tryOpenConfirm() {
+        if (!formRefEdit.value) return
+        const valid = await formRefEdit.value.validate()
+        if (valid) {
+            openModalConfirm.value = true
+            openModalEdit.value = false
+        } else {
+            console.warn('Formulário inválido')
+        }
+    }
+
+    async function updateUser() {
+        editUser.value = { ...editUser.value }
+        const updated = await userStore.updateUser(selectUser.value.id, editUser.value)
+        if (updated) {
+            await userStore.fetchUsers()
+            openModalEdit.value = false
+            openModalConfirm.value = false
+            editUser.value = { name: '', email: '', role: '' }
+            selectUser.value = null
+        } else {
+            console.error('Failed to update user', error)
+            openModalConfirm.value = false
+            openModalEdit.value = true
+        }
+    }
+
+    //cancel
+
+    function cancel() {
+        openModalEdit.value = false
+        openModalCreate.value = false
+        editUser.value = { name: '', email: '', role: '' }
+        newUser.value = { name: '', email: '', password: '', role: '' }
+        selectUser.value = null
+    }
+
+    //delete user
+
+    function deleteUser(user) {
+        selectUser.value = user
+        openModalExclude.value = true
+    }
+
+    async function confirmDelete() {
+        if (!selectUser.value) return console.warn('No renter selected for deletion')
+        let userName = localStorage.getItem('nameUser')
+        if (selectUser.value.name == userName) return errorMsg(t('toasts.error.deleteErrorOwnUser'))
+
+        try {
+            await userStore.deleteUser(selectUser.value.id)
+            await userStore.fetchUsers()
+            openModalExclude.value = false
+            selectUser.value = null
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    //view user
+
+    function viewUserFunction(user) {
+        selectUser.value = user
+        openModalView.value = true
+
+        viewUser.value = {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role === 'ADMIN' ? t('roleAdmin') : t('roleUser')
+        }
+    }
+
+
     return {
-        newUser, addUser,
+        newUser, addUser, prepareEditUser, formRefEdit, editUser, tryOpenConfirm, updateUser, fixedName,
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm,
 
-        t, i18n, locale,
+        t, i18n, locale, cancel, deleteUser, confirmDelete, viewUserFunction, viewUser,
 
-        filter, pagination, columns,
+        filter, pagination, columns, selectUser,
 
         paginationLabel, users, loading, error, formRef, isDuplicate
     }

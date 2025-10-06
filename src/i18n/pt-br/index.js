@@ -160,27 +160,27 @@ export default {
             actions: "Ações"
         },
         createModal: {
-            title: "Cadastrar Usuário",
-            name: "Nome",
-            email: "Email",
-            password: "Senha",
+            title: "Cadastrar novo usuário",
+            name: "Nome*",
+            email: "Email*",
+            password: "Senha*",
             admin: "Administrador",
             user: "Usuário",
             registerButton: "Cadastrar",
             cancelButton: "Cancelar"
         },
         editModal: {
-            title: "Editar Usuário",
-            name: "Nome",
-            email: "Email",
-            password: "Senha",
+            title: "Editar usuário",
+            name: "Nome*",
+            email: "Email*",
+            password: "Senha*",
             admin: "Administrador",
             user: "Usuário",
             registerButton: "Atualizar",
             cancelButton: "Cancelar"
         },
         viewModal: {
-            title: "Detalhes do Usuário",
+            title: "Detalhes do usuário",
             id: "ID",
             name: "Nome",
             email: "Email",
@@ -217,30 +217,30 @@ export default {
         headerTitle: "Locatários",
         table: {
             tableTitle: "Relação de Locatários",
-            name: "Nome",
-            email: "Email",
-            telephone: "Telefone",
-            address: "Endereço",
-            cpf: "CPF",
+            name: "Nome*",
+            email: "Email*",
+            telephone: "Telefone*",
+            address: "Endereço*",
+            cpf: "CPF*",
             actions: "Ações"
         },
         createModal: {
-            title: "Cadastrar Locatário",
-            name: "Nome",
-            email: "Email",
-            telephone: "Telefone",
-            cpf: "CPF",
-            address: "Endereço",
+            title: "Cadastrar novo locatário",
+            name: "Nome*",
+            email: "Email*",
+            telephone: "Telefone*",
+            cpf: "CPF*",
+            address: "Endereço*",
             registerButton: "Cadastrar",
             cancelButton: "Cancelar"
         },
         editModal: {
-            title: "Editar Locatário",
-            name: "Nome",
-            email: "Email",
-            telephone: "Telefone",
-            cpf: "CPF",
-            address: "Endereço",
+            title: "Editar locatário",
+            name: "Nome*",
+            email: "Email*",
+            telephone: "Telefone*",
+            cpf: "CPF*",
+            address: "Endereço*",
             registerButton: "Atualizar",
             cancelButton: "Cancelar",
         },
@@ -277,7 +277,7 @@ export default {
             actions: "Ações"
         },
         createModal: {
-            title: "Cadastrar Editora",
+            title: "Cadastrar nova editora",
             name: "Nome*",
             email: "Email*",
             telephone: "Telefone*",
@@ -286,7 +286,7 @@ export default {
             cancelButton: "Cancelar"
         },
         editModal: {
-            title: "Editar Editora",
+            title: "Editar editora",
             name: "Nome*",
             email: "Email*",
             telephone: "Telefone*",
@@ -318,6 +318,8 @@ export default {
             getError: "Erro ao obter os dados!",
 
             deleteErrorPublishers: "Erro ao realizar exclusão! Verifique se não existem livros vinculados.",
+
+            deleteErrorOwnUser: "Você não pode excluir a si mesmo!",
 
             deleteErrorRenters: "Erro ao realizar exclusão! Verifique se este locatário possui aluguéis ativos.",
             deleteError: "Erro ao realizar exclusão!",

@@ -145,26 +145,26 @@ export default {
         headerTitle: "Usuarios",
         table: {
             tableTitle: "Relación de Usuarios",
-            name: "Nombre",
-            email: "Correo electrónico",
-            role: "Nivel de acceso",
+            name: "Nombre*",
+            email: "Correo electrónico*",
+            role: "Nivel de acceso*",
             actions: "Acciones"
         },
         createModal: {
-            title: "Registrar Usuario",
-            name: "Nombre",
-            email: "Correo electrónico",
-            password: "Contraseña",
+            title: "Registrar nuevo usuario",
+            name: "Nombre*",
+            email: "Correo electrónico*",
+            password: "Contraseña*",
             admin: "Administrador",
             user: "Usuario",
             registerButton: "Registrar",
             cancelButton: "Cancelar"
         },
         editModal: {
-            title: "Editar Usuario",
-            name: "Nombre",
-            email: "Correo electrónico",
-            password: "Contraseña",
+            title: "Editar usuario",
+            name: "Nombre*",
+            email: "Correo electrónico*",
+            password: "Contraseña*",
             admin: "Administrador",
             user: "Usuario",
             registerButton: "Guardar",
@@ -176,7 +176,7 @@ export default {
             }
         },
         viewModal: {
-            title: "Detalles del Usuario",
+            title: "Detalles del usuario",
             id: "ID",
             name: "Nombre",
             email: "Correo electrónico",
@@ -209,30 +209,30 @@ export default {
         headerTitle: "Arrendatarios",
         table: {
             tableTitle: "Lista de arrendatarios",
-            name: "Nombre",
-            email: "Correo electrónico",
-            telephone: "Teléfono",
-            address: "Dirección",
-            cpf: "CPF",
+            name: "Nombre*",
+            email: "Correo electrónico*",
+            telephone: "Teléfono*",
+            address: "Dirección*",
+            cpf: "CPF*",
             actions: "Acciones"
         },
         createModal: {
-            title: "Registrar arrendatario",
-            name: "Nombre",
-            email: "Correo electrónico",
-            telephone: "Teléfono",
-            cpf: "CPF",
-            address: "Dirección",
+            title: "Registrar nuevo arrendatario",
+            name: "Nombre*",
+            email: "Correo electrónico*",
+            telephone: "Teléfono*",
+            cpf: "CPF*",
+            address: "Dirección*",
             registerButton: "Registrar",
             cancelButton: "Cancelar"
         },
         editModal: {
             title: "Editar arrendatario",
-            name: "Nombre",
-            email: "Correo electrónico",
-            telephone: "Teléfono",
-            cpf: "CPF",
-            address: "Dirección",
+            name: "Nombre*",
+            email: "Correo electrónico*",
+            telephone: "Teléfono*",
+            cpf: "CPF*",
+            address: "Dirección*",
             registerButton: "Guardar",
             cancelButton: "Cancelar",
         },
@@ -270,7 +270,7 @@ export default {
             actions: "Acciones"
         },
         createModal: {
-            title: "Registrar editorial",
+            title: "Registrar nuevo editorial",
             name: "Nombre*",
             email: "Correo electrónico*",
             telephone: "Teléfono*",
@@ -312,6 +312,8 @@ export default {
 
             deleteErrorPublishers: "¡Error durante la eliminación! Verifique si no hay libros vinculados.",
             deleteError: "¡Error durante la eliminación!",
+
+            deleteErrorOwnUser: "¡No puedes eliminar el usuario que está en uso!",
 
             deleteErrorRenters: "¡Error durante la eliminación! Verifique si este arrendatario tiene alquileres activos.",
 

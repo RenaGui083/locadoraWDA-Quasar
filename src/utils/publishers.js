@@ -29,6 +29,8 @@ export function useCrud() {
         telephone: '',
         site: ''
     })
+
+    const fixedName = ref('')
     const { publishers, loading, error } = storeToRefs(publisherStore)
 
 
@@ -138,6 +140,7 @@ export function useCrud() {
             telephone: publisher.telephone,
             site: publisher.site
         }
+        fixedName.value = publisher.name
     }
 
     async function updatePublisher() {
@@ -173,7 +176,7 @@ export function useCrud() {
 
         filter, pagination, columns,
 
-        t, i18n, locale, paginationLabel,
+        t, i18n, locale, paginationLabel, fixedName,
 
         publishers, loading, error, isDuplicate, cancel
 

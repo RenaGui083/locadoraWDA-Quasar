@@ -127,7 +127,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('renters.editModal.title') + " " + (editRenter.name) + "?" }}</div>
+                    <div class="text-h5">{{ t('renters.editModal.title') + " " + (fixedName) + "?" }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -322,7 +322,7 @@ const {
 
     t, paginationLabel, isDuplicate, editRenter, tryOpenConfirm, prepareEditRenter,
 
-    renters, loading, upadteRenter, cancel,
+    renters, loading, upadteRenter, cancel, fixedName,
 
     deleteRenter, confirmDelete, viewRenter, viewRenterFunction, selectRenter
 } = useCrud()

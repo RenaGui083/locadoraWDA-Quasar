@@ -52,6 +52,8 @@ export function useCrud() {
     const formRefEdit = ref(null)
     const selectRenter = ref(null)
 
+    const fixedName = ref('')
+
     const pagination = ref({
         page: 1,
         rowsPerPage: $q.screen.lt.md ? 0 : 5
@@ -132,6 +134,8 @@ export function useCrud() {
             cpf: renter.cpf,
             address: renter.address
         }
+
+        fixedName.value = renter.name
     }
 
     async function upadteRenter() {
@@ -202,7 +206,7 @@ export function useCrud() {
 
         $q, openModalCreate, openModalEdit, openModalExclude, openModalView, openModalConfirm,
 
-        filter, pagination, columns,
+        filter, pagination, columns, fixedName,
 
         t, i18n, locale, paginationLabel,
 
