@@ -1,12 +1,24 @@
-import { ref, watch,computed } from 'vue'
+import { ref, watch,computed, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
+import { useRentsStore } from 'src/stores/rentsStore'; 
+import { storeToRefs } from 'pinia'
 
 export function useCrud() {
+    const rentsStore = useRentsStore()
+
     const renter = ref('')
     const book = ref('')
     const deadLine = ref('')
+
+    // const newRent = ref({
+    //     book: '',
+    //     renter: '',
+    //     rentDate: '',
+    //     deadLine: '',
+    //     status: ''
+    // })
 
     const $q = useQuasar()
 
@@ -19,6 +31,8 @@ export function useCrud() {
 
     const { t } = useI18n()
     const { locale } = useI18n()
+
+    const { rents, loading, error } = storeToRefs(rentsStore)
 
     const pagination = ref({
         page: 1,
@@ -40,14 +54,16 @@ export function useCrud() {
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
-    const rows = ref([
-        { book: "Dom Casmurro", renter: "Renan Guilherme", rentDate: "2025-09-01", deadLine: "2025-09-10", status: "Devolvido no prazo" },
-        { book: "O Senhor dos Anéis", renter: "Ana Silva", rentDate: "2025-09-03", deadLine: "2025-09-15", status: "Devolvido no prazo"},
-        { book: "1984", renter: "Carlos Souza", rentDate: "2025-09-05", deadLine: "2025-09-20",status: "Devolvido no prazo" },
-        { book: "A Menina que Roubava Livros", renter: "Mariana Rocha", rentDate: "2025-09-07", deadLine: "2025-09-18",status: "Pendente" },
-        { book: "Harry Potter e a Pedra Filosofal", renter: "João Pedro", rentDate: "2025-09-08", deadLine: "2025-09-19",status: "Pendente" },
-        { book: "O Pequeno Príncipe", renter: "Fernanda Lima", rentDate: "2025-09-02", deadLine: "2025-09-12" ,status: "Entregue com atraso" }
-    ])
+    //get rents on load
+    
+        onMounted(async () => {
+            try {
+                await rentsStore.fetchRents()
+                console.log('Publishers fetched on mount')
+            } catch (error) {
+                console.log(error)('Failed to fetch publishers on mount')
+            }
+        })
 
 
     return {
@@ -55,6 +71,6 @@ export function useCrud() {
 
         $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm,  t, i18n, locale,
 
-        filter, pagination, columns, rows,paginationLabel
+        filter, pagination, columns,paginationLabel, rents, loading, error
     }
 }

@@ -17,10 +17,10 @@
 
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">{{ t('rents.table.tableTitle') }}</div>
-            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+            <q-table :rows="rents" :columns="columns" row-key="id" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
                 :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
-                :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders"
+                :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders"  :loading="loading" :loading-label="t('tables.loading')"
                 :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
@@ -172,9 +172,9 @@
 import { useCrud } from 'src/utils/rents.js'
 
 
-const { book, renter, deadLine,
+const { book, renter, deadLine, rents, loading,
 
     $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, locale,
 
-    filter, pagination, columns, rows, paginationLabel } = useCrud()
+    filter, pagination, columns, paginationLabel } = useCrud()
 </script>
