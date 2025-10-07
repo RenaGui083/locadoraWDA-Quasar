@@ -147,6 +147,12 @@ export default {
                 text: "Você tem certeza de que deseja realizar a devolução? ",
             }
         },
+        status: {
+            RENTED: "Alugado",
+            IN_TIME: "Devolvido no prazo",
+            LATE: "Atrasado",
+            DELIVERED_WITH_DELAY: "Devolvido com atraso"
+        }
     },
 
 

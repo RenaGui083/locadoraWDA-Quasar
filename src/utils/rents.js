@@ -1,24 +1,20 @@
-import { ref, watch,computed, onMounted } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
-import { useRentsStore } from 'src/stores/rentsStore'; 
+import { useRentsStore } from 'src/stores/rentsStore';
 import { storeToRefs } from 'pinia'
 
 export function useCrud() {
     const rentsStore = useRentsStore()
 
-    const renter = ref('')
-    const book = ref('')
-    const deadLine = ref('')
-
-    // const newRent = ref({
-    //     book: '',
-    //     renter: '',
-    //     rentDate: '',
-    //     deadLine: '',
-    //     status: ''
-    // })
+    const newRent = ref({
+        book: '',
+        renter: '',
+        rentDate: '',
+        deadLine: '',
+        status: ''
+    })
 
     const $q = useQuasar()
 
@@ -49,28 +45,41 @@ export function useCrud() {
         { name: "rentDate", label: t('rents.table.rentDate'), field: "rentDate", align: "left", sortable: true },
         { name: "deadLine", label: t('rents.table.deadLine'), field: "deadLine", align: "left", sortable: true },
         { name: "status", label: t('rents.table.status'), field: "status", align: "left", sortable: true },
-        { name: "actions", label: t('rents.table.actions'), field: "actions", align: "center" , filter: false}
+        { name: "actions", label: t('rents.table.actions'), field: "actions", align: "center", filter: false }
     ])
+
+    // Select de livros
+const booksOptions = computed(() =>
+  [...new Map(rents.value.map(r => [r.bookId, r.book])).entries()]
+    .map(([id, label]) => ({ label, value: id }))
+)
+
+// Select de locatários
+const rentersOptions = computed(() =>
+  [...new Map(rents.value.map(r => [r.renterId, r.renter])).entries()]
+    .map(([id, label]) => ({ label, value: id }))
+)
+
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
     //get rents on load
-    
-        onMounted(async () => {
-            try {
-                await rentsStore.fetchRents()
-                console.log('Publishers fetched on mount')
-            } catch (error) {
-                console.log(error)('Failed to fetch publishers on mount')
-            }
-        })
+
+    onMounted(async () => {
+        try {
+            await rentsStore.fetchRents()
+            console.log('Publishers fetched on mount')
+        } catch (error) {
+            console.log(error)('Failed to fetch publishers on mount')
+        }
+    })
 
 
     return {
-        renter, book, deadLine,
+        newRent, booksOptions, rentersOptions,
 
-        $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm,  t, i18n, locale,
+        $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, i18n, locale,
 
-        filter, pagination, columns,paginationLabel, rents, loading, error
+        filter, pagination, columns, paginationLabel, rents, loading, error
     }
 }

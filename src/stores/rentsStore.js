@@ -2,6 +2,7 @@ import { api } from 'boot/axios'
 import { defineStore } from 'pinia'
 import { successMsg, errorMsg } from 'src/utils/toasts'
 import { i18n } from 'boot/i18n'
+import { watch } from 'vue'
 
 export const useRentsStore = defineStore('rents', {
     state: () => ({
@@ -16,12 +17,20 @@ export const useRentsStore = defineStore('rents', {
 
             return api.get('/rent')
                 .then(response => {
+                    const locale = i18n.global.locale.value || i18n.global.locale
                     this.rents = response.data.map(rent => ({
                         ...rent,
                         book: rent.book.name,
-                        renter: rent.renter?.name,
-                        rentDate: new Date(rent.rentDate).toLocaleDateString(i18n.global.locale),
-                        deadLine: new Date(rent.deadLine).toLocaleDateString(i18n.global.locale)
+                        renter: rent.renter.name,
+                        bookId: rent.book.id,          
+                        renterId: rent.renter.id,      
+                        rentDate: rent.rentDate
+                            ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(rent.rentDate))
+                            : '',
+                        deadLine: rent.deadLine
+                            ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(rent.deadLine))
+                            : '',
+                        status: i18n.global.t(`rents.status.${rent.status}`)
                     }))
                 })
                 .catch(e => {
@@ -78,3 +87,11 @@ export const useRentsStore = defineStore('rents', {
         }
     }
 })
+
+const rentsStore = useRentsStore()
+watch(
+    () => i18n.global.locale.value,
+    () => {
+        if (rentsStore.rents.length) rentsStore.fetchRents()
+    }
+)

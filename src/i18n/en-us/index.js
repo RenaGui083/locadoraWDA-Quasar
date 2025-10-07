@@ -147,6 +147,12 @@ export default {
                 text: "Are you sure you want to return this book?",
             }
         },
+        status: {
+            RENTED: "Rented",
+            IN_TIME: "Returned on time",
+            LATE: "Late",
+            DELIVERED_WITH_DELAY: "Delivered with delay"
+        }
     },
 
 

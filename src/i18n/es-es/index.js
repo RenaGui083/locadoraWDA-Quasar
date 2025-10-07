@@ -140,6 +140,12 @@ export default {
                 text: "¿Estás seguro de que deseas realizar la devolución?",
             }
         },
+        status: {
+            RENTED: "Alquilado",
+            IN_TIME: "Devuelto a tiempo",
+            LATE: "Atrasado",
+            DELIVERED_WITH_DELAY: "Devuelto con demora"
+        }
     },
     users: {
         headerTitle: "Usuarios",
