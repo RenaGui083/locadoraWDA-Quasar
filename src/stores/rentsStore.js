@@ -7,6 +7,7 @@ import { watch } from 'vue'
 export const useRentsStore = defineStore('rents', {
     state: () => ({
         rents: [],
+        fetchRentsTable: [],
         loading: false,
         error: null
     }),
@@ -17,13 +18,15 @@ export const useRentsStore = defineStore('rents', {
 
             return api.get('/rent')
                 .then(response => {
+                    this.rents = response.data
+
                     const locale = i18n.global.locale.value || i18n.global.locale
-                    this.rents = response.data.map(rent => ({
+                    this.fetchRentsTable = response.data.map(rent => ({
                         ...rent,
                         book: rent.book.name,
                         renter: rent.renter.name,
-                        bookId: rent.book.id,          
-                        renterId: rent.renter.id,      
+                        bookId: rent.book.id,
+                        renterId: rent.renter.id,
                         rentDate: rent.rentDate
                             ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(rent.rentDate))
                             : '',
@@ -32,6 +35,7 @@ export const useRentsStore = defineStore('rents', {
                             : '',
                         status: i18n.global.t(`rents.status.${rent.status}`)
                     }))
+                    console.log('Rents fetched:', this.rents);
                 })
                 .catch(e => {
                     console.error('Erro:', e.response?.data || e.message);
@@ -52,6 +56,7 @@ export const useRentsStore = defineStore('rents', {
                 .catch(error => {
                     errorMsg(i18n.global.t('toasts.error.postError'));
                     console.error('Erro:', error.response?.data || error.message);
+                    console.log(rent)
                     return false
                 })
         },
@@ -84,7 +89,29 @@ export const useRentsStore = defineStore('rents', {
                     errorMsg(i18n.global.t('toasts.error.finishRent'));
                     return false
                 })
-        }
+        },
+
+        async fetchBooksAndRenters() {
+      try {
+        const booksRes = await api.get('/book')
+        this.booksOptions = (booksRes.data || []).map(b => ({
+          label: b.name,
+          value: b.id
+        }))
+
+        const rentersRes = await api.get('/renter')
+        this.rentersOptions = (rentersRes.data || []).map(r => ({
+          label: r.name,
+          value: r.id
+        }))
+
+        console.log('Books:', this.booksOptions)
+        console.log('Renters:', this.rentersOptions)
+      } catch (err) {
+        console.error('Erro ao buscar livros e locatários:', err)
+        errorMsg(i18n.global.t('toasts.error.getError'))
+      }
+    }
     }
 })
 
@@ -92,6 +119,8 @@ const rentsStore = useRentsStore()
 watch(
     () => i18n.global.locale.value,
     () => {
-        if (rentsStore.rents.length) rentsStore.fetchRents()
+        rentsStore.fetchRents()
+            .then(() => console.log('Rents refetched after locale change'))
+            .catch(err => console.error(err))
     }
 )

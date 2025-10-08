@@ -17,7 +17,7 @@
 
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">{{ t('rents.table.tableTitle') }}</div>
-            <q-table :rows="rents" :columns="columns" row-key="id" v-model:pagination="pagination"
+            <q-table :rows="fetchRentsTable" :columns="columns" row-key="id" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
                 :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
                 :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders" :loading="loading"
@@ -72,13 +72,13 @@
                 <q-card-section class="scroll">
                     <slot>
                         <q-form @submit="onSubmit" @reset="onReset" ref="formRef">
-                            <q-select filled v-model="newRent.book" :options="booksOptions" :label="t('rents.createModal.book')"
-                                class="inputModal" color="primary" :rules="[
+                            <q-select filled v-model="newRent.bookId" :options="booksOptions"
+                                :label="t('rents.createModal.book')" class="inputModal" color="primary" :rules="[
                                     val => !!val || t('rents.errorInput.book')
                                 ]" />
 
-                            <q-select filled v-model="newRent.renter" :options="rentersOptions" :label="t('rents.createModal.renter')"
-                                class="inputModal" color="primary" :rules="[
+                            <q-select filled v-model="newRent.renterId" :options="rentersOptions"
+                                :label="t('rents.createModal.renter')" class="inputModal" color="primary" :rules="[
                                     val => !!val || t('rents.errorInput.renter')
                                 ]" />
 
@@ -86,7 +86,28 @@
                                 :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
                                 :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal"
                                 color="primary" :rules="[
-                                    val => !!val || t('rents.errorInput.deadLine')
+                                    val => !!val || t('rents.errorInput.deadLine'),
+                                    val => {
+                                        if (!val) return true
+
+                                        let inputDate
+
+                                        if (locale === 'en-US') {
+                                            // Formato: MM/DD/YYYY
+                                            const [month, day, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        } else {
+                                            // Formato: DD/MM/YYYY
+                                            const [day, month, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        }
+
+                                        const today = new Date()
+                                        today.setHours(0, 0, 0, 0)
+                                        inputDate.setHours(0, 0, 0, 0)
+
+                                        return inputDate >= today || t('rents.errorInput.invalidDeadLine')
+                                    }
                                 ]" />
                         </q-form>
                     </slot>
@@ -95,7 +116,7 @@
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated :label="t('rents.createModal.registerButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('rents.createModal.registerButton')" color="primary" @click=" addRent"
                         class="buttonRegister" />
                     <q-btn flat :label="t('rents.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -192,7 +213,7 @@
 import { useCrud } from 'src/utils/rents.js'
 
 
-const { rents, loading, newRent, booksOptions, rentersOptions,
+const { loading, newRent, addRent, formRef, fetchRentsTable, booksOptions, rentersOptions,
 
     $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, locale,
 

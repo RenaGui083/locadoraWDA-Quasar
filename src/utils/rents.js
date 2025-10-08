@@ -9,11 +9,9 @@ export function useCrud() {
     const rentsStore = useRentsStore()
 
     const newRent = ref({
-        book: '',
-        renter: '',
-        rentDate: '',
-        deadLine: '',
-        status: ''
+        renterId: null,
+        bookId: null,
+        deadLine: ''
     })
 
     const $q = useQuasar()
@@ -24,13 +22,15 @@ export function useCrud() {
     const openModalConfirm = ref(false)
 
     const filter = ref("")
+    const formRef = ref(null)
+    // const formRefEdit = ref(null)
 
     const { t } = useI18n()
     const { locale } = useI18n()
 
-    const { rents, loading, error } = storeToRefs(rentsStore)
+    const { fetchRentsTable, rents, loading, error } = storeToRefs(rentsStore)
 
-    const pagination = ref({
+    const pagination = ref({   
         page: 1,
         rowsPerPage: $q.screen.lt.md ? 0 : 5
     })
@@ -48,20 +48,32 @@ export function useCrud() {
         { name: "actions", label: t('rents.table.actions'), field: "actions", align: "center", filter: false }
     ])
 
-    // Select de livros
-const booksOptions = computed(() =>
-  [...new Map(rents.value.map(r => [r.bookId, r.book])).entries()]
-    .map(([id, label]) => ({ label, value: id }))
-)
-
-// Select de locatários
-const rentersOptions = computed(() =>
-  [...new Map(rents.value.map(r => [r.renterId, r.renter])).entries()]
-    .map(([id, label]) => ({ label, value: id }))
-)
-
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
+
+   const booksOptions = computed(() => {
+    if (!rents.value || !rents.value.length) return []
+
+    // Map para remover duplicados pelo bookId
+    const map = new Map(rents.value.map(r => [r.book.id, r.book.name]))
+    return Array.from(map, ([id, name]) => ({
+        label: name,
+        value: Number(id)  // garante que seja number
+    }))
+})
+
+
+const rentersOptions = computed(() => {
+    if (!rents.value || !rents.value.length) return []
+
+    // Map para remover duplicados pelo renterId
+    const map = new Map(rents.value.map(r => [r.renter.id, r.renter.name]))
+    return Array.from(map, ([id, name]) => ({
+        label: name,
+        value: Number(id)  // garante que seja number
+    }))
+})
+
 
     //get rents on load
 
@@ -74,9 +86,48 @@ const rentersOptions = computed(() =>
         }
     })
 
+    //add rent
+
+    async function addRent() {
+    const success = await formRef.value.validate()
+    if (!success) {
+        console.log('Invalid form')
+        return
+    }
+
+    // Formata deadLine para YYYY-MM-DD
+    let formattedDeadLine = ''
+    if (newRent.value.deadLine) {
+        const [day, month, year] = locale.value === 'en-US'
+            ? newRent.value.deadLine.split('/') // MM/DD/YYYY
+            : newRent.value.deadLine.split('/') // DD/MM/YYYY
+        formattedDeadLine = `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}`
+    }
+
+    const payload = {
+        renterId: Number(newRent.value.renterId),
+        bookId: Number(newRent.value.bookId),
+        deadLine: formattedDeadLine
+    }
+
+    try {
+        await rentsStore.addRent(payload)
+        $q.notify({ type: 'positive', message: t('rents.success') })
+
+        // Reset do form
+        newRent.value = { bookId: '', renterId: '', deadLine: '' }
+        openModalCreate.value = false
+        formRef.value.resetValidation()
+    } catch (err) {
+        $q.notify({ type: 'negative', message: err.response?.data?.message || err.message })
+    }
+}
+
+
+
 
     return {
-        newRent, booksOptions, rentersOptions,
+        newRent, addRent, formRef, fetchRentsTable, booksOptions, rentersOptions,
 
         $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, i18n, locale,
 

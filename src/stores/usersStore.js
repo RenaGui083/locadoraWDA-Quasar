@@ -16,13 +16,13 @@ export const useUserStore = defineStore('user', {
 
             return api.get('/user')
                 .then(response => {
-                    // this.users = response.data
-                    this.users = response.data.map(user => ({
-                        ...user,
-                        role: user.role === 'ADMIN' 
-                        ? i18n.global.t('roleAdmin') 
-                        : i18n.global.t('roleUser')
-                    }))
+                    this.users = response.data
+                    // this.users = response.data.map(user => ({
+                    //     ...user,
+                    //     role: user.role === 'ADMIN' 
+                    //     ? i18n.global.t('roleAdmin') 
+                    //     : i18n.global.t('roleUser')
+                    // }))
                 })
                 .catch(e => {
                     console.error('Erro:', e.response?.data || e.message);

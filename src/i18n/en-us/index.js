@@ -152,6 +152,12 @@ export default {
             IN_TIME: "Returned on time",
             LATE: "Late",
             DELIVERED_WITH_DELAY: "Delivered with delay"
+        },
+        errorInput: {
+            book: "Book is required",
+            renter: "Renter is required",
+            deadLine: "Dead line is required",
+            invalidDeadLine: "Dead line must be a future date"
         }
     },
 

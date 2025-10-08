@@ -28,12 +28,18 @@
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
                         <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditUser(props.row)" />
                         <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteUser(props.row)" />
-                        <q-btn flat round dense icon="visibility" color="#121f2f" @click="viewUserFunction(props.row)" />
+                        <q-btn flat round dense icon="visibility" color="#121f2f"
+                            @click="viewUserFunction(props.row)" />
                     </q-td>
                 </template>
                 <template v-slot:body-cell="props">
                     <q-td :props="props" :data-label="props.col.label">
                         {{ props.value }}
+                    </q-td>
+                </template>
+                <template v-slot:body-cell-role="props">
+                    <q-td :props="props">
+                        {{ props.row.role === 'ADMIN' ? t('roleAdmin') : t('roleUser') }}
                     </q-td>
                 </template>
                 <template v-slot:item="props">
@@ -45,7 +51,8 @@
                         <div class="row justify-end q-mt-sm">
                             <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditUser(props.row)" />
                             <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteUser(props.row)" />
-                            <q-btn flat round dense icon="visibility" color="#121f2f" @click="viewUserFunction(props.row)" />
+                            <q-btn flat round dense icon="visibility" color="#121f2f"
+                                @click="viewUserFunction(props.row)" />
                         </div>
                     </div>
                 </template>
@@ -104,7 +111,8 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('users.createModal.registerButton')" color="primary" @click="addUser"
                         class="buttonRegister" />
-                    <q-btn flat :label="t('users.createModal.cancelButton')" color="white" @click="cancel" v-close-popup />
+                    <q-btn flat :label="t('users.createModal.cancelButton')" color="white" @click="cancel"
+                        v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -143,7 +151,7 @@
 
 
                             <div class="q-pa-lg radio-container">
-                                <q-option-group v-model="editUser.role" :options="options" color="primary" inline 
+                                <q-option-group v-model="editUser.role" :options="options" color="primary" inline
                                     class="radio" :rules="[val => !!val || t('users.errorInput.role')]" />
                             </div>
 
@@ -157,7 +165,8 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('users.editModal.registerButton')" color="primary"
                         @click="tryOpenConfirm" class="buttonRegister" />
-                    <q-btn flat :label="t('users.editModal.cancelButton')" color="white" @click="cancel" v-close-popup />
+                    <q-btn flat :label="t('users.editModal.cancelButton')" color="white" @click="cancel"
+                        v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -169,7 +178,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('excludeModal.text') + " " + "(" +(selectUser.name) + ")" }}</div>
+                    <div class="text-h5">{{ t('excludeModal.text') + " " + "(" + (selectUser.name) + ")" }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -192,7 +201,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('users.viewModal.title') + " " + (viewUser?.name ??'')  }}</div>
+                    <div class="text-h5">{{ t('users.viewModal.title') + " " + (viewUser?.name ?? '') }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -203,39 +212,47 @@
 
 
 
-                     <q-field class="viewInput" filled :label="t('users.viewModal.id')" label-color="primary" stack-label>
+                    <q-field class="viewInput" filled :label="t('users.viewModal.id')" label-color="primary"
+                        stack-label>
                         <template v-slot:prepend>
                             <q-icon name="key" color="primary" />
                         </template>
                         <template v-slot:control>
-                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.id ??'') }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{
+                                (viewUser?.id ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field class="viewInput" filled :label="t('users.viewModal.name')" label-color="primary" stack-label>
+                    <q-field class="viewInput" filled :label="t('users.viewModal.name')" label-color="primary"
+                        stack-label>
                         <template v-slot:prepend>
                             <q-icon name="person" color="primary" />
                         </template>
                         <template v-slot:control>
-                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.name ??'') }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{
+                                (viewUser?.name ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field class="viewInput" filled :label="t('users.viewModal.email')" label-color="primary" stack-label>
+                    <q-field class="viewInput" filled :label="t('users.viewModal.email')" label-color="primary"
+                        stack-label>
                         <template v-slot:prepend>
                             <q-icon name="email" color="primary" />
                         </template>
                         <template v-slot:control>
-                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.email ??'') }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{
+                                (viewUser?.email ??'') }}</div>
                         </template>
                     </q-field>
 
-                    <q-field class="viewInput" filled :label="t('users.viewModal.role')" label-color="primary" stack-label>
+                    <q-field class="viewInput" filled :label="t('users.viewModal.role')" label-color="primary"
+                        stack-label>
                         <template v-slot:prepend>
                             <q-icon name="work" color="primary" />
                         </template>
                         <template v-slot:control>
-                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{ (viewUser?.role ??'') }}</div>
+                            <div class="self-center full-width no-outline" tabindex="0" style="color: white;">{{
+                                (viewUser?.role ??'') }}</div>
                         </template>
                     </q-field>
 
@@ -280,7 +297,7 @@
 import { useCrud } from 'src/utils/users.js'
 
 
-const { newUser, addUser, isDuplicate, prepareEditUser, editUser, formRefEdit,tryOpenConfirm, updateUser, cancel, fixedName, viewUserFunction, viewUser,
+const { newUser, addUser, isDuplicate, prepareEditUser, editUser, formRefEdit, tryOpenConfirm, updateUser, cancel, fixedName, viewUserFunction, viewUser,
 
     $q, openModalCreate, openModalEdit, openModalExclude, openModalView, options, openModalConfirm, deleteUser, confirmDelete, selectUser,
 

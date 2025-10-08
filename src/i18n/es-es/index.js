@@ -145,6 +145,12 @@ export default {
             IN_TIME: "Devuelto a tiempo",
             LATE: "Atrasado",
             DELIVERED_WITH_DELAY: "Devuelto con demora"
+        },
+        errorInput: {
+            book: "El libro es obligatorio",
+            renter: "El arrendatario es obligatorio",
+            deadLine: "La fecha de devolución es obligatoria",
+            invalidDeadLine: "La fecha de devolución debe ser futura"
         }
     },
     users: {
