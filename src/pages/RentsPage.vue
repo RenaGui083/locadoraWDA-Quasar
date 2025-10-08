@@ -72,15 +72,16 @@
                 <q-card-section class="scroll">
                     <slot>
                         <q-form @submit="onSubmit" @reset="onReset" ref="formRef">
-                            <q-select filled v-model="newRent.bookId" :options="booksOptions"
-                                :label="t('rents.createModal.book')" class="inputModal" color="primary" :rules="[
-                                    val => !!val || t('rents.errorInput.book')
-                                ]" />
+                            <q-select filled v-model="newRent.bookId" :options="booksOptions" option-value="id"
+                                option-label="name" emit-value map-options :label="t('rents.createModal.book')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('rents.errorInput.book')]" />
 
-                            <q-select filled v-model="newRent.renterId" :options="rentersOptions"
-                                :label="t('rents.createModal.renter')" class="inputModal" color="primary" :rules="[
-                                    val => !!val || t('rents.errorInput.renter')
-                                ]" />
+                            <q-select filled v-model="newRent.renterId" :options="rentersOptions" option-value="id"
+                                option-label="name" emit-value map-options :label="t('rents.createModal.renter')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('rents.errorInput.renter')]" />
+
 
                             <q-input filled v-model="newRent.deadLine" :label="t('rents.createModal.deadLine')"
                                 :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
@@ -116,7 +117,7 @@
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated :label="t('rents.createModal.registerButton')" color="primary" @click=" addRent"
+                    <q-btn unelevated :label="t('rents.createModal.registerButton')" color="primary" @click="addRent"
                         class="buttonRegister" />
                     <q-btn flat :label="t('rents.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>

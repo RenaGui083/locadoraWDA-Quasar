@@ -8,6 +8,8 @@ export const useRentsStore = defineStore('rents', {
     state: () => ({
         rents: [],
         fetchRentsTable: [],
+        booksOptions: [],
+        rentersOptions: [],
         loading: false,
         error: null
     }),
@@ -92,26 +94,20 @@ export const useRentsStore = defineStore('rents', {
         },
 
         async fetchBooksAndRenters() {
-      try {
-        const booksRes = await api.get('/book')
-        this.booksOptions = (booksRes.data || []).map(b => ({
-          label: b.name,
-          value: b.id
-        }))
+            try {
+                const booksRes = await api.get('/book')
+                this.booksOptions = booksRes.data
 
-        const rentersRes = await api.get('/renter')
-        this.rentersOptions = (rentersRes.data || []).map(r => ({
-          label: r.name,
-          value: r.id
-        }))
+                const rentersRes = await api.get('/renter')
+                this.rentersOptions = rentersRes.data
 
-        console.log('Books:', this.booksOptions)
-        console.log('Renters:', this.rentersOptions)
-      } catch (err) {
-        console.error('Erro ao buscar livros e locatários:', err)
-        errorMsg(i18n.global.t('toasts.error.getError'))
-      }
-    }
+                console.log('Books:', this.booksOptions)
+                console.log('Renters:', this.rentersOptions)
+            } catch (err) {
+                console.error('Erro ao buscar livros e locatários:', err)
+                errorMsg(i18n.global.t('toasts.error.getError'))
+            }
+        }
     }
 })
 

@@ -28,9 +28,9 @@ export function useCrud() {
     const { t } = useI18n()
     const { locale } = useI18n()
 
-    const { fetchRentsTable, rents, loading, error } = storeToRefs(rentsStore)
+    const { booksOptions, rentersOptions, fetchRentsTable, rents, loading, error } = storeToRefs(rentsStore)
 
-    const pagination = ref({   
+    const pagination = ref({
         page: 1,
         rowsPerPage: $q.screen.lt.md ? 0 : 5
     })
@@ -51,77 +51,54 @@ export function useCrud() {
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
-   const booksOptions = computed(() => {
-    if (!rents.value || !rents.value.length) return []
-
-    // Map para remover duplicados pelo bookId
-    const map = new Map(rents.value.map(r => [r.book.id, r.book.name]))
-    return Array.from(map, ([id, name]) => ({
-        label: name,
-        value: Number(id)  // garante que seja number
-    }))
-})
-
-
-const rentersOptions = computed(() => {
-    if (!rents.value || !rents.value.length) return []
-
-    // Map para remover duplicados pelo renterId
-    const map = new Map(rents.value.map(r => [r.renter.id, r.renter.name]))
-    return Array.from(map, ([id, name]) => ({
-        label: name,
-        value: Number(id)  // garante que seja number
-    }))
-})
-
 
     //get rents on load
 
     onMounted(async () => {
         try {
-            await rentsStore.fetchRents()
-            console.log('Publishers fetched on mount')
+            await Promise.all([
+                rentsStore.fetchRents(),
+                rentsStore.fetchBooksAndRenters()
+            ])
+            console.log('Rents, books e renters carregados com sucesso')
         } catch (error) {
-            console.log(error)('Failed to fetch publishers on mount')
+            console.error('Erro ao carregar dados iniciais:', error)
         }
     })
 
     //add rent
 
     async function addRent() {
-    const success = await formRef.value.validate()
-    if (!success) {
-        console.log('Invalid form')
-        return
-    }
+        const success = await formRef.value.validate()
+        if (!success) {
+            console.log('Invalid form')
+            return
+        }
 
-    // Formata deadLine para YYYY-MM-DD
-    let formattedDeadLine = ''
-    if (newRent.value.deadLine) {
-        const [day, month, year] = locale.value === 'en-US'
-            ? newRent.value.deadLine.split('/') // MM/DD/YYYY
-            : newRent.value.deadLine.split('/') // DD/MM/YYYY
-        formattedDeadLine = `${year}-${month.padStart(2,'0')}-${day.padStart(2,'0')}`
-    }
+        // Formata deadLine para YYYY-MM-DD
+        let formattedDeadLine = ''
+        if (newRent.value.deadLine) {
+            const [day, month, year] = locale.value === 'en-US'
+                ? newRent.value.deadLine.split('/') // MM/DD/YYYY
+                : newRent.value.deadLine.split('/') // DD/MM/YYYY
+            formattedDeadLine = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+        }
 
-    const payload = {
-        renterId: Number(newRent.value.renterId),
-        bookId: Number(newRent.value.bookId),
-        deadLine: formattedDeadLine
-    }
+        const payload = {
+            renterId: newRent.value.renterId,
+            bookId: newRent.value.bookId,
+            deadLine: formattedDeadLine
+        }
 
-    try {
-        await rentsStore.addRent(payload)
-        $q.notify({ type: 'positive', message: t('rents.success') })
-
-        // Reset do form
-        newRent.value = { bookId: '', renterId: '', deadLine: '' }
-        openModalCreate.value = false
-        formRef.value.resetValidation()
-    } catch (err) {
-        $q.notify({ type: 'negative', message: err.response?.data?.message || err.message })
+        try {
+            await rentsStore.addRent(payload)
+            newRent.value = { bookId: '', renterId: '', deadLine: '' }
+            openModalCreate.value = false
+            await rentsStore.fetchRents()
+        } catch (err) {
+            $q.notify({ type: 'negative', message: err.response?.data?.message || err.message })
+        }
     }
-}
 
 
 
