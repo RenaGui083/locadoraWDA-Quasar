@@ -22,19 +22,19 @@ export const useRentsStore = defineStore('rents', {
                 .then(response => {
                     this.rents = response.data
 
-                    const locale = i18n.global.locale.value || i18n.global.locale
+                    // const locale = i18n.global.locale.value || i18n.global.locale
                     this.fetchRentsTable = response.data.map(rent => ({
                         ...rent,
                         book: rent.book.name,
                         renter: rent.renter.name,
                         bookId: rent.book.id,
                         renterId: rent.renter.id,
-                        rentDate: rent.rentDate
-                            ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(rent.rentDate))
-                            : '',
-                        deadLine: rent.deadLine
-                            ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(rent.deadLine))
-                            : '',
+                        rentDate: rent.rentDate,
+                            // ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(rent.rentDate))
+                            // : '',
+                        deadLine: rent.deadLine,
+                            // ? new Intl.DateTimeFormat(locale, { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(rent.deadLine))
+                            // : '',
                         status: i18n.global.t(`rents.status.${rent.status}`)
                     }))
                     console.log('Rents fetched:', this.rents);
@@ -56,7 +56,7 @@ export const useRentsStore = defineStore('rents', {
                     return true
                 })
                 .catch(error => {
-                    errorMsg(i18n.global.t('toasts.error.postError'));
+                    errorMsg(i18n.global.t('toasts.error.postErrorRent'));
                     console.error('Erro:', error.response?.data || error.message);
                     console.log(rent)
                     return false
@@ -64,7 +64,7 @@ export const useRentsStore = defineStore('rents', {
         },
 
         updateRent(id, updated) {
-            return api.put(`/rent/${id}`, updated)
+            return api.put(`/rent/update/${id}`, updated)
                 .then(response => {
                     const index = this.rents.findIndex(r => r.id === id)
                     if (index !== -1) this.rents[index] = response.data
@@ -88,7 +88,7 @@ export const useRentsStore = defineStore('rents', {
                 .catch(error => {
                     const msg = error.response?.data?.error || error.message;
                     console.error('Erro:', msg);
-                    errorMsg(i18n.global.t('toasts.error.finishRent'));
+                    errorMsg(i18n.global.t('toasts.error.errorFinishRent'));
                     return false
                 })
         },

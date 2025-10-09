@@ -14,6 +14,12 @@ export function useCrud() {
         deadLine: ''
     })
 
+    const editRent = ref({
+        renterId: null,
+        bookId: null,
+        deadLine: ''
+    })
+
     const $q = useQuasar()
 
     const openModalCreate = ref(false)
@@ -23,7 +29,10 @@ export function useCrud() {
 
     const filter = ref("")
     const formRef = ref(null)
-    // const formRefEdit = ref(null)
+    const formRefEdit = ref(null)
+
+    const selectRent = ref(null)
+    const fixedName = ref('')
 
     const { t } = useI18n()
     const { locale } = useI18n()
@@ -42,8 +51,8 @@ export function useCrud() {
     const columns = computed(() => [
         { name: "book", label: t('rents.table.book'), field: "book", align: "left", sortable: true },
         { name: "renter", label: t('rents.table.renter'), field: "renter", align: "left", sortable: true },
-        { name: "rentDate", label: t('rents.table.rentDate'), field: "rentDate", align: "left", sortable: true },
-        { name: "deadLine", label: t('rents.table.deadLine'), field: "deadLine", align: "left", sortable: true },
+        { name: "rentDate", label: t('rents.table.rentDate'), field: row => formatISOToLocale(row.rentDate, locale.value), align: "left", sortable: true },
+        { name: "deadLine", label: t('rents.table.deadLine'), field: row => formatISOToLocale(row.deadLine, locale.value), align: "left", sortable: true },
         { name: "status", label: t('rents.table.status'), field: "status", align: "left", sortable: true },
         { name: "actions", label: t('rents.table.actions'), field: "actions", align: "center", filter: false }
     ])
@@ -60,9 +69,9 @@ export function useCrud() {
                 rentsStore.fetchRents(),
                 rentsStore.fetchBooksAndRenters()
             ])
-            console.log('Rents, books e renters carregados com sucesso')
+            console.log('Rents, books and renters fetched')
         } catch (error) {
-            console.error('Erro ao carregar dados iniciais:', error)
+            console.error('Error to fetch data', error)
         }
     })
 
@@ -75,39 +84,135 @@ export function useCrud() {
             return
         }
 
-        // Formata deadLine para YYYY-MM-DD
-        let formattedDeadLine = ''
-        if (newRent.value.deadLine) {
-            const [day, month, year] = locale.value === 'en-US'
-                ? newRent.value.deadLine.split('/') // MM/DD/YYYY
-                : newRent.value.deadLine.split('/') // DD/MM/YYYY
-            formattedDeadLine = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-        }
-
         const payload = {
             renterId: newRent.value.renterId,
             bookId: newRent.value.bookId,
-            deadLine: formattedDeadLine
+            deadLine: parseInputDateToISO(newRent.value.deadLine, locale.value)
         }
 
         try {
-            await rentsStore.addRent(payload)
-            newRent.value = { bookId: '', renterId: '', deadLine: '' }
-            openModalCreate.value = false
-            await rentsStore.fetchRents()
-        } catch (err) {
-            $q.notify({ type: 'negative', message: err.response?.data?.message || err.message })
+            const add = await rentsStore.addRent(payload)
+            if (add) {
+                console.log(payload)
+                newRent.value = { bookId: '', renterId: '', deadLine: '' }
+                openModalCreate.value = false
+                await rentsStore.fetchRents()
+            }
+        } catch (error) {
+            console.error('Error to add rent', error)
+        }
+    }
+
+    function parseInputDateToISO(dateStr, locale) {
+        if (!dateStr) return ''
+        const parts = dateStr.split('/')
+        let day, month, year
+
+        if (locale.toLowerCase() === 'en-us') {
+            // MM/DD/YYYY
+            [month, day, year] = parts
+        } else {
+            // DD/MM/YYYY
+            [day, month, year] = parts
+        }
+
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    }
+
+    function formatISOToLocale(isoDate, locale) {
+        if (!isoDate) return ''
+        const [year, month, day] = isoDate.split('-')
+
+        if (locale.toLowerCase() === 'en-us') {
+            // MM/DD/YYYY
+            return `${month}/${day}/${year}`
+        } else {
+            // DD/MM/YYYY
+            return `${day}/${month}/${year}`
         }
     }
 
 
+    //update rent
 
+    function prepareEditRent(rent) {
+        openModalEdit.value = true
+        selectRent.value = rent
+
+        editRent.value = {
+            bookId: rent.bookId,
+            renterId: rent.renterId,
+            deadLine: formatISOToLocale(rent.deadLine, locale.value)
+        }
+        fixedName.value = rent.book
+    }
+
+    async function tryOpenConfirm() {
+        if (!formRefEdit.value) return
+        const valid = await formRefEdit.value.validate()
+        if (valid) {
+            openModalConfirm.value = true
+            openModalEdit.value = false
+        } else {
+            console.warn('Formulário inválido')
+        }
+    }
+
+    async function updateRent() {
+        const payload = {
+            renterId: editRent.value.renterId,
+            bookId: editRent.value.bookId,
+            deadLine: parseInputDateToISO(editRent.value.deadLine, locale.value)
+        }
+
+        const updated = await rentsStore.updateRent(selectRent.value.id, payload)
+        if (updated == true) {
+            await rentsStore.fetchRents()
+            openModalEdit.value = false
+            openModalConfirm.value = false
+            editRent.value = { bookId: '', renterId: '', deadLine: '' }
+            selectRent.value = null
+        } else {
+            console.error('Failed to update rent:', error)
+            openModalConfirm.value = false
+            openModalEdit.value = true
+        }
+
+    }
+
+    //finish rent
+
+    function openModalFinishRent(rent) {
+        openModalBookReturn.value = true
+        selectRent.value = rent
+    }
+
+    async function finishRent() {
+
+        const updated = await rentsStore.finishRent(selectRent.value.id)
+        if (updated == true) {
+            await rentsStore.fetchRents()
+            openModalBookReturn.value = false
+        } else {
+            console.error('Failed to finish rent:', error)
+        }
+    }
+
+    //cancel
+
+    function cancel() {
+        openModalEdit.value = false
+        openModalCreate.value = false
+        editRent.value = { bookId: '', renterId: '', deadLine: '' }
+        newRent.value = { bookId: '', renterId: '', deadLine: '' }
+        selectRent.value = null
+    }
 
     return {
-        newRent, addRent, formRef, fetchRentsTable, booksOptions, rentersOptions,
+        newRent, addRent, formRef, fetchRentsTable, booksOptions, rentersOptions, editRent, formRefEdit, prepareEditRent, selectRent,
 
-        $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, i18n, locale,
+        $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, i18n, locale, tryOpenConfirm,
 
-        filter, pagination, columns, paginationLabel, rents, loading, error
+        filter, pagination, columns, paginationLabel, rents, loading, error, fixedName, updateRent, finishRent, openModalFinishRent, cancel
     }
 }

@@ -157,7 +157,8 @@ export default {
             book: "Book is required",
             renter: "Renter is required",
             deadLine: "Dead line is required",
-            invalidDeadLine: "Dead line must be a future date"
+            invalidDeadLine: "Dead line must be a future date",
+            tooFarDeadLine: "The maximum deadline is 30 days."
         }
     },
 
@@ -330,7 +331,8 @@ export default {
         success: {
             postSuccess: "Registration completed successfully!",
             deleteSuccess: "Deletion completed successfully!",
-            putSuccess: "Update completed successfully!"
+            putSuccess: "Update completed successfully!",
+            finishRent: "Return completed successfully!",
         },
         error: {
             getError: "Error fetching data!",
@@ -344,8 +346,11 @@ export default {
             postError: "Error during registration!",
             putError: "Error during update!",
 
+            postErrorRent: "Error! Check if the renter has any overdue items!",
+
             postErrorCpf: "Error during registration! Check if the CPF is valid.",
             putErrorCpf: "Error during update! Check if the CPF is valid.",
+            errorFinishRent: "Error when completing the return.",
         },
     },
 

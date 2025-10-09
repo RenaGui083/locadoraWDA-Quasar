@@ -150,7 +150,8 @@ export default {
             book: "El libro es obligatorio",
             renter: "El arrendatario es obligatorio",
             deadLine: "La fecha de devolución es obligatoria",
-            invalidDeadLine: "La fecha de devolución debe ser futura"
+            invalidDeadLine: "La fecha de devolución debe ser futura",
+            tooFarDeadLine: "La fecha máxima de devolución es 30 días"
         }
     },
     users: {
@@ -317,7 +318,8 @@ export default {
         success: {
             postSuccess: "¡Registro realizado con éxito!",
             deleteSuccess: "¡Eliminación realizada con éxito!",
-            putSuccess: "¡Actualización realizada con éxito!"
+            putSuccess: "¡Actualización realizada con éxito!",
+            finishRent: "¡Devolución realizada con éxito!",
         },
         error: {
             getError: "¡Error al obtener los datos!",
@@ -332,8 +334,11 @@ export default {
             postError: "¡Error durante el registro!",
             putError: "¡Error durante la actualización!",
 
+            postErrorRent: "¡Error! Verifica si el inquilino tiene retrasos.",
+
             postErrorCpf: "¡Error durante el registro! Verifique si el CPF es válido.",
             putErrorCpf: "¡Error durante la actualización! Verifique si el CPF es válido.",
+            errorFinishRent: "Error al realizar la devolución.",
         },
     }
 }

@@ -127,7 +127,7 @@ export default {
             actions: "Ações"
         },
         createModal: {
-            title: "Cadastrar Aluguel",
+            title: "Cadastrar aluguel",
             book: "Livro",
             renter: "Locatário",
             deadLine: "Data de devolução",
@@ -135,7 +135,7 @@ export default {
             cancelButton: "Cancelar"
         },
         editModal: {
-            title: "Editar Aluguel",
+            title: "Editar aluguel",
             book: "Livro",
             renter: "Locatário",
             deadLine: "Data de devolução",
@@ -157,7 +157,8 @@ export default {
             book: "O livro é obrigatório",
             renter: "O locatário é obrigatório",
             deadLine: "A data de devolução é obrigatória",
-            invalidDeadLine: "A data de devolução deve ser futura"
+            invalidDeadLine: "A data de devolução deve ser futura",
+            tooFarDeadLine: "O prazo máximo é de 30 dias"
         }
     },
 
@@ -166,9 +167,9 @@ export default {
         headerTitle: "Usuários",
         table: {
             tableTitle: "Relação de Usuários",
-            name: "Nome",
-            email: "Email",
-            role: "Nível de acesso",
+            name: "Nome*",
+            email: "Email*",
+            role: "Nível de acesso*",
             actions: "Ações"
         },
         createModal: {
@@ -324,7 +325,8 @@ export default {
         success: {
             postSuccess: "Cadastro realizado com sucesso!",
             deleteSuccess: "Exclusão realizada com sucesso!",
-            putSuccess: "Atualização realizada com sucesso!"
+            putSuccess: "Atualização realizada com sucesso!",
+            finishRent: "Devolução realizada com sucesso!"
         },
         error: {
             getError: "Erro ao obter os dados!",
@@ -337,9 +339,13 @@ export default {
             deleteError: "Erro ao realizar exclusão!",
             putError: "Erro ao realizar atualização!",
             postError: "Erro ao realizar cadastro!",
+
+            postErrorRent: "Erro! Verifique se o locatário não possui atrasos!",
             
             postErrorCpf: "Erro ao realizar cadastro! Verifique se o CPF é válido.",
             putErrorCpf: "Erro ao realizar atualização! Verifique se o CPF é válido.",
+
+            errorFinishRent: "Erro ao realizar a devolução.",
         }
     },
 }

@@ -25,9 +25,9 @@
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
-                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true"
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditRent(props.row)"
                             v-if="['Rented', 'Alugado', 'Alquilado'].includes(props.row.status)" />
-                        <q-btn flat round dense icon="check" color="#121f2f" @click="openModalBookReturn = true"
+                        <q-btn flat round dense icon="check" color="#121f2f" @click="openModalFinishRent(props.row)"
                             v-if="['Rented', 'Alugado', 'Alquilado'].includes(props.row.status)" />
                     </q-td>
                 </template>
@@ -43,9 +43,9 @@
                             <div class="col-8">{{ col.value }}</div>
                         </div>
                         <div class="row justify-end q-mt-sm">
-                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true"
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditRent(props.row)"
                                 v-if="['Rented', 'Alugado', 'Alquilado'].includes(props.row.status)" />
-                            <q-btn flat round dense icon="check" color="#121f2f" @click="openModalBookReturn = true"
+                            <q-btn flat round dense icon="check" color="#121f2f" @click="openModalFinishRent(props.row)"
                                 v-if="['Rented', 'Alugado', 'Alquilado'].includes(props.row.status)" />
                         </div>
                     </div>
@@ -107,7 +107,19 @@
                                         today.setHours(0, 0, 0, 0)
                                         inputDate.setHours(0, 0, 0, 0)
 
-                                        return inputDate >= today || t('rents.errorInput.invalidDeadLine')
+                                        // Verifica se é data no passado
+                                        if (inputDate < today) {
+                                            return t('rents.errorInput.invalidDeadLine')
+                                        }
+
+                                        // Verifica se passou de 30 dias
+                                        const diffMs = inputDate - today
+                                        const diffDays = diffMs / (1000 * 60 * 60 * 24)
+                                        if (diffDays > 30) {
+                                            return t('rents.errorInput.tooFarDeadLine')
+                                        }
+
+                                        return true
                                     }
                                 ]" />
                         </q-form>
@@ -119,7 +131,7 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('rents.createModal.registerButton')" color="primary" @click="addRent"
                         class="buttonRegister" />
-                    <q-btn flat :label="t('rents.createModal.cancelButton')" color="white" v-close-popup />
+                    <q-btn flat :label="t('rents.createModal.cancelButton')" color="white" @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -131,7 +143,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('rents.editModal.title') }}</div>
+                    <div class="text-h5">{{ t('rents.editModal.title')  + " " + (fixedName) + "?" }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -141,14 +153,58 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-select filled v-model="book" :options="booksOptions" :label="t('rents.editModal.book')"
-                            class="inputModal" />
-                        <q-select filled v-model="renter" :options="rentersOptions" :label="t('rents.editModal.renter')"
-                            class="inputModal" />
-                        <q-input filled v-model="deadLine" :label="t('rents.createModal.deadLine')"
-                            :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
-                            :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal" />
+                        <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
+                            <q-select filled v-model="editRent.bookId" :options="booksOptions" option-value="id"
+                                option-label="name" emit-value map-options :label="t('rents.createModal.book')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('rents.errorInput.book')]" />
 
+                            <q-select filled v-model="editRent.renterId" :options="rentersOptions" option-value="id"
+                                option-label="name" emit-value map-options :label="t('rents.createModal.renter')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('rents.errorInput.renter')]" />
+
+
+                            <q-input filled v-model="editRent.deadLine" :label="t('rents.createModal.deadLine')"
+                                :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
+                                :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal"
+                                color="primary" :rules="[
+                                    val => !!val || t('rents.errorInput.deadLine'),
+                                    val => {
+                                        if (!val) return true
+
+                                        let inputDate
+
+                                        if (locale === 'en-US') {
+                                            // Formato: MM/DD/YYYY
+                                            const [month, day, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        } else {
+                                            // Formato: DD/MM/YYYY
+                                            const [day, month, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        }
+
+                                        const today = new Date()
+                                        today.setHours(0, 0, 0, 0)
+                                        inputDate.setHours(0, 0, 0, 0)
+
+                                        // Verifica se é data no passado
+                                        if (inputDate < today) {
+                                            return t('rents.errorInput.invalidDeadLine')
+                                        }
+
+                                        // Verifica se passou de 30 dias
+                                        const diffMs = inputDate - today
+                                        const diffDays = diffMs / (1000 * 60 * 60 * 24)
+                                        if (diffDays > 30) {
+                                            return t('rents.errorInput.tooFarDeadLine')
+                                        }
+
+                                        return true
+                                    }
+                                ]" />
+                        </q-form>
                     </slot>
                 </q-card-section>
 
@@ -156,8 +212,8 @@
                 <q-separator />
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('rents.editModal.registerButton')" color="primary"
-                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
-                    <q-btn flat :label="t('rents.editModal.cancelButton')" color="white" v-close-popup />
+                        @click="tryOpenConfirm" class="buttonRegister" />
+                    <q-btn flat :label="t('rents.editModal.cancelButton')" color="white" @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -169,7 +225,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('rents.editModal.returnModal.text') }}</div>
+                    <div class="text-h5">{{ t('rents.editModal.returnModal.text') + " " + "(" +(selectRent.book) + ")"  }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -179,7 +235,7 @@
 
                 <q-card-actions align="right">
                     <q-btn unelevated :label="t('rents.editModal.returnModal.yesButton')" color="primary"
-                        @click="register" class="buttonRegister" />
+                        @click="finishRent" class="buttonRegister" />
                     <q-btn flat :label="t('rents.editModal.returnModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -200,7 +256,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="updateRent"
                         class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -214,9 +270,9 @@
 import { useCrud } from 'src/utils/rents.js'
 
 
-const { loading, newRent, addRent, formRef, fetchRentsTable, booksOptions, rentersOptions,
+const { loading, newRent, addRent, formRef, fetchRentsTable, booksOptions, rentersOptions, editRent, formRefEdit, prepareEditRent, cancel,
 
-    $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, locale,
+    $q, openModalCreate, openModalEdit, openModalBookReturn, openModalConfirm, t, locale, fixedName, tryOpenConfirm, selectRent,
 
-    filter, pagination, columns, paginationLabel } = useCrud()
+    filter, pagination, columns, paginationLabel, updateRent, finishRent, openModalFinishRent } = useCrud()
 </script>
