@@ -18,9 +18,9 @@
 
         <div class="tableContainer">
             <div class="text-h6 text-center full-width">{{ t('library.table.tableTitle') }}</div>
-            <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
+            <q-table :rows="fetchBooksTable" :columns="columns" row-key="id" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
-                :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"
+                :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"  :loading="loading" :loading-label="t('tables.loading')"
                 :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders"
                 :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
@@ -184,8 +184,8 @@
 import { useCrud } from 'src/utils/books.js'
 
 const {
-    name, publisher, author, launchDate, totalQuantity,
+    name, publisher, author, launchDate, totalQuantity, fetchBooksTable,
     $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, locale,
-    filter, pagination, columns, rows, paginationLabel
+    filter, pagination, columns, paginationLabel,loading,
 } = useCrud()
 </script>
