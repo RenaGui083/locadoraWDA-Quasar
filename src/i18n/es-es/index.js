@@ -101,6 +101,14 @@ export default {
             registerButton: "Guardar",
             cancelButton: "Cancelar",
         },
+        errorInput: {
+            name: "El nombre es obligatorio",
+            author: "El autor es obligatorio",
+            totalQuantity: "La cantidad en stock es obligatoria",
+            publisher: "La editorial es obligatoria",
+            launchDate: "La fecha de lanzamiento es obligatoria",
+            invalidLaunchDate: "La fecha de lanzamiento no puede ser futura"
+        }
     },
 
     search: {
@@ -204,8 +212,8 @@ export default {
             weakPassword: "La contraseña debe tener al menos 8 caracteres",
             invalidEmail: "Correo electrónico inválido",
             invalidRole: "El nivel de acceso es obligatorio"
-    }
-},
+        }
+    },
     excludeModal: {
         text: "¿Está seguro de que desea eliminar esto?",
         yesButton: "Sí",
@@ -261,7 +269,7 @@ export default {
         },
         errorInput: {
             name: "El nombre es obligatorio",
-            email: "El correo electrónico es obligatorio",  
+            email: "El correo electrónico es obligatorio",
             telephone: "El teléfono es obligatorio",
             cpf: "El CPF es obligatorio",
             address: "La dirección es obligatoria",

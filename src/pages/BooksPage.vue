@@ -20,9 +20,9 @@
             <div class="text-h6 text-center full-width">{{ t('library.table.tableTitle') }}</div>
             <q-table :rows="fetchBooksTable" :columns="columns" row-key="id" v-model:pagination="pagination"
                 :rows-per-page-options="$q.screen.lt.md ? [] : [5, 6]" :filter="filter" flat bordered
-                :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')"  :loading="loading" :loading-label="t('tables.loading')"
-                :pagination-label="paginationLabel" class="my-table shadow-2 rounded-borders"
-                :hide-bottom="$q.screen.lt.md">
+                :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')" :loading="loading"
+                :loading-label="t('tables.loading')" :pagination-label="paginationLabel"
+                class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
@@ -68,26 +68,70 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('library.createModal.name')"
-                            class="inputModal" />
-                        <q-input filled v-model="author" type="text" :label="t('library.createModal.author')"
-                            class="inputModal" />
-                        <q-input filled v-model="totalQuantity" type="number"
-                            :label="t('library.createModal.totalQuantity')" class="inputModal" :min="1" />
-                        <q-select filled v-model="publisher" :options="options" type="text"
-                            :label="t('library.createModal.publisher')" class="inputModal" />
-                        <!-- <q-input filled v-model="launchDate" type="date" :label="t('library.createModal.launchDate')"
-                            class="inputModal" /> -->
-                        <q-input filled v-model="launchDate" :label="t('library.createModal.launchDate')"
-                            :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
-                            :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal" />
+                        <q-form @submit="onSubmit" @reset="onReset" ref="formRef">
+
+                            <q-input filled v-model="newBook.name" type="text" :label="t('library.createModal.name')"
+                                class="inputModal" color="primary"
+                                :rules="[
+                                    val => !!val || t('library.errorInput.name'),
+                                    val => isDuplicate('name', val)
+                                ]" />
+
+                            <q-input filled v-model="newBook.author" type="text" :label="t('library.createModal.author')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('library.errorInput.author')]" />
+
+                            <q-input filled v-model.number="newBook.totalQuantity" type="number"
+                                :label="t('library.createModal.totalQuantity')" class="inputModal" color="primary"
+                                :min="1" :rules="[
+                                    val => !!val || t('library.errorInput.totalQuantity'),
+                                ]" />
+
+                          
+                            <q-select filled v-model="newBook.publisherId" :options="publishersOptions" option-value="id" 
+                                option-label="name" emit-value map-options :label="t('library.createModal.publisher')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('library.errorInput.publisher')]" />
+
+                            <q-input filled v-model="newBook.launchDate" :label="t('library.createModal.launchDate')"
+                                :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
+                                :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal"
+                                color="primary" :rules="[
+                                    val => !!val || t('library.errorInput.launchDate'),
+                                    val => {
+                                        if (!val) return true
+
+                                        let inputDate
+                                        if (locale === 'en-US') {
+                                            const [month, day, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        } else {
+                                            const [day, month, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        }
+
+                                        const today = new Date()
+                                        today.setHours(0, 0, 0, 0)
+                                        inputDate.setHours(0, 0, 0, 0)
+
+                                        // Não pode ser data futura
+                                        if (inputDate > today) {
+                                            return t('library.errorInput.invalidLaunchDate')
+                                        }
+
+                                        return true
+                                    }
+                                ]" />
+
+                        </q-form>
                     </slot>
                 </q-card-section>
 
 
                 <q-separator />
                 <q-card-actions align="left">
-                    <q-btn unelevated :label="t('library.createModal.registerButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('library.createModal.registerButton')" color="primary" @click="addBook"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('library.createModal.cancelButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -110,17 +154,65 @@
 
                 <q-card-section class="scroll">
                     <slot>
-                        <q-input filled v-model="name" type="text" :label="t('library.editModal.name')" class="inputModal" />
-                        <q-input filled v-model="author" type="text" :label="t('library.editModal.author')" class="inputModal" />
-                        <q-input filled v-model="totalQuantity" type="number" :label="t('library.editModal.totalQuantity')" class="inputModal"
-                            :min="1" />
-                        <q-select filled v-model="publisher" :options="options" type="text" :label="t('library.editModal.publisher')"
-                            class="inputModal" />
-                        <!-- <q-input filled v-model="launchDate" type="date" label="Data de lançamento"
-                            class="inputModal" /> -->
-                         <q-input filled v-model="launchDate" :label="t('library.editModal.launchDate')"
-                            :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
-                            :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal" />
+                        <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
+
+                            <q-input filled v-model="newBook.name" type="text" :label="t('library.editModal.name')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('library.errorInput.name')]" />
+
+                            <q-input filled v-model="newBook.author" type="text" :label="t('library.editModal.author')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('library.errorInput.author')]" />
+
+                            <q-input filled v-model.number="newBook.totalQuantity" type="number"
+                                :label="t('library.editModal.totalQuantity')" class="inputModal" color="primary"
+                                :min="1" :rules="[
+                                    val => !!val || t('library.errorInput.totalQuantity'),
+                                    val => val >= 1 || t('library.errorInput.minQuantity')
+                                ]" />
+
+                            <q-input filled v-model.number="newBook.totalInUse" type="number"
+                                :label="t('library.editModal.totalInUse')" class="inputModal" color="primary" :min="0"
+                                :rules="[
+                                    val => val >= 0 || t('library.errorInput.minInUse')
+                                ]" />
+
+                            <q-select filled v-model="newBook.publisher" :options="publishersOptions" option-value="id" 
+                                option-label="name" emit-value map-options :label="t('library.editModal.publisher')"
+                                class="inputModal" color="primary"
+                                :rules="[val => !!val || t('library.errorInput.publisher')]" />
+
+                            <q-input filled v-model="newBook.launchDate" :label="t('library.editModal.launchDate')"
+                                :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
+                                :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal"
+                                color="primary" :rules="[
+                                    val => !!val || t('library.errorInput.launchDate'),
+                                    val => {
+                                        if (!val) return true
+
+                                        let inputDate
+                                        if (locale === 'en-US') {
+                                            const [month, day, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        } else {
+                                            const [day, month, year] = val.split('/')
+                                            inputDate = new Date(year, month - 1, day)
+                                        }
+
+                                        const today = new Date()
+                                        today.setHours(0, 0, 0, 0)
+                                        inputDate.setHours(0, 0, 0, 0)
+
+                                        // Não pode ser data futura
+                                        if (inputDate > today) {
+                                            return t('library.errorInput.invalidLaunchDate')
+                                        }
+
+                                        return true
+                                    }
+                                ]" />
+
+                        </q-form>
                     </slot>
                 </q-card-section>
 
@@ -150,7 +242,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -170,7 +263,8 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register" class="buttonRegister" />
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                        class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
 
@@ -184,8 +278,8 @@
 import { useCrud } from 'src/utils/books.js'
 
 const {
-    name, publisher, author, launchDate, totalQuantity, fetchBooksTable,
+    fetchBooksTable, addBook, formRef, newBook, isDuplicate, publishersOptions,
     $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, locale,
-    filter, pagination, columns, paginationLabel,loading,
+    filter, pagination, columns, paginationLabel, loading,
 } = useCrud()
 </script>

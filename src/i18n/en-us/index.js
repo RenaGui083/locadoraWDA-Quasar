@@ -106,6 +106,14 @@ export default {
             registerButton: "Save",
             cancelButton: "Cancel",
         },
+        errorInput: {
+            name: "Name is required",
+            author: "Author is required",
+            totalQuantity: "Stock quantity is required",
+            publisher: "Publisher is required",
+            launchDate: "Launch date is required",
+            invalidLaunchDate: "Launch date cannot be in the future"
+        }
     },
 
 
@@ -336,7 +344,7 @@ export default {
         },
         error: {
             getError: "Error fetching data!",
-    
+
             deleteErrorPublishers: "Error during deletion! Check for linked books.",
             deleteErrorRenters: "Error during deletion! Check if this tenant has active rentals.",
             deleteError: "Error during deletion!",

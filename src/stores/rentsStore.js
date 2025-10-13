@@ -104,7 +104,7 @@ export const useRentsStore = defineStore('rents', {
                 console.log('Books:', this.booksOptions)
                 console.log('Renters:', this.rentersOptions)
             } catch (err) {
-                console.error('Erro ao buscar livros e locatários:', err)
+                console.error('Error to fetch books and renters:', err)
                 errorMsg(i18n.global.t('toasts.error.getError'))
             }
         }

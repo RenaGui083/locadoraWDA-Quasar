@@ -106,6 +106,14 @@ export default {
             registerButton: "Salvar",
             cancelButton: "Cancelar",
         },
+        errorInput: {
+            name: "O nome é obrigatório",
+            author: "O autor é obrigatório",
+            totalQuantity: "O estoque é obrigatório",
+            publisher: "A editora é obrigatória",
+            launchDate: "A data de lançamento é obrigatória",
+            invalidLaunchDate: "A data de lançamento não pode ser futura"
+        }
     },
 
 
