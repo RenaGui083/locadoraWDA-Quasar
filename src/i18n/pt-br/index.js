@@ -78,26 +78,26 @@ export default {
         headerTitle: "Biblioteca",
         table: {
             tableTitle: "Acervo atual",
-            name: "Nome",
-            author: "Autor",
-            launchDate: "Data de lançamento",
-            totalQuantity: "Estoque",
-            totalInUse: "Alugados",
-            publisher: "Editora",
+            name: "Nome*",
+            author: "Autor*",
+            launchDate: "Data de lançamento*",
+            totalQuantity: "Estoque*",
+            totalInUse: "Alugados*",
+            publisher: "Editora*",
             actions: "Ações"
         },
         createModal: {
             title: "Cadastrar Livro",
-            name: "Nome",
-            author: "Autor",
-            totalQuantity: "Estoque",
-            publisher: "Editora",
-            launchDate: "Data de lançamento",
+            name: "Nome*",
+            author: "Autor*",
+            totalQuantity: "Estoque*",
+            publisher: "Editora*",
+            launchDate: "Data de lançamento*",
             registerButton: "Cadastrar",
             cancelButton: "Cancelar"
         },
         editModal: {
-            title: "Editar Livro",
+            title: "Editar livro",
             name: "Nome",
             author: "Autor",
             totalQuantity: "Estoque",
@@ -127,26 +127,26 @@ export default {
         headerTitle: "Aluguéis",
         table: {
             tableTitle: "Relação de aluguéis",
-            book: "Livro",
-            renter: "Locatário",
-            rentDate: "Data de locação",
-            deadLine: "Data de devolução",
-            status: "Status",
+            book: "Livro*",
+            renter: "Locatário*",
+            rentDate: "Data de locação*",
+            deadLine: "Data de devolução*",
+            status: "Status*",
             actions: "Ações"
         },
         createModal: {
             title: "Cadastrar aluguel",
-            book: "Livro",
-            renter: "Locatário",
-            deadLine: "Data de devolução",
+            book: "Livro*",
+            renter: "Locatário*",
+            deadLine: "Data de devolução*",
             registerButton: "Cadastrar",
             cancelButton: "Cancelar"
         },
         editModal: {
             title: "Editar aluguel",
-            book: "Livro",
-            renter: "Locatário",
-            deadLine: "Data de devolução",
+            book: "Livro*",
+            renter: "Locatário*",
+            deadLine: "Data de devolução*",
             registerButton: "Atualizar",
             cancelButton: "Cancelar",
             returnModal: {
@@ -354,6 +354,8 @@ export default {
             putErrorCpf: "Erro ao realizar atualização! Verifique se o CPF é válido.",
 
             errorFinishRent: "Erro ao realizar a devolução.",
+
+            deleteErrorBook: "Erro ao deletar! Verifique se este livro não possui aluguéis ativos."
         }
     },
 }

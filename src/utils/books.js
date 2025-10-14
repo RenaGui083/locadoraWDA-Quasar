@@ -16,9 +16,16 @@ export function useCrud() {
         publisherId: null
     })
 
+    const editBook = ref({
+        name: '',
+        author: '',
+        launchDate: '',
+        totalQuantity: null,
+        publisherId: null
+    })
+
     const $q = useQuasar()
 
-    // estados dos modais
     const openModalCreate = ref(false)
     const openModalEdit = ref(false)
     const openModalExclude = ref(false)
@@ -30,12 +37,12 @@ export function useCrud() {
     const { books, loading, error, fetchBooksTable, publishersOptions } = storeToRefs(booksStore)
 
 
-    // pesquisa
     const filter = ref("")
     const formRef = ref(null)
+    const formRefEdit = ref(null)
     const selectBook = ref(null)
+    const fixedName = ref('')
 
-    // paginação
     const pagination = ref({
         page: 1,
         rowsPerPage: $q.screen.lt.md ? 0 : 5
@@ -139,19 +146,103 @@ export function useCrud() {
             }
         } catch (error) {
             console.error('Error to add book', error)
-            
+
         }
 
     }
 
+    //update Book
+
+    function prepareEditBook(book) {
+        openModalEdit.value = true
+        selectBook.value = book
+
+        editBook.value = {
+            name: book.name,
+            author: book.author,
+            launchDate: formatISOToLocale(book.launchDate, locale.value),
+            totalQuantity: book.totalQuantity,
+            publisherId: book.publisherId
+        }
+        fixedName.value = book.name
+    }
+
+    async function tryOpenConfirm() {
+        if (!formRefEdit.value) return
+        const valid = await formRefEdit.value.validate()
+        if (valid) {
+            openModalConfirm.value = true
+            openModalEdit.value = false
+        } else {
+            console.warn('Formulário inválido')
+        }
+    }
+
+    async function updateBook() {
+        const payload = {
+            name: editBook.value.name,
+            author: editBook.value.author,
+            launchDate: parseInputDateToISO(editBook.value.launchDate, locale.value),
+            totalQuantity: editBook.value.totalQuantity,
+            publisherId: editBook.value.publisherId
+        }
+
+        console.log('Payload enviado pra API:', payload)
+
+        const updated = await booksStore.updateBook(selectBook.value.id, payload)
+        if (updated == true) {
+            await booksStore.fetchBooks()
+            openModalEdit.value = false
+            openModalConfirm.value = false
+            editBook.value = { name: '', author: '', launchDate: '', totalQuantity: null, publisherId: null }
+            selectBook.value = null
+        } else {
+            console.error('Failed to update book:', error)
+            openModalConfirm.value = false
+            openModalEdit.value = true
+        }
+
+    }
+
+    // delete book
+
+
+    function deleteBook(book) {
+        selectBook.value = book
+        openModalExclude.value = true
+    }
+
+    async function confirmDelete() {
+        if (!selectBook.value) return console.warn('No book selected for deletion')
+
+        try {
+            await booksStore.deleteBook(selectBook.value.id)
+            await booksStore.fetchBooks()
+            openModalExclude.value = false
+            selectBook.value = null
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    //cancel
+
+    function cancel() {
+        openModalEdit.value = false
+        openModalCreate.value = false
+        editBook.value = { name: '', author: '', launchDate: '', totalQuantity: null, publisherId: null }
+        newBook.value = {  name: '', author: '', launchDate: '', totalQuantity: null, publisherId: null }
+        selectBook.value = null
+    }
+
     return {
 
-        fetchBooksTable, addBook, formRef, newBook, isDuplicate, publishersOptions,
+        fetchBooksTable, addBook, formRef, newBook, isDuplicate, publishersOptions, prepareEditBook, fixedName, editBook, selectBook,
 
 
-        $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, i18n, locale,
+        $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, i18n, locale, tryOpenConfirm, formRefEdit,
 
 
-        filter, pagination, columns, paginationLabel, books, loading, error
+        filter, pagination, columns, paginationLabel, books, loading, error, updateBook, deleteBook, confirmDelete, cancel
     }
 }

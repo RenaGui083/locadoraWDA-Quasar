@@ -26,6 +26,7 @@ export const useBookStore = defineStore('book', {
                         ...book,
                         name: book.name,
                         publisher: book.publisher.name,
+                        publisherId: book.publisher.id,
                         author: book.author,
                         launchDate: book.launchDate,
                         totalQuantity: book.totalQuantity,
@@ -81,7 +82,7 @@ export const useBookStore = defineStore('book', {
                 .catch(error => {
                     const msg = error.response?.data?.error || error.message;
                     console.error('Erro:', msg);
-                    errorMsg(i18n.global.t('toasts.error.deleteErrorPublishers'));
+                    errorMsg(i18n.global.t('toasts.error.deleteErrorBook'));
                 })
         },
 

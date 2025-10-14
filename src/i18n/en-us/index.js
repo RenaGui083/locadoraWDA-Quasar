@@ -97,7 +97,7 @@ export default {
             cancelButton: "Cancel"
         },
         editModal: {
-            title: "Edit Book",
+            title: "Edit book",
             name: "Name",
             author: "Author",
             totalQuantity: "Stock",
@@ -359,6 +359,8 @@ export default {
             postErrorCpf: "Error during registration! Check if the CPF is valid.",
             putErrorCpf: "Error during update! Check if the CPF is valid.",
             errorFinishRent: "Error when completing the return.",
+
+            deleteErrorBook: "Error deleting! Please check if this book has active rentals."
         },
     },
 

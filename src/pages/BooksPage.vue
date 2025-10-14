@@ -26,8 +26,8 @@
                 <!-- Modo tabela normal (desktop) -->
                 <template v-slot:body-cell-actions="props">
                     <q-td :props="props" class="text-center" :data-label="props.col.label">
-                        <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
-                        <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                        <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditBook(props.row)" />
+                        <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteBook(props.row)" />
                     </q-td>
                 </template>
                 <template v-slot:body-cell="props">
@@ -42,8 +42,8 @@
                             <div class="col-8">{{ col.value }}</div>
                         </div>
                         <div class="row justify-end q-mt-sm">
-                            <q-btn flat round dense icon="edit" color="#121f2f" @click="openModalEdit = true" />
-                            <q-btn flat round dense icon="delete" color="#121f2f" @click="openModalExclude = true" />
+                            <q-btn flat round dense icon="edit" color="#121f2f" @click="prepareEditBook(props.row)" />
+                            <q-btn flat round dense icon="delete" color="#121f2f" @click="deleteBook(props.row)" />
                         </div>
                     </div>
                 </template>
@@ -132,7 +132,7 @@
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('library.createModal.registerButton')" color="primary" @click="addBook"
                         class="buttonRegister" />
-                    <q-btn flat :label="t('library.createModal.cancelButton')" color="white" v-close-popup />
+                    <q-btn flat :label="t('library.createModal.cancelButton')" color="white"  @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -144,7 +144,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('library.editModal.title') }}</div>
+                    <div class="text-h5">{{ t('library.editModal.title')  + " " + (fixedName) + "?"  }}</div>
                     <q-space />
                     <q-btn icon="close" flat round dense v-close-popup class="closeIcon" />
                 </q-card-section>
@@ -156,33 +156,30 @@
                     <slot>
                         <q-form @submit="onSubmit" @reset="onReset" ref="formRefEdit">
 
-                            <q-input filled v-model="newBook.name" type="text" :label="t('library.editModal.name')"
+                            <q-input filled v-model="editBook.name" type="text" :label="t('library.createModal.name')"
                                 class="inputModal" color="primary"
-                                :rules="[val => !!val || t('library.errorInput.name')]" />
+                                :rules="[
+                                    val => !!val || t('library.errorInput.name'),
+                                    val => isDuplicate('name', val)
+                                ]" />
 
-                            <q-input filled v-model="newBook.author" type="text" :label="t('library.editModal.author')"
+                            <q-input filled v-model="editBook.author" type="text" :label="t('library.createModal.author')"
                                 class="inputModal" color="primary"
                                 :rules="[val => !!val || t('library.errorInput.author')]" />
 
-                            <q-input filled v-model.number="newBook.totalQuantity" type="number"
-                                :label="t('library.editModal.totalQuantity')" class="inputModal" color="primary"
+                            <q-input filled v-model.number="editBook.totalQuantity" type="number"
+                                :label="t('library.createModal.totalQuantity')" class="inputModal" color="primary"
                                 :min="1" :rules="[
                                     val => !!val || t('library.errorInput.totalQuantity'),
-                                    val => val >= 1 || t('library.errorInput.minQuantity')
                                 ]" />
 
-                            <q-input filled v-model.number="newBook.totalInUse" type="number"
-                                :label="t('library.editModal.totalInUse')" class="inputModal" color="primary" :min="0"
-                                :rules="[
-                                    val => val >= 0 || t('library.errorInput.minInUse')
-                                ]" />
-
-                            <q-select filled v-model="newBook.publisher" :options="publishersOptions" option-value="id" 
-                                option-label="name" emit-value map-options :label="t('library.editModal.publisher')"
+                          
+                            <q-select filled v-model="editBook.publisherId" :options="publishersOptions" option-value="id" 
+                                option-label="name" emit-value map-options :label="t('library.createModal.publisher')"
                                 class="inputModal" color="primary"
                                 :rules="[val => !!val || t('library.errorInput.publisher')]" />
 
-                            <q-input filled v-model="newBook.launchDate" :label="t('library.editModal.launchDate')"
+                            <q-input filled v-model="editBook.launchDate" :label="t('library.createModal.launchDate')"
                                 :mask="locale === 'en-US' ? '##/##/####' : '##/##/####'"
                                 :placeholder="locale === 'en-US' ? 'MM/DD/YYYY' : 'DD/MM/YYYY'" class="inputModal"
                                 color="primary" :rules="[
@@ -212,6 +209,7 @@
                                     }
                                 ]" />
 
+
                         </q-form>
                     </slot>
                 </q-card-section>
@@ -220,8 +218,8 @@
                 <q-separator />
                 <q-card-actions align="left">
                     <q-btn unelevated :label="t('library.editModal.registerButton')" color="primary"
-                        @click="openModalConfirm = true, openModalEdit = false" class="buttonRegister" />
-                    <q-btn flat :label="t('library.editModal.cancelButton')" color="white" v-close-popup />
+                        @click="tryOpenConfirm" class="buttonRegister" />
+                    <q-btn flat :label="t('library.editModal.cancelButton')" color="white" @click="cancel" v-close-popup />
                 </q-card-actions>
 
             </q-card>
@@ -233,7 +231,7 @@
             <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
 
                 <q-card-section class="row items-center">
-                    <div class="text-h5">{{ t('excludeModal.text') }}</div>
+                    <div class="text-h5">{{ t('excludeModal.text') + " " + "(" + (selectBook.name) + ")"  }}</div>
                     <q-space />
                     <!-- <q-btn icon="close" flat round dense v-close-popup class="closeIcon" /> -->
                 </q-card-section>
@@ -242,7 +240,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('excludeModal.yesButton')" color="primary" @click="confirmDelete"
                         class="buttonRegister" />
                     <q-btn flat :label="t('excludeModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -263,7 +261,7 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="register"
+                    <q-btn unelevated :label="t('confirmModal.yesButton')" color="primary" @click="updateBook"
                         class="buttonRegister" />
                     <q-btn flat :label="t('confirmModal.noButton')" color="white" v-close-popup />
                 </q-card-actions>
@@ -278,8 +276,8 @@
 import { useCrud } from 'src/utils/books.js'
 
 const {
-    fetchBooksTable, addBook, formRef, newBook, isDuplicate, publishersOptions,
-    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, locale,
-    filter, pagination, columns, paginationLabel, loading,
+    fetchBooksTable, addBook, formRef, newBook, isDuplicate, publishersOptions, prepareEditBook, fixedName, editBook,
+    $q, openModalCreate, openModalEdit, openModalExclude, openModalConfirm, t, locale, tryOpenConfirm, formRefEdit,
+    filter, pagination, columns, paginationLabel, loading, updateBook, deleteBook, confirmDelete, selectBook, cancel
 } = useCrud()
 </script>

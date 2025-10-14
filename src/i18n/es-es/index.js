@@ -92,7 +92,7 @@ export default {
             cancelButton: "Cancelar"
         },
         editModal: {
-            title: "Editar Libro",
+            title: "Editar libro",
             name: "Nombre",
             author: "Autor",
             totalQuantity: "Inventario",
@@ -347,6 +347,8 @@ export default {
             postErrorCpf: "¡Error durante el registro! Verifique si el CPF es válido.",
             putErrorCpf: "¡Error durante la actualización! Verifique si el CPF es válido.",
             errorFinishRent: "Error al realizar la devolución.",
+
+            deleteErrorBook: "¡Error al eliminar! Verifique si este libro tiene alquileres activos."
         },
     }
 }
