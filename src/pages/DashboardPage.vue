@@ -26,24 +26,26 @@
                     </q-card-section>
                 </q-card>
 
-                 <q-card class="cardSection" id="chartPieSection">
-                <q-card-section>
-                    <div class="headerContainerChart">
-                        <header>{{ t('dashboard.publishersBooksRenters') }}</header>
-                    </div>
-                    <ChartPie1 id="chartPieBottom" />
-                </q-card-section>
-            </q-card>
+                <q-card class="cardSection" id="chartPieSection">
+                    <q-card-section>
+                        <div class="headerContainerChart">
+                            <header>{{ t('dashboard.publishersBooksRenters') }}</header>
+                        </div>
+                        <ChartPie1 id="chartPieBottom" />
+                    </q-card-section>
+                </q-card>
             </div>
 
             <div class="sectionBottom">
 
                 <div class="tableContainer" id="gridDashboard">
                     <div class="text-h6 text-center full-width">{{ t('dashboard.table.tableTitle') }}</div>
-                    <q-table :rows="rows" :columns="columns" row-key="name" v-model:pagination="pagination"
-                        :filter="filter" flat bordered :no-data-label="t('tables.noData')" :rows-per-page-label="t('tables.rowsPerPage')" :pagination-label="paginationLabel"
-                        class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md">
-                        
+                    <q-table :rows="renters" :columns="columns" row-key="id" v-model:pagination="pagination"
+                        :filter="filter" flat bordered :no-data-label="t('tables.noData')"
+                        :rows-per-page-label="t('tables.rowsPerPage')" :pagination-label="paginationLabel"
+                        class="my-table shadow-2 rounded-borders" :hide-bottom="$q.screen.lt.md" :loading="loading"
+                        :loading-label="t('tables.loading')" :rows-per-page-options="[renters.length]">
+
                         <template v-slot:body-cell="props">
                             <q-td :props="props" :data-label="props.col.label">
                                 {{ props.value }}
@@ -55,15 +57,15 @@
                     <q-card-section>
                         <div class="headerContainerChart" id="usersChart">
                             <header class="headerUsers">{{ t('dashboard.numberOfUsers') }}</header>
-                            <p>29</p>
+                            <p>{{ numberOfUsers }}</p>
                         </div>
                         <div class="headerContainerChart" id="adminsChart">
                             <header class="headerUsers">{{ t('dashboard.numberOfAdmins') }}</header>
-                            <p>18</p>
+                            <p>{{ numberOfAdmins }}</p>
                         </div>
                     </q-card-section>
                 </q-card>
-               
+
             </div>
 
 
@@ -80,8 +82,8 @@ import { Dark } from 'quasar'
 Dark.set(false)
 
 const {
-    ChartBar1, ChartBar2, ChartPie1,
-    $q, t,
-    pagination, columns, rows, paginationLabel
+    ChartBar1, ChartBar2, ChartPie1, renters, loading,
+    $q, t, numberOfAdmins, numberOfUsers,
+    pagination, columns, paginationLabel
 } = useCrud()
 </script>

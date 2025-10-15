@@ -5,9 +5,12 @@ import ChartBar2 from "src/components/DashboardChartBar2.vue";
 import ChartPie1 from "src/components/DashboardChartPie1.vue";
 import { useI18n } from 'vue-i18n'
 import i18n from 'src/i18n';
+import { useDashboardStore } from 'src/stores/dashboardStore';
+import { storeToRefs } from 'pinia'
 
 
 export function useCrud() {
+    const dashboardStore = useDashboardStore()
     
     const { t } = useI18n()
 
@@ -18,45 +21,45 @@ export function useCrud() {
         rowsPerPage: 2
     })
 
+     const { renters, loading, error, fetchRenters, numberOfAdmins, numberOfUsers } = storeToRefs(dashboardStore)
+
     watch(() => $q.screen.lt.md, (isMobile) => {
         pagination.value.rowsPerPage = isMobile ? 0 : 5
     })
 
-    onMounted(() => { // onMounted = window.onload do javaScript
-        if ($q.screen.gt.lg) {
+    onMounted(async () => { // onMounted = window.onload do javaScript
+        try {
+            await Promise.all([
+                dashboardStore.fetchRenters(),
+                dashboardStore.fetchRentersAndAdmins()
+            ])
+            console.log('data fetched on mount')
+        } catch (error) {
+            console.log(error)('Failed to fetch data on mount')
+        }
+        if ($q.screen.gt.   lg) {
             pagination.value.rowsPerPage = 5
         } else if ($q.screen.lt.lg) {
             pagination.value.rowsPerPage = 3
         }
     })
-    const columns = computed(() =>[
-        { name: "renter", label: t('dashboard.table.renters'), field: "renter", align: "left", sortable: true },
-        { name: "rentsQuantity", label: t('dashboard.table.rentsQuantity'), field: "rentsQuantity", align: "left", sortable: true },
-        { name: "rentsActive", label: t('dashboard.table.rentsActive'), field: "rentsActive", align: "left", sortable: true }
-    ])
+    const columns = computed(() => [
+  { name: "name", label: t('dashboard.table.renters'), field: "name", align: "left", sortable: true },
+  { name: "rentsQuantity", label: t('dashboard.table.rentsQuantity'), field: "rentsQuantity", align: "left", sortable: true },
+  { name: "rentsActive", label: t('dashboard.table.rentsActive'), field: "rentsActive", align: "left", sortable: true }
+])
 
     const paginationLabel = (start, end, total) => `${start} - ${end} ${t('tables.of')} ${total}`
 
 
-    const rows = ref([
-        { renter: "Renan Guilherme", rentsQuantity: 12, rentsActive: 3 },
-        { renter: "Ana Silva", rentsQuantity: 5, rentsActive: 2 },
-        { renter: "Carlos Souza", rentsQuantity: 7, rentsActive: 0 },
-        { renter: "Mariana Rocha", rentsQuantity: 10, rentsActive: 1 },
-        { renter: "João Pedro", rentsQuantity: 3, rentsActive: 3 },
-        { renter: "Fernanda Lima", rentsQuantity: 8, rentsActive: 2 },
-        { renter: "Paulo Henrique", rentsQuantity: 4, rentsActive: 1 },
-        { renter: "Isabela Martins", rentsQuantity: 6, rentsActive: 0 },
-        { renter: "Lucas Almeida", rentsQuantity: 9, rentsActive: 4 },
-        { renter: "Camila Ferreira", rentsQuantity: 2, rentsActive: 0 }
-    ])
+    
 
 
     return {
-        ChartBar1, ChartBar2, ChartPie1,
+        ChartBar1, ChartBar2, ChartPie1, renters, loading, error, fetchRenters,
 
-        $q, t, i18n,
+        $q, t, i18n, numberOfAdmins, numberOfUsers,
 
-        pagination, columns, rows, paginationLabel
+        pagination, columns,paginationLabel
     }
 }
