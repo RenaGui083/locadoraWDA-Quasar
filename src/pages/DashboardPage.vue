@@ -10,17 +10,17 @@
 
                 <q-card class="cardSection">
                     <q-card-section>
-                        <div class="headerContainerChart">
-                            <header>{{ t('dashboard.rentsChart') }}</header>
+                        <div class="headerContainerChart" id="conteinerDashboard">
+                            <header>{{ t('dashboard.rentsChart') }}</header><q-input filled label="sim" v-model="numberOfMonths" type="number" class="numberOfMonths" placeholder="months" min="1" />
                         </div>
                         <ChartBar1 style="height: 200px;" />
                     </q-card-section>
                 </q-card>
 
-                <q-card class="cardSection">
+                <q-card class="cardSection" >
                     <q-card-section>
-                        <div class="headerContainerChart">
-                            <header>{{ t('dashboard.top3Chart') }}</header>
+                        <div class="headerContainerChart"  id="conteinerDashboard2">
+                            <header>{{ t('dashboard.top3Chart') }}</header>  <q-input filled label="sim" v-model="numberOfMonthsTop3" type="number" class="numberOfMonths" placeholder="months" min="1" />
                         </div>
                         <ChartBar2 style="min-height: 200px;" />
                     </q-card-section>
@@ -83,7 +83,7 @@ Dark.set(false)
 
 const {
     ChartBar1, ChartBar2, ChartPie1, renters, loading,
-    $q, t, numberOfAdmins, numberOfUsers,
+    $q, t, numberOfAdmins, numberOfUsers, numberOfMonths, numberOfMonthsTop3,
     pagination, columns, paginationLabel
 } = useCrud()
 </script>

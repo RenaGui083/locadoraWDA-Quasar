@@ -307,6 +307,27 @@ body {
     margin-bottom: 4%;
 }
 
+.numberOfMonths{
+    width: 25%;
+    height: 30px;
+    border-radius: 6px;
+    // border: #1F2548  1px solid;
+    font-size: 12px;
+    padding: 5px;
+}
+
+#conteinerDashboard{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#conteinerDashboard2{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
 #usersChart{
     padding: 4%;
     background-color: #E0E4EB;
@@ -328,7 +349,7 @@ body {
     flex: 1; // ocupa espaço igual
     min-width: 0; // evita overflow
     border-radius: 16px;
-    max-height: 250px;
+    max-height: 280px;
 }
 
 
