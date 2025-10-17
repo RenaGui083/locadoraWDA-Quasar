@@ -364,6 +364,6 @@ export default {
         },
     },
 
-
+    monthLabel: "Months:"
 
 }

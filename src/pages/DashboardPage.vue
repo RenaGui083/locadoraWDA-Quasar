@@ -11,7 +11,7 @@
                 <q-card class="cardSection">
                     <q-card-section>
                         <div class="headerContainerChart" id="conteinerDashboard">
-                            <header>{{ t('dashboard.rentsChart') }}</header><q-input filled label="sim" v-model="numberOfMonths" type="number" class="numberOfMonths" placeholder="months" min="1" />
+                            <header>{{ t('dashboard.rentsChart') }}</header><q-input filled :label="t('monthLabel')" v-model="numberOfMonths" type="number" class="numberOfMonths" placeholder="months" min="1" />
                         </div>
                         <ChartBar1 style="height: 200px;" />
                     </q-card-section>
@@ -20,7 +20,7 @@
                 <q-card class="cardSection" >
                     <q-card-section>
                         <div class="headerContainerChart"  id="conteinerDashboard2">
-                            <header>{{ t('dashboard.top3Chart') }}</header>  <q-input filled label="sim" v-model="numberOfMonthsTop3" type="number" class="numberOfMonths" placeholder="months" min="1" />
+                            <header>{{ t('dashboard.top3Chart') }}</header>  <q-input filled :label="t('monthLabel')" v-model="numberOfMonthsTop3" type="number" class="numberOfMonths" placeholder="months" min="1" />
                         </div>
                         <ChartBar2 style="min-height: 200px;" />
                     </q-card-section>

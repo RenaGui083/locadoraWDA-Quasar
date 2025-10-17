@@ -6,7 +6,6 @@
 
 
 <script setup>
-import { computed } from 'vue';
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import {
@@ -16,6 +15,14 @@ import {
 } from "chart.js";
 import { Pie } from "vue-chartjs";
 
+import { useDashboardStore } from 'src/stores/dashboardStore';
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+
+ const dashboardStore = useDashboardStore()
+
+const { publishers,rentersNumber,books } = storeToRefs(dashboardStore)
+
 // registrar os módulos do Chart.js
 ChartJS.register(Title, Tooltip, Legend, ArcElement);
 
@@ -24,7 +31,7 @@ const chartData = computed(() => ({
     datasets: [
         {
             label: "Cadastros",
-            data: [40, 20, 60],
+            data: [publishers.value,books.value,rentersNumber.value],
             backgroundColor: ['#404668', '#121F2F', '#F7B176'],
         },
     ],

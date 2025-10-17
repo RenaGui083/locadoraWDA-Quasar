@@ -350,5 +350,7 @@ export default {
 
             deleteErrorBook: "¡Error al eliminar! Verifique si este libro tiene alquileres activos."
         },
-    }
+    },
+
+    monthLabel: "Meses:"
 }
