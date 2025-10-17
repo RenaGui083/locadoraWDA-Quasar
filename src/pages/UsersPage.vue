@@ -63,7 +63,7 @@
 
         <!-- Modals -->
         <q-dialog v-model="openModalCreate" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('users.createModal.title') }}</div>
@@ -121,7 +121,7 @@
 
 
         <q-dialog v-model="openModalEdit" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('users.editModal.title') + " " + (fixedName) + "?" }}</div>
@@ -175,7 +175,7 @@
 
 
         <q-dialog v-model="openModalExclude" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('excludeModal.text') + " " + "(" + (selectUser.name) + ")" }}</div>
@@ -198,7 +198,7 @@
 
 
         <q-dialog v-model="openModalView" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('users.viewModal.title') + " " + (viewUser?.name ?? '') }}</div>
@@ -270,7 +270,7 @@
 
 
         <q-dialog v-model="openModalConfirm" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('confirmModal.text') }}</div>

@@ -59,7 +59,7 @@
 
         <!-- Modals -->
         <q-dialog v-model="openModalCreate" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('rents.createModal.title') }}</div>
@@ -140,7 +140,7 @@
 
 
         <q-dialog v-model="openModalEdit" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('rents.editModal.title')  + " " + (fixedName) + "?" }}</div>
@@ -222,7 +222,7 @@
 
 
         <q-dialog v-model="openModalBookReturn" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('rents.editModal.returnModal.text') + " " + "(" +(selectRent.book) + ")"  }}</div>
@@ -244,7 +244,7 @@
 
 
         <q-dialog v-model="openModalConfirm" persistent :maximized="$q.screen.lt.md">
-            <q-card style="min-width: 400px; max-width: 95vw; max-height: 90vh;" class="mainModal">
+            <q-card style="min-width: 400px; max-width: 95vw; max-height: none;" class="mainModal">
 
                 <q-card-section class="row items-center">
                     <div class="text-h5">{{ t('confirmModal.text') }}</div>
